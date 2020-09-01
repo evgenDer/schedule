@@ -2,11 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'js', 'index.ts'),
+  entry: path.join(__dirname, 'src', 'ts', 'index.tsx'),
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'app.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devServer: {
     port: 3000,
@@ -25,7 +25,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'ts-loader',
-        }
+        },
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.module\.scss$/,
@@ -36,14 +43,14 @@ module.exports = {
             options: {
               modules: true,
               sourceMap: true,
-            }
+            },
           },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
             },
-          }
+          },
         ],
       },
       {
@@ -61,22 +68,22 @@ module.exports = {
             options: {
               sourceMap: true,
             },
-          }
+          },
         ],
         exclude: /\.module\.scss$/,
       },
       {
         test: /\.(svg|png|jpe?g)$/,
-        use: 'file-loader'
-      }
-    ]
+        use: 'file-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html')
-    })
-  ]
-}
+      template: path.join(__dirname, 'src', 'index.html'),
+    }),
+  ],
+};
