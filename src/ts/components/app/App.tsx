@@ -1,5 +1,5 @@
 import React from 'react';
-import ScheduleTable from '../table/ScheduleTable';
+import ScheduleTable from '../scheduleTable/ScheduleTable';
 
 const dataSource = [
   {
