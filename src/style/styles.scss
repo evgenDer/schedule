@@ -1,5 +1,9 @@
+@import './base/normalizer';
+@import '../../node_modules/antd/dist/antd.css';
+
 @import './abstaract/constants';
 @import './abstaract/mixins';
 
-@import './base/normalizer';
 @import './base/base';
+
+@import './components/shedule-table';
