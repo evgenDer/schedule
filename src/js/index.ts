@@ -4,4 +4,3 @@ ReactDOM.render(
   'Hello World!!!',
   document.getElementById('app'),
 )
-console.log('Work!');
