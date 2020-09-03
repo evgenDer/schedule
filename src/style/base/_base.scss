@@ -1,0 +1,29 @@
+html {
+  user-select: none;
+}
+
+h1 {
+  @include font(3.2rem, 4.2rem, 800);
+  @include media-tablet {
+    @include font(2.6rem, 2.6rem, bold);
+  }
+  @media (max-width: 800px) {
+    @include font(2.6rem, 2.6rem, bold);
+  }
+}
+
+h2 {
+  @include font(2.8rem, 2.8rem, bold);
+  @include media-tablet {
+    @include font(2.2rem, 2.2rem, bold);
+  }
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+body {
+  overflow-x: hidden;
+}
