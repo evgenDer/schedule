@@ -30,13 +30,14 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
     "@types/antd": "^1.0.0",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
-    "antd": "^2.13.11",
+    "antd": "^4.6.2",
     "classnames": "^2.2.6",
     "cross-env": "^7.0.2",
     "normalize.css": "^8.0.1",
