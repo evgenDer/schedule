@@ -2,13 +2,12 @@ import React from 'react';
 import { Button, Tooltip, Popconfirm, Tag } from 'antd';
 import {
   EditOutlined,
-  MinusSquareOutlined,
-  CheckOutlined,
   DeleteOutlined,
   LikeOutlined,
   DislikeOutlined,
+  GithubOutlined,
 } from '@ant-design/icons';
-import { sortMarks } from '../../helpers/dataHelper';
+import { sortMarks, sortDate } from '../../helpers/dataHelper';
 import { IData, TableDataColumns, ITaskType } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
 
@@ -25,6 +24,7 @@ export const COMMON_COLS: TableDataColumns = [
     title: 'Date',
     dataIndex: 'date',
     key: 'date',
+    sorter: (a: IData, b: IData) => sortDate(new Date(a.date), new Date(b.date)),
     width: 120,
   },
   {
@@ -37,10 +37,11 @@ export const COMMON_COLS: TableDataColumns = [
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
-    render: (type: ITaskType) => <Tag color={type.color}>{type.name}</Tag>,
+    render: ({ name, color }: ITaskType) => <Tag color={color}>{name}</Tag>,
     filters: Object.values(TASK_TYPES).map(({ name }) => ({ text: name, value: name })),
-    onFilter: (value: any, record: IData) => record.type.name === value,
-    width: 100,
+    onFilter: (value: any, { type }: IData) => type.name === value,
+    align: 'center',
+    width: 150,
   },
   {
     title: 'Place',
@@ -71,26 +72,17 @@ export const COMMON_COLS: TableDataColumns = [
     dataIndex: 'organizer',
     key: 'organizer',
     ellipsis: true,
-    render: (organizer: string) => (
-      <Tooltip placement="topLeft" title={organizer}>
-        <span>{organizer}</span>
-      </Tooltip>
-    ),
+    render: (organizer: string) => {
+      if (organizer) {
+        return (
+          <Tag icon={<GithubOutlined />} color="default">
+            <a href={organizer}>{organizer.split('/').pop()}</a>
+          </Tag>
+        );
+      }
+      return '';
+    },
     width: 150,
-  },
-  {
-    title: 'Mark',
-    dataIndex: 'mark',
-    key: 'mark',
-    sorter: (a: IData, b: IData) => sortMarks(a.mark, b.mark),
-    width: 120,
-  },
-  {
-    title: 'Max Mark',
-    dataIndex: 'maxMark',
-    key: 'maxMark',
-    sorter: (a: IData, b: IData) => sortMarks(a.maxMark, b.maxMark),
-    width: 120,
   },
   {
     title: 'Comment',
@@ -102,11 +94,27 @@ export const COMMON_COLS: TableDataColumns = [
         <span>{comment}</span>
       </Tooltip>
     ),
-    width: 150,
+    width: 200,
+  },
+  {
+    title: 'Max Mark',
+    dataIndex: 'maxMark',
+    key: 'maxMark',
+    sorter: (a: IData, b: IData) => sortMarks(a.maxMark, b.maxMark),
+    width: 120,
+    align: 'right',
   },
 ];
 
 export const STUDENT_COLS: TableDataColumns = [
+  {
+    title: 'Mark',
+    dataIndex: 'mark',
+    key: 'mark',
+    sorter: (a: IData, b: IData) => sortMarks(a.mark, b.mark),
+    width: 120,
+    align: 'right',
+  },
   {
     title: 'Complited',
     dataIndex: 'isComplited',
@@ -123,32 +131,23 @@ export const STUDENT_COLS: TableDataColumns = [
       },
     ],
     onFilter: (value: any, record: IData) => record.isComplited === value,
+    align: 'center',
     width: 120,
   },
   {
     title: '',
     dataIndex: 'taskDone',
+    key: 'taskDone',
     fixed: 'right',
-    render: () => (
-      <Tooltip placement="topRight" title="Mark as done!">
-        <Button type="ghost">
-          <CheckOutlined />
-        </Button>
-      </Tooltip>
-    ),
+    align: 'center',
     width: 70,
   },
   {
     title: '',
     dataIndex: 'hideRow',
+    key: 'hideRow',
     fixed: 'right',
-    render: () => (
-      <Tooltip placement="topRight" title="Hide this row!">
-        <Button type="ghost">
-          <MinusSquareOutlined />
-        </Button>
-      </Tooltip>
-    ),
+    align: 'center',
     width: 70,
   },
 ];
@@ -166,6 +165,7 @@ export const ORGANIZER_COLS: TableDataColumns = [
         </Button>
       </Tooltip>
     ),
+    align: 'center',
     width: 70,
   },
   {
@@ -182,6 +182,7 @@ export const ORGANIZER_COLS: TableDataColumns = [
         </Popconfirm>
       </Tooltip>
     ),
+    align: 'center',
     width: 70,
   },
 ];
