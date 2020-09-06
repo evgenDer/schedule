@@ -8,9 +8,9 @@ import {
   LikeOutlined,
   DislikeOutlined,
 } from '@ant-design/icons';
-import { sortMarks } from '../helpers/dataHelper';
-import { IData, TableDataColumns, ITaskType } from './types-interfaces';
-import { TASK_TYPES } from './taskTypes';
+import { sortMarks } from '../../helpers/dataHelper';
+import { IData, TableDataColumns, ITaskType } from '../../constants/types-interfaces';
+import { TASK_TYPES } from '../../constants/taskTypes';
 
 export const COMMON_COLS: TableDataColumns = [
   {

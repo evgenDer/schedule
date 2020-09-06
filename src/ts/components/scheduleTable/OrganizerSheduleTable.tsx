@@ -1,15 +1,16 @@
 import React from 'react';
 import { Table } from 'antd';
+import { IData, TableDataColumns } from '../../constants/types-interfaces';
 
 type OrganizerSheduleTableProps = {
-  dataSource: object[];
-  columns: object[];
+  dataSource: IData[];
+  columns: TableDataColumns;
 };
 
 const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({ dataSource, columns }) => {
   return (
     <React.Fragment>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table<IData> dataSource={dataSource} columns={columns} scroll={{ x: 1600 }} sticky />
     </React.Fragment>
   );
 };

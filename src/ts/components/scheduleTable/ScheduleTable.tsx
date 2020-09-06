@@ -1,10 +1,11 @@
 import React from 'react';
 import StudentSheduleTable from './StudentSheduleTable';
 import OrganizerSheduleTable from './OrganizerSheduleTable';
-import { COMMON_COLS, STUDENT_COLS, ORGANIZER_COLS } from '../../constants/tableColumns';
+import { COMMON_COLS, STUDENT_COLS, ORGANIZER_COLS } from './tableColumns';
+import { IData, TableDataColumns } from '../../constants/types-interfaces';
 
 type SheduleTableProps = {
-  dataSource: object[];
+  dataSource: IData[];
   userType?: boolean;
 };
 
