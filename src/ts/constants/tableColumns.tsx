@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tooltip, Popconfirm } from 'antd';
+import { Button, Tooltip, Popconfirm, Tag } from 'antd';
 import {
   EditOutlined,
   MinusSquareOutlined,
@@ -9,7 +9,8 @@ import {
   DislikeOutlined,
 } from '@ant-design/icons';
 import { sortMarks } from '../helpers/dataHelper';
-import { IData, TableDataColumns } from './types-interfaces';
+import { IData, TableDataColumns, ITaskType } from './types-interfaces';
+import { TASK_TYPES } from './taskTypes';
 
 export const COMMON_COLS: TableDataColumns = [
   {
@@ -36,6 +37,9 @@ export const COMMON_COLS: TableDataColumns = [
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
+    render: (type: ITaskType) => <Tag color={type.color}>{type.name}</Tag>,
+    filters: Object.values(TASK_TYPES).map(({ name }) => ({ text: name, value: name })),
+    onFilter: (value: any, record: IData) => record.type.name === value,
     width: 100,
   },
   {
