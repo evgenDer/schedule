@@ -12,6 +12,7 @@ type StudentSheduleTableProps = {
 
 const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, columns }) => {
   const [data, setData] = useState(dataSource);
+  const [hiddenData, setHiddenData] = useState<IData[]>([]);
 
   const setTaskDone = (idx: number) => {
     const newData = [...data];
@@ -21,8 +22,18 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, c
   };
 
   const setRowHidden = (idx: number) => {
+    const newHidden = data.find(({ key }) => key === idx);
+    if (newHidden) {
+      setHiddenData([...hiddenData, newHidden]);
+    }
     const newData = [...data].filter(({ key }) => key !== idx);
     setData(newData);
+  };
+
+  const showHiddenRows = () => {
+    const newData = [...data, ...hiddenData].sort((a: IData, b: IData) => a.key - b.key);
+    setData(newData);
+    setHiddenData([]);
   };
 
   const newColumns = columns.map((col) => {
@@ -57,10 +68,31 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, c
     return col;
   });
 
+  type TableHeaderProps = {
+    hiddenRowsAmnt: number;
+    onClick: () => void;
+  };
+
+  const TableHeader: React.FC<TableHeaderProps> = ({ hiddenRowsAmnt, onClick }) => {
+    const hideButton = hiddenRowsAmnt ? (
+      <Button onClick={onClick}>Показать скрытые строки ({hiddenRowsAmnt})</Button>
+    ) : (
+      <Button disabled={true}>Нет скрытых строк</Button>
+    );
+
+    return <React.Fragment>{hideButton}</React.Fragment>;
+  };
+
   return (
     <React.Fragment>
       {/* <VirtualTable dataSource={dataSource} columns={columns} scroll={{ x: 1600, y: 300 }} /> */}
-      <Table<IData> dataSource={data} columns={newColumns} scroll={{ x: 1600 }} sticky />
+      <Table<IData>
+        dataSource={data}
+        columns={newColumns}
+        scroll={{ x: 1600 }}
+        sticky
+        title={() => <TableHeader hiddenRowsAmnt={hiddenData.length} onClick={showHiddenRows} />}
+      />
     </React.Fragment>
   );
 };
