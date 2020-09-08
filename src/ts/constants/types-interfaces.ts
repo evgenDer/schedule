@@ -7,8 +7,7 @@ export interface ITaskType {
 
 export interface IData {
   readonly key: number;
-  date: string;
-  time: string;
+  datetime: string; // RFC2822 (GMT+0300)
   name: string;
   type: ITaskType;
   mark?: number;

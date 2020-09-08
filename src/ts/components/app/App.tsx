@@ -6,8 +6,7 @@ import { TASK_TYPES } from '../../constants/taskTypes';
 const dataSource: IData[] = [
   {
     key: 0,
-    date: '2020-09-02',
-    time: '20:44',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 1',
     type: TASK_TYPES.jstask,
     mark: 200,
@@ -20,8 +19,7 @@ const dataSource: IData[] = [
   },
   {
     key: 1,
-    date: '2020-09-03',
-    time: '20:43',
+    datetime: 'Fri Sep 11 2020 20:50:07 GMT+0300',
     name: 'Task 2',
     type: TASK_TYPES.lecture,
     mark: 250,
@@ -35,8 +33,7 @@ const dataSource: IData[] = [
   },
   {
     key: 2,
-    date: '1995-09-04',
-    time: '20:24',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 3',
     type: TASK_TYPES.codewars,
     maxMark: 100,
@@ -47,8 +44,7 @@ const dataSource: IData[] = [
   },
   {
     key: 3,
-    date: '2015-09-05',
-    time: '20:44',
+    datetime: 'Sun Dec 01 2019 11:50:07 GMT+0300',
     name: 'Task 4',
     type: TASK_TYPES.deadline,
     maxMark: 100,
@@ -57,8 +53,7 @@ const dataSource: IData[] = [
   },
   {
     key: 4,
-    date: '2020-05-04',
-    time: '00:00',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 5',
     type: TASK_TYPES.interview,
     maxMark: 110,
@@ -67,8 +62,7 @@ const dataSource: IData[] = [
   },
   {
     key: 5,
-    date: '2020-09-03',
-    time: '12:20',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 6',
     type: TASK_TYPES.test,
     organizer: 'olga',
@@ -76,8 +70,7 @@ const dataSource: IData[] = [
   },
   {
     key: 6,
-    date: '2020-08-30',
-    time: '21:35',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 7',
     type: TASK_TYPES.htmlcssacademy,
     maxMark: 30,
@@ -87,8 +80,7 @@ const dataSource: IData[] = [
   },
   {
     key: 7,
-    date: '2020-12-31',
-    time: '21:22',
+    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
     name: 'Task 8',
     type: TASK_TYPES.cvmarkdown,
     maxMark: 20,

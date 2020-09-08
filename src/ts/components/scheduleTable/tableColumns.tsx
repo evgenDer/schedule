@@ -1,13 +1,7 @@
 import React from 'react';
 import { Button, Tooltip, Popconfirm, Tag } from 'antd';
-import {
-  EditOutlined,
-  DeleteOutlined,
-  LikeOutlined,
-  DislikeOutlined,
-  GithubOutlined,
-} from '@ant-design/icons';
-import { sortMarks, sortDate } from '../../helpers/dataHelper';
+import { EditOutlined, DeleteOutlined, LikeOutlined, DislikeOutlined, GithubOutlined } from '@ant-design/icons';
+import { sortMarks, sortDate, getDateString, getTimeString } from '../../helpers/dataHelper';
 import { IData, TableDataColumns, ITaskType } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
 
@@ -22,15 +16,17 @@ export const COMMON_COLS: TableDataColumns = [
   },
   {
     title: 'Date',
-    dataIndex: 'date',
+    dataIndex: 'datetime',
     key: 'date',
-    sorter: (a: IData, b: IData) => sortDate(new Date(a.date), new Date(b.date)),
+    render: (datetime: string) => getDateString(new Date(datetime)),
+    sorter: (a: IData, b: IData) => sortDate(new Date(a.datetime), new Date(b.datetime)),
     width: 120,
   },
   {
     title: 'Time',
-    dataIndex: 'time',
+    dataIndex: 'datetime',
     key: 'time',
+    render: (datetime: string) => getTimeString(new Date(datetime)),
     width: 100,
   },
   {
