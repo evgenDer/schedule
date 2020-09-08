@@ -6,11 +6,11 @@ import typesOfUsers from './typesOfUsers'
 
 const title: string = 'Schedule';
 
-const Header: React.FunctionComponent<{ selectUserHandler: () => string, selectScheduleForm: () => string }> = ({ selectUserHandler, selectScheduleForm }) => {
+const Header: React.FunctionComponent<{ selectUserHandler: (e) => void, selectScheduleFormHandler: (e) => void }> = ({ selectUserHandler, selectScheduleFormHandler }) => {
     return (
         <PageHeader title={title}>
             <SelectComponent values={typesOfUsers} handler={selectUserHandler} />
-            <SelectComponent values={typesOfScheduleForm} handler={selectUserHandler} />
+            <SelectComponent values={typesOfScheduleForm} handler={selectScheduleFormHandler} />
         </PageHeader>
     )
 }
