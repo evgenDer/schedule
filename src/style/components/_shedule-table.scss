@@ -2,3 +2,20 @@
   width: 100%;
   padding: 10px;
 }
+
+.shedule-table__header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap-reverse;
+
+  & > * {
+    margin: 0.5rem;
+  }
+}
+
+.shedule-table__select {
+  width: 55rem;
+}
