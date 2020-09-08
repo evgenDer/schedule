@@ -1,0 +1,137 @@
+.upload {
+  margin-right: 0px;
+}
+
+.uload-video__btn,
+.image {
+  width: 100%;
+  margin: 25px 0;
+  text-align: center;
+}
+.uload-video__btn {
+  margin: 0px;
+  width: 16rem;
+  .input__file-button {
+    margin: 0 0 0 15px;
+  }
+}
+
+.uload-video__input {
+  height: 4rem;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.uploader-video {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.upload {
+  text-align: center;
+}
+
+label.input__button {
+  margin-top: 20px;
+  margin: auto;
+}
+
+.input__img,
+.input__video {
+  opacity: 0;
+  position: absolute;
+  margin-left: 0px;
+}
+
+.uload-video__input {
+  margin-right: 20px;
+}
+
+.input__video {
+  padding-left: 20px;
+}
+
+.input__icon-wrapper {
+  height: 3rem;
+  width: 3rem;
+  margin-right: 15px;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-right: 1px solid #fff;
+}
+
+.anticon {
+  svg {
+    font-size: 2rem;
+  }
+}
+
+.input__button-text {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-top: 1px;
+}
+
+input[type='file'] {
+  width: 16rem;
+  margin-left: -8rem;
+  margin-top: 1rem;
+}
+
+input[type='file']:hover {
+  background-color: lighten($color: $color-primary, $amount: 10);
+  cursor: pointer;
+}
+
+.image {
+  cursor: pointer;
+}
+
+.upload__img,
+.video {
+  text-align: center;
+  width: 60%;
+  height: 30vw;
+  min-height: 500px;
+  border-radius: 4px;
+  @include media-laptop {
+    width: 100%;
+    min-height: 400px;
+  }
+  display: block;
+  margin: 30px auto;
+}
+
+.input__button {
+  width: 16rem;
+  height: 4rem;
+  background: $color-primary;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.input__button:hover {
+  background-color: lighten($color: $color-primary, $amount: 10);
+}
