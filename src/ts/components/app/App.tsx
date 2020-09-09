@@ -6,13 +6,15 @@ const App: React.FC = () => {
   const [typeOfScheduleForm, setTypeOfScheduleForm] = useState('table');
   const typesOfUsersHandler: (value: string) => void = function (value) {
     setTypeOfUser(value);
-  }
+  };
   const typesOfScheduleFormHandler: (value: string) => void = (value) => {
     setTypeOfScheduleForm(value);
-  }
-  return <React.Fragment>
-    <Header selectUserHandler={typesOfUsersHandler} selectScheduleFormHandler={typesOfScheduleFormHandler}/>
-  </React.Fragment>;
+  };
+  return (
+    <React.Fragment>
+      <Header selectUserHandler={typesOfUsersHandler} selectScheduleFormHandler={typesOfScheduleFormHandler} />
+    </React.Fragment>
+  );
 };
 
 export default App;
