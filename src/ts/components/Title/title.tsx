@@ -1,5 +1,4 @@
 import React from 'react';
-import './title.scss';
 
 const title: string = 'Schedule';
 const Title: React.FunctionComponent = () => {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Select } from 'antd';
-import './select-block.scss';
 
 const SelectComponent: React.FunctionComponent<{ values: string[], handler: (value: string) => void }> = ({ values, handler }) => {
     const options = values.map(type => <Select.Option value={type}>{type}</Select.Option>);
