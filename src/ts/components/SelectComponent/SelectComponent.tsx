@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
 import { Select } from 'antd';
+import './select-block.scss';
 
-const SelectComponent: React.FunctionComponent<{ values: string[], handler: (e) => void }> = ({ values, handler }) => {
+const SelectComponent: React.FunctionComponent<{ values: string[], handler: (value: string) => void }> = ({ values, handler }) => {
     const options = values.map(type => <Select.Option value={type}>{type}</Select.Option>);
     const [value, setValue] = useState(values[0]);
-    const changeHandler: (e) => void = (e) => {
-        handler(e);
-        setValue(e.target.value);
+    const changeHandler: (value: string) => void = (value) => {
+        setValue(value);
+        handler(value);
     }
     return (
     <Select 
+        className={'select-block'}
         defaultValue = {value}
-        onChange = {changeHandler}
+        onSelect = {changeHandler}
     >
      {options}   
     </Select>)

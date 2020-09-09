@@ -1,17 +1,19 @@
 import React from 'react';
-import { PageHeader } from 'antd';
+import { Layout } from 'antd';
 import SelectComponent from '../SelectComponent/SelectComponent';
 import typesOfScheduleForm from './typesOfScheduleForm';
-import typesOfUsers from './typesOfUsers'
+import typesOfUsers from './typesOfUsers';
+import Title from '../Title/title';
 
-const title: string = 'Schedule';
-
-const Header: React.FunctionComponent<{ selectUserHandler: (e) => void, selectScheduleFormHandler: (e) => void }> = ({ selectUserHandler, selectScheduleFormHandler }) => {
+const Header: React.FunctionComponent<{ selectUserHandler: (value: string) => void, selectScheduleFormHandler: (value: string) => void }> = ({ selectUserHandler, selectScheduleFormHandler }) => {
     return (
-        <PageHeader title={title}>
-            <SelectComponent values={typesOfUsers} handler={selectUserHandler} />
-            <SelectComponent values={typesOfScheduleForm} handler={selectScheduleFormHandler} />
-        </PageHeader>
+        <Layout.Header className="header">
+            <Title />
+            <div>
+                <SelectComponent values={typesOfUsers} handler={selectUserHandler} />
+                <SelectComponent values={typesOfScheduleForm} handler={selectScheduleFormHandler} />
+            </div>
+        </Layout.Header>
     )
 }
 

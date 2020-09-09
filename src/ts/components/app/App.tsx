@@ -3,12 +3,12 @@ import Header from '../header/header';
 
 const App: React.FC = () => {
   const [typeOfUser, setTypeOfUser] = useState('student');
-  const [typesOfScheduleForm, setTypeOfScheduleForm] = useState('table');
-  const typesOfUsersHandler: (e) => void = (e) => {
-    setTypeOfUser(e.target.value);
+  const [typeOfScheduleForm, setTypeOfScheduleForm] = useState('table');
+  const typesOfUsersHandler: (value: string) => void = function (value) {
+    setTypeOfUser(value);
   }
-  const typesOfScheduleFormHandler: (e) => void = (e) => {
-    setTypeOfScheduleForm(e.target.value);
+  const typesOfScheduleFormHandler: (value: string) => void = (value) => {
+    setTypeOfScheduleForm(value);
   }
   return <React.Fragment>
     <Header selectUserHandler={typesOfUsersHandler} selectScheduleFormHandler={typesOfScheduleFormHandler}/>
