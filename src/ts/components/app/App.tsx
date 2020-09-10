@@ -2,16 +2,17 @@ import React from 'react';
 import services from '../../services/services';
 
 async function func () {
-  console.log(await services.addEvent({
-    "name": "Markdown & Git",
+  console.log(await services.updateEvent({
     "description": "",
-    "descriptionUrl": "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/git-markdown.md",
-    "type": "cv:markdown",
-    "timeZone": "Asia/Tashkent",
-    "dateTime": "2020-09-04T10:24:00",
-    "place": "",
     "comment": "",
-}));
+    "place": "",
+    "dateTime": "2020-09-04T10:24:00",
+    "timeZone": "Europe/Minsk",
+    "name": "Markdown & Git",
+    "type": "cv:markdown",
+    "descriptionUrl": "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/git-markdown.md",
+    "id": "08b67h2LXPox6UkNdooh"
+  }));
 }
 func();
 

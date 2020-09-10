@@ -1,3 +1,15 @@
+interface RsSchoolEvent {
+    "id": string,
+    "name": string,
+    "description": string,
+    "descriptionUrl": string,
+    "type": string,
+    "timeZone": string,
+    "dateTime": string,
+    "place": string,
+    "comment": string,
+}
+
 class Services {
     url: string;
     constructor() {
@@ -14,7 +26,7 @@ class Services {
           return content.data;
     }
 
-    public async getEvent(id: string) {
+    public async getEvent(id: RsSchoolEvent) {
         const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
             method: 'GET',
             headers: {
@@ -37,6 +49,17 @@ class Services {
         console.log(rawResponse);
     }
 
+    public async updateEvent(event: RsSchoolEvent) {
+        const rawResponse = await fetch(`${this.url}/team/39/event/${event.id}`, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(event),
+        });
+        console.log(rawResponse);
+    }
 }
 const services = new Services;
 export default services;
