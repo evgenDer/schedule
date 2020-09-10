@@ -67,6 +67,17 @@ class Services {
             },
         });
     }
+
+    public async getAllOrganizers() {
+        const rawResponse = await fetch(`${this.url}/team/39/organizers`, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+            },
+          });
+        const content = await rawResponse.json();
+        return content.data;
+    }
 }
 const services = new Services;
 export default services;
