@@ -1,5 +1,10 @@
 import React from 'react';
-import getUserSettings from '../../temp-data/getData';
+import services from '../../services/services';
+
+async function func () {
+  console.log(await services.getEvent("82MCS5XD4FogsuFJi7Iv"));
+}
+func();
 
 const App: React.FC = () => {
   return <React.Fragment></React.Fragment>;
