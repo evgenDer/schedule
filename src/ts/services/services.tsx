@@ -15,7 +15,7 @@ class Services {
     }
 
     public async getEvent(id: string) {
-        const rawResponse = await fetch(`${this.url}/team/26/event/${id}`, {
+        const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
             method: 'GET',
             headers: {
               Accept: 'application/json',
@@ -24,11 +24,13 @@ class Services {
           const content = await rawResponse.json();
           return content;
     }
+
     public async addEvent(event: object) {
         const rawResponse = await fetch(`${this.url}/team/39/event`, {
             method: 'POST',
             headers: {
               Accept: 'application/json',
+              'Content-type': 'application/json',
             },
             body: JSON.stringify(event),
         });
