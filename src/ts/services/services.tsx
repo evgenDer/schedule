@@ -46,7 +46,6 @@ class Services {
             },
             body: JSON.stringify(event),
         });
-        console.log(rawResponse);
     }
 
     public async updateEvent(event: RsSchoolEvent) {
@@ -58,7 +57,15 @@ class Services {
             },
             body: JSON.stringify(event),
         });
-        console.log(rawResponse);
+    }
+
+    public async deleteEvent(id: string) {
+        const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+            },
+        });
     }
 }
 const services = new Services;
