@@ -10,6 +10,11 @@ interface RsSchoolEvent {
     "comment": string,
 }
 
+interface organizer {
+    "id": string,
+    "name": string,
+}
+
 class Services {
     url: string;
     constructor() {
@@ -37,7 +42,7 @@ class Services {
           return content;
     }
 
-    public async addEvent(event: object) {
+    public async addEvent(event: RsSchoolEvent) {
         const rawResponse = await fetch(`${this.url}/team/39/event`, {
             method: 'POST',
             headers: {
@@ -79,7 +84,7 @@ class Services {
         return content.data;
     }
 
-    public async addOrganizer(organizer: object) {
+    public async addOrganizer(organizer: organizer) {
         const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
             method: 'POST',
             headers: {
@@ -99,6 +104,17 @@ class Services {
           });
           const content = await rawResponse.json();
           return content;
+    }
+
+    public async updateOrganizer(organizer: organizer) {
+        const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
+            method: 'PUT',
+            headers: {
+              Accept: 'application/json',
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(organizer),
+        });
     }
 }
 const services = new Services;
