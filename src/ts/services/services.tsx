@@ -23,10 +23,10 @@ class Services {
             },
           });
           const content = await rawResponse.json();
-          return content.data;
+          return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
     }
 
-    public async getEvent(id: RsSchoolEvent) {
+    public async getEvent(id: string) {
         const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
             method: 'GET',
             headers: {
@@ -77,6 +77,28 @@ class Services {
           });
         const content = await rawResponse.json();
         return content.data;
+    }
+
+    public async addOrganizer(organizer: object) {
+        const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(organizer),
+        });
+    }
+
+    public async getOrganizer(id: string) {
+        const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+            },
+          });
+          const content = await rawResponse.json();
+          return content;
     }
 }
 const services = new Services;
