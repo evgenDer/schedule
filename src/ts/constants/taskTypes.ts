@@ -11,3 +11,9 @@ export const TASK_TYPES = {
   htmlcssacademy: { name: 'htmlcssacademy', color: 'blue' } as ITaskType,
   lecture: { name: 'lecture', color: 'magenta' } as ITaskType,
 };
+
+export const TASK_TYPES_COLOR = [
+  'magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple'
+];
+
+// export default TASK_TYPES;
