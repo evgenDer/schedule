@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { IData, TableDataColumns } from '../../constants/types-interfaces';
-import { Button, Tooltip, Select } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
-import SheduleTableHeader from './SheduleTableHeader';
+import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 // import VirtualTable from './VirtualTable';
 
 type StudentSheduleTableProps = {
-  dataSource: IData[];
+  data: IData[];
+  setData: (data: any) => void;
   columns: TableDataColumns;
+  finalColumns: TableDataColumns;
+  setFinalColumns: (finalColumns: TableDataColumns) => void;
+  scroll: { x: number };
 };
 
-const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, columns }) => {
-  const [data, setData] = useState(dataSource);
+const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
+  data,
+  setData,
+  columns,
+  finalColumns,
+  setFinalColumns,
+  scroll,
+}) => {
   const [hiddenData, setHiddenData] = useState<IData[]>([]);
-  const [newColumns, setNewColumns] = useState(
+  const [newColumns] = useState(
     columns.map((col) => {
       if (col.key === 'taskDone') {
         return {
@@ -47,27 +57,30 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, c
       return col;
     })
   );
-  const [finalColumns, setFinalColumns] = useState(newColumns);
+
+  useEffect(() => {
+    setFinalColumns(newColumns);
+  }, []);
 
   const setTaskDone = (idx: number) => {
-    const newData = [...data];
-    const index = newData.findIndex(({ key }) => key === idx);
-    newData[index].isComplited = !newData[index].isComplited;
-    setData(newData);
+    setData((prev: IData[]) => {
+      const newData = [...prev];
+      const index = newData.findIndex(({ key }) => key === idx);
+      newData[index].isComplited = !newData[index].isComplited;
+      return newData;
+    });
   };
 
   const setRowHidden = (idx: number) => {
     const newHidden = data.find(({ key }) => key === idx);
     if (newHidden) {
-      setHiddenData([...hiddenData, newHidden]);
+      setHiddenData((prev) => [...prev, newHidden]);
     }
-    const newData = [...data].filter(({ key }) => key !== idx);
-    setData(newData);
+    setData((prev: IData[]) => prev.filter(({ key }) => key !== idx));
   };
 
   const showHiddenRows = () => {
-    const newData = [...data, ...hiddenData].sort((a: IData, b: IData) => a.key - b.key);
-    setData(newData);
+    setData((prev: IData[]) => [...prev, ...hiddenData].sort((a: IData, b: IData) => a.key - b.key));
     setHiddenData([]);
   };
 
@@ -77,12 +90,12 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({ dataSource, c
       <Table<IData>
         dataSource={data}
         columns={finalColumns}
-        scroll={{ x: 1600 }}
+        scroll={scroll}
         sticky
         title={() => (
           <SheduleTableHeader
             hiddenRowsAmnt={hiddenData.length}
-            onClick={showHiddenRows}
+            onShowHiddenButtonClick={showHiddenRows}
             columns={newColumns}
             finalColumns={finalColumns}
             setFinalColumns={setFinalColumns}

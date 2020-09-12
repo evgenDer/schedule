@@ -126,7 +126,7 @@ export const STUDENT_COLS: TableDataColumns = [
         value: false,
       },
     ],
-    onFilter: (value: any, record: IData) => record.isComplited === value,
+    onFilter: (value: any, { isComplited }: IData) => isComplited === value,
     align: 'center',
     width: 120,
   },
@@ -148,37 +148,4 @@ export const STUDENT_COLS: TableDataColumns = [
   },
 ];
 
-export const ORGANIZER_COLS: TableDataColumns = [
-  {
-    title: '',
-    dataIndex: 'edit',
-    key: 'edit',
-    fixed: 'right',
-    render: () => (
-      <Tooltip placement="topRight" title="Edit this row!">
-        <Button type="ghost">
-          <EditOutlined />
-        </Button>
-      </Tooltip>
-    ),
-    align: 'center',
-    width: 70,
-  },
-  {
-    title: '',
-    dataIndex: 'delete',
-    key: 'delete',
-    fixed: 'right',
-    render: () => (
-      <Tooltip placement="topRight" title="Delete this row!">
-        <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
-          <Button type="ghost">
-            <DeleteOutlined />
-          </Button>
-        </Popconfirm>
-      </Tooltip>
-    ),
-    align: 'center',
-    width: 70,
-  },
-];
+export const ORGANIZER_COLS: TableDataColumns = [];

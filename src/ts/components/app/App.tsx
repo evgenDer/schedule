@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ScheduleTable from '../scheduleTable/ScheduleTable';
 import { IData } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
@@ -90,9 +90,11 @@ const dataSource: IData[] = [
 ];
 
 const App: React.FC = () => {
+  const [data, setData] = useState(dataSource);
+
   return (
     <React.Fragment>
-      <ScheduleTable dataSource={dataSource} userType={false} />
+      <ScheduleTable dataSource={data} setData={setData} userType={true} />
     </React.Fragment>
   );
 };
