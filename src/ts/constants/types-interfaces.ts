@@ -7,7 +7,7 @@ export interface ITaskType {
 
 export interface IData {
   readonly key: number;
-  datetime: string; // RFC2822 (GMT+0300)
+  datetime: string; // moment().format()
   name: string;
   type: ITaskType;
   mark?: number;
@@ -20,3 +20,7 @@ export interface IData {
 }
 
 export type TableDataColumns = ColumnsType<IData>;
+
+export interface ITimeZone {
+  name: string;
+}

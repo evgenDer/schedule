@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
-import { IData, TableDataColumns } from '../../constants/types-interfaces';
+import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
@@ -13,6 +13,8 @@ type StudentSheduleTableProps = {
   finalColumns: TableDataColumns;
   setFinalColumns: (finalColumns: TableDataColumns) => void;
   scroll: { x: number };
+  timezone: ITimeZone;
+  setTimezone: (timezone: ITimeZone) => void;
 };
 
 const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
@@ -22,6 +24,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   finalColumns,
   setFinalColumns,
   scroll,
+  timezone,
+  setTimezone,
 }) => {
   const [hiddenData, setHiddenData] = useState<IData[]>([]);
   const [newColumns] = useState(
@@ -99,6 +103,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
             columns={newColumns}
             finalColumns={finalColumns}
             setFinalColumns={setFinalColumns}
+            timezone={timezone}
+            setTimezone={setTimezone}
           />
         )}
       />

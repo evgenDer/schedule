@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment-timezone';
 import ScheduleTable from '../scheduleTable/ScheduleTable';
 import { IData } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
+import { DEFAULT_TIMEZONE } from '../../constants/timezones';
 
 const dataSource: IData[] = [
   {
     key: 0,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '2020-09-12T22:29:32+03:00',
     name: 'Task 1',
     type: TASK_TYPES.jstask,
     mark: 200,
@@ -19,7 +21,7 @@ const dataSource: IData[] = [
   },
   {
     key: 1,
-    datetime: 'Fri Sep 11 2020 20:50:07 GMT+0300',
+    datetime: '2020-10-12T22:29:32+03:00',
     name: 'Task 2',
     type: TASK_TYPES.lecture,
     mark: 250,
@@ -33,7 +35,7 @@ const dataSource: IData[] = [
   },
   {
     key: 2,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '2020-09-13T22:29:32+03:00',
     name: 'Task 3',
     type: TASK_TYPES.codewars,
     maxMark: 100,
@@ -44,7 +46,7 @@ const dataSource: IData[] = [
   },
   {
     key: 3,
-    datetime: 'Sun Dec 01 2019 11:50:07 GMT+0300',
+    datetime: '2020-09-11T22:29:32+03:00',
     name: 'Task 4',
     type: TASK_TYPES.deadline,
     maxMark: 100,
@@ -53,7 +55,7 @@ const dataSource: IData[] = [
   },
   {
     key: 4,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '1998-09-12T22:29:32+03:00',
     name: 'Task 5',
     type: TASK_TYPES.interview,
     maxMark: 110,
@@ -62,7 +64,7 @@ const dataSource: IData[] = [
   },
   {
     key: 5,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '2020-09-12T22:29:32+03:00',
     name: 'Task 6',
     type: TASK_TYPES.test,
     organizer: 'olga',
@@ -70,7 +72,7 @@ const dataSource: IData[] = [
   },
   {
     key: 6,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '2020-10-15T22:29:32+03:00',
     name: 'Task 7',
     type: TASK_TYPES.htmlcssacademy,
     maxMark: 30,
@@ -80,7 +82,7 @@ const dataSource: IData[] = [
   },
   {
     key: 7,
-    datetime: 'Fri Sep 11 2020 11:50:07 GMT+0300',
+    datetime: '2020-09-12T22:30:00+03:00',
     name: 'Task 8',
     type: TASK_TYPES.cvmarkdown,
     maxMark: 20,
@@ -91,10 +93,26 @@ const dataSource: IData[] = [
 
 const App: React.FC = () => {
   const [data, setData] = useState(dataSource);
+  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+
+  useEffect(() => {
+    setData((prev) =>
+      prev.map((element) => {
+        element.datetime = moment(element.datetime).tz(timezone.name).format();
+        return element;
+      })
+    );
+  }, [timezone]);
 
   return (
     <React.Fragment>
-      <ScheduleTable dataSource={data} setData={setData} userType={true} />
+      <ScheduleTable
+        dataSource={data}
+        setData={setData}
+        userType={true}
+        timezone={timezone}
+        setTimezone={setTimezone}
+      />
     </React.Fragment>
   );
 };

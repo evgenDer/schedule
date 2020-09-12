@@ -40,6 +40,8 @@
     "antd": "^4.6.2",
     "classnames": "^2.2.6",
     "cross-env": "^7.0.2",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "normalize.css": "^8.0.1",
     "rc-resize-observer": "^0.2.5",
     "react-dom": "^16.13.1",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
-import { IData, TableDataColumns } from '../../constants/types-interfaces';
+import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 
 type OrganizerSheduleTableProps = {
@@ -10,6 +10,8 @@ type OrganizerSheduleTableProps = {
   finalColumns: TableDataColumns;
   setFinalColumns: (finalColumns: TableDataColumns) => void;
   scroll: { x: number };
+  timezone: ITimeZone;
+  setTimezone: (timezone: ITimeZone) => void;
 };
 
 const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
@@ -19,6 +21,8 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   finalColumns,
   setFinalColumns,
   scroll,
+  timezone,
+  setTimezone,
 }) => {
   const [newColumns] = useState(columns);
 
@@ -40,6 +44,8 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
             columns={newColumns}
             finalColumns={finalColumns}
             setFinalColumns={setFinalColumns}
+            timezone={timezone}
+            setTimezone={setTimezone}
           />
         )}
       />

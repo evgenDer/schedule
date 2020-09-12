@@ -29,7 +29,7 @@ const ColumnsSelector: React.FC<ColumnsSelectorProps> = ({ columns, finalColumns
   return (
     <React.Fragment>
       <Select
-        className="shedule-table__select"
+        className="shedule-table__columns-selector"
         mode="multiple"
         allowClear
         placeholder="Select table columns"
