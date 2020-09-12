@@ -1,121 +1,166 @@
 interface RsSchoolEvent {
-    "id": string,
-    "name": string,
-    "description": string,
-    "descriptionUrl": string,
-    "type": string,
-    "timeZone": string,
-    "dateTime": string,
-    "place": string,
-    "comment": string,
+  id: string;
+  name: string;
+  description: string;
+  descriptionUrl: string;
+  type: string;
+  timeZone: string;
+  dateTime: string;
+  place: string;
+  comment: string;
 }
 
 interface organizer {
-    "id": string,
-    "name": string,
+  id: string;
+  name: string;
 }
 
 class Services {
-    url: string;
-    constructor() {
-        this.url = 'https://rs-react-schedule.firebaseapp.com/api';
+  url: string;
+  constructor() {
+    this.url = 'https://rs-react-schedule.firebaseapp.com/api';
+  }
+  public async getAllEvents() {
+    const rawResponse = await fetch(`${this.url}/team/39/events`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (rawResponse.ok) {
+      const content = await rawResponse.json();
+      return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
     }
-    public async getAllEvents() {
-        const rawResponse = await fetch(`${this.url}/team/39/events`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-            },
-          });
-          const content = await rawResponse.json();
-          return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
-    }
+    throw new Error(`${rawResponse.status}`);
+  }
 
-    public async getEvent(id: string) {
-        const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-            },
-          });
-          const content = await rawResponse.json();
-          return content;
+  public async getEvent(id: string) {
+    const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (rawResponse.ok) {
+      const content = await rawResponse.json();
+      return content;
     }
+    throw new Error(`${rawResponse.status}`);
+  }
 
-    public async addEvent(event: RsSchoolEvent) {
-        const rawResponse = await fetch(`${this.url}/team/39/event`, {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(event),
-        });
+  public async addEvent(event: RsSchoolEvent) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/event`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(event),
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
     }
+  }
 
-    public async updateEvent(event: RsSchoolEvent) {
-        const rawResponse = await fetch(`${this.url}/team/39/event/${event.id}`, {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(event),
-        });
+  public async updateEvent(event: RsSchoolEvent) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/event/${event.id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(event),
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
     }
+  }
 
-    public async deleteEvent(id: string) {
-        const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-            },
-        });
+  public async deleteEvent(id: string) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
     }
+  }
 
-    public async getAllOrganizers() {
-        const rawResponse = await fetch(`${this.url}/team/39/organizers`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-            },
-          });
-        const content = await rawResponse.json();
-        return content.data;
+  public async getAllOrganizers() {
+    const rawResponse = await fetch(`${this.url}/team/39/organizers`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (rawResponse.ok) {
+      const content = await rawResponse.json();
+      return content.data;
     }
+    throw new Error(`${rawResponse.status}`);
+  }
 
-    public async addOrganizer(organizer: organizer) {
-        const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(organizer),
-        });
+  public async addOrganizer(organizer: organizer) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(organizer),
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
     }
+  }
 
-    public async getOrganizer(id: string) {
-        const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-            },
-          });
-          const content = await rawResponse.json();
-          return content;
+  public async getOrganizer(id: string) {
+    const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (rawResponse.ok) {
+      const content = await rawResponse.json();
+      return content;
     }
+    throw new Error(`${rawResponse.status}`);
+  }
 
-    public async updateOrganizer(organizer: organizer) {
-        const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(organizer),
-        });
+  public async updateOrganizer(organizer: organizer) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(organizer),
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
     }
+  }
+
+  public async deleteOrganizer(id: string) {
+    try {
+      const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+    } catch (e) {
+      throw new Error(`${e.message}`);
+    }
+  }
 }
-const services = new Services;
+const services = new Services();
 export default services;
