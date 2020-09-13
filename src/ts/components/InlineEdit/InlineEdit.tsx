@@ -5,6 +5,7 @@ import getInlineEditMachine from './machine';
 import Input from './Input';
 import InputType from './inputType';
 import ReactMarkdown from 'react-markdown';
+import { Tooltip } from 'antd';
 
 interface InlineEditProps {
   value: string;
@@ -152,9 +153,13 @@ const InlineEdit: React.FC<InlineEditProps> = ({
         current.value === 'loading' ||
         current.value === 'saved' ||
         current.value === 'error') && (
-        <span onClick={() => send('CLICK')} onFocus={() => send('FOCUS')}>
-          {render ? render(viewValue) : viewValue}
-        </span>
+        <>
+          <span className="inline-edit" onClick={() => send('CLICK')} onFocus={() => send('FOCUS')}>
+            <Tooltip placement="right" title={'Click to edit'} color={'blue'}>
+              {render ? render(viewValue) : viewValue}
+            </Tooltip>
+          </span>
+        </>
       )}
       {current.value === 'edit' && (
         <Input
