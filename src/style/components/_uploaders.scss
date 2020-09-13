@@ -23,7 +23,7 @@
 }
 
 .uploader-video {
-  margin-top: 25px;
+  margin: 20px 0;
   display: flex;
   justify-content: space-between;
 }
@@ -46,6 +46,9 @@ label.input__button {
 
 .uload-video__input {
   margin-right: 20px;
+  @include media-laptop {
+    margin-right: 5px;
+  }
 }
 
 .input__video {
@@ -53,6 +56,9 @@ label.input__button {
 }
 
 .input__icon-wrapper {
+  @include media-laptop {
+    dispaly: none;
+  }
   height: 3rem;
   width: 3rem;
   margin-right: 15px;
@@ -99,13 +105,19 @@ input[type='file']:hover {
 .upload__img,
 .video {
   text-align: center;
-  width: 60%;
-  height: 30vw;
-  min-height: 500px;
+  width: 100%;
+  height: 70vh;
+  min-height: 550px;
   border-radius: 4px;
+  @include media-tablet {
+    height: 50vh;
+  }
   @include media-laptop {
     width: 100%;
-    min-height: 400px;
+    min-height: 300px;
+  }
+  @include media-mobile {
+    min-height: 200px;
   }
   display: block;
   margin: 30px auto;
@@ -113,6 +125,14 @@ input[type='file']:hover {
 
 .input__button {
   width: 16rem;
+  @include media-laptop {
+    width: 12rem;
+  }
+  @include media-mobile {
+    width: 10rem;
+    padding-right: 20px;
+  }
+
   height: 4rem;
   background: $color-primary;
   color: #fff;
