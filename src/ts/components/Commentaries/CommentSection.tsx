@@ -43,6 +43,7 @@ const CommentsSection: React.FC = () => {
       author: 'Github Id',
       content: <p>{value}</p>,
       datetime: moment().fromNow(),
+      avatar: 'https://avatars1.githubusercontent.com/u/9919?s=200&v=4',
     };
 
     setTimeout(() => {
@@ -59,7 +60,7 @@ const CommentsSection: React.FC = () => {
     <div className="comment-section">
       {comments.length > 0 && <CommentList comments={comments} />}
       <Comment
-        avatar={<Avatar src="" alt="Han Solo" />}
+        avatar={<Avatar src="https://avatars1.githubusercontent.com/u/9919?s=200&v=4" alt="Han Solo" />}
         content={<Editor onChange={handleChange} onSubmit={handleSubmit} submitting={submitting} value={value} />}
       />
     </div>
