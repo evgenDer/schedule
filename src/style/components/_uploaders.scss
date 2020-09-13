@@ -4,7 +4,7 @@
 
 .uload-video__btn,
 .image {
-  width: 100%;
+  width: 0%;
   margin: 25px 0;
   text-align: center;
 }
@@ -59,7 +59,7 @@ label.input__button {
   @include media-laptop {
     dispaly: none;
   }
-  height: 3rem;
+  height: 2rem;
   width: 3rem;
   margin-right: 15px;
   padding: 5px;
@@ -82,9 +82,10 @@ label.input__button {
 }
 
 .input__button-text {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 1;
   margin-top: 1px;
+  text-align: left;
 }
 
 input[type='file'] {
@@ -105,7 +106,7 @@ input[type='file']:hover {
 .upload__img,
 .video {
   text-align: center;
-  width: 100%;
+  width: 60%;
   height: 70vh;
   min-height: 550px;
   border-radius: 4px;
@@ -114,10 +115,11 @@ input[type='file']:hover {
   }
   @include media-laptop {
     width: 100%;
+    max-height: 450px;
     min-height: 300px;
   }
   @include media-mobile {
-    min-height: 200px;
+    height: 200px;
   }
   display: block;
   margin: 30px auto;
@@ -133,7 +135,7 @@ input[type='file']:hover {
     padding-right: 20px;
   }
 
-  height: 4rem;
+  height: 3.5rem;
   background: $color-primary;
   color: #fff;
   font-size: 1.125rem;
