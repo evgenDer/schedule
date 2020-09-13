@@ -3,11 +3,16 @@ import { UploadOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Button, notification, Input } from 'antd';
 import VideoPlayer from 'react-video-js-player';
 
-const UploaderVideo: React.FC = () => {
+type UploaderVideoType = {
+  videoSrc: string;
+  setVideoSrc: (videoSrc) => void;
+  isMentor: boolean;
+};
+
+const UploaderVideo: React.FC<UploaderVideoType> = ({ videoSrc, setVideoSrc, isMentor }) => {
   const [value, setValue] = useState<string>('');
   const [isDownald, setIsDownald] = useState<boolean>(false);
 
-  const isMentor = true;
   let videoElement: JSX.Element | null = null;
 
   function uploadVideo() {
@@ -19,15 +24,15 @@ const UploaderVideo: React.FC = () => {
   }
 
   const onChange = (event) => {
-    setValue(event.target.value);
+    setVideoSrc(event.target.value);
     setIsDownald(false);
   };
 
   return (
     <React.Fragment>
-      {isDownald && value ? (
+      {videoSrc ? (
         <iframe
-          src={value.replace('watch?v=', 'embed/')}
+          src={videoSrc.replace('watch?v=', 'embed/')}
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
@@ -44,7 +49,7 @@ const UploaderVideo: React.FC = () => {
               <span className="input__icon-wrapper">
                 <UploadOutlined />
               </span>
-              <span className="input__button-text">{'Upload video'}</span>
+              <span className="input__button-text">{'Update video'}</span>
             </label>
           </div>
         </form>

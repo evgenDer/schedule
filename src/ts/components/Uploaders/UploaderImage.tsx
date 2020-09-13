@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { UploadOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Button, notification, Input } from 'antd';
 
-const UploaderImage: React.FC = () => {
-  const [urlImg, setUrlImage] = useState<any>('');
-  const isMentor = true;
-  function handleImageChange(event) {
-    console.log(event);
+type UploaderImageType = {
+  imageSrc: string;
+  setImageSrc: (imageSrc) => void;
+  isMentor: boolean;
+};
 
+const UploaderImage: React.FC<UploaderImageType> = ({ imageSrc, setImageSrc, isMentor }) => {
+  function handleImageChange(event) {
     event.preventDefault();
 
     let reader = new FileReader();
@@ -17,7 +19,7 @@ const UploaderImage: React.FC = () => {
     reader.onloadend = () => {
       const TYPE_FILE: string = file.type;
       if (TYPE_FILE.indexOf('image') !== -1) {
-        setUrlImage(reader.result);
+        setImageSrc(reader.result);
       } else {
         notification.open({
           placement: 'topLeft',
@@ -32,8 +34,8 @@ const UploaderImage: React.FC = () => {
   }
 
   let imagePreview: null | JSX.Element = null;
-  if (urlImg) {
-    imagePreview = <img src={urlImg} className="upload__img" />;
+  if (imageSrc) {
+    imagePreview = <img src={imageSrc} className="upload__img" />;
   }
 
   function handleSubmit(event) {
@@ -56,7 +58,7 @@ const UploaderImage: React.FC = () => {
               <span className="input__icon-wrapper">
                 <UploadOutlined />
               </span>
-              <span className="input__button-text">{'Upload image'}</span>
+              <span className="input__button-text">{'Update image'}</span>
             </label>
           </div>
         </form>
