@@ -4,7 +4,6 @@ import { SaveOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-// import
 
 enum FormatFiles {
   png = 'png',
@@ -12,30 +11,26 @@ enum FormatFiles {
 }
 
 const SaveFile: React.FC = () => {
-  function handleMenuClick(e) {
+  function handleMenuClick(event) {
     const downloadElement = document.querySelector('.header') as HTMLElement;
-    console.log(downloadElement.innerHTML);
     let canvasPage;
     html2canvas(downloadElement).then(function (canvas) {
       canvasPage = canvas;
-      console.log(canvas);
       const FILE: Blob = new Blob([canvasPage]);
-      console.log(FILE);
-      if (e.key === FormatFiles.png) {
+      if (event.key === FormatFiles.png) {
         canvas.toBlob((blob) => {
           if (blob) {
             saveAs(blob, 'image.png');
           }
         });
       }
-      if (e.key === FormatFiles.pdf) {
-        const doc = new jsPDF();
-        doc.addImage(canvas.toDataURL(), 'JPEG', 15, 40, 180, 180);
-        doc.save();
+      if (event.key === FormatFiles.pdf) {
+        const docPdf = new jsPDF();
+        docPdf.addImage(canvas.toDataURL(), 'JPEG', 15, 40, 180, 180);
+        docPdf.save();
         // html2pdf(downloadElement);
       }
     });
-    console.log('click', e.key);
   }
 
   const formatFilesMenu = (
@@ -49,7 +44,7 @@ const SaveFile: React.FC = () => {
     <Dropdown overlay={formatFilesMenu}>
       <Button>
         <SaveOutlined />
-        Save file
+        Save to file
       </Button>
     </Dropdown>
   );
