@@ -4,11 +4,7 @@ import { SaveOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
-enum FormatFiles {
-  png = 'png',
-  pdf = 'pdf',
-}
+import { FormatFiles } from './FormatFiles';
 
 const SaveFile: React.FC = () => {
   function handleMenuClick(event) {
