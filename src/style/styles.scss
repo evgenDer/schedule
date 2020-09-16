@@ -3,3 +3,8 @@
 
 @import './base/normalizer';
 @import './base/base';
+@import '../../node_modules/antd/dist/antd.css';
+@import './layout/header';
+@import './layout/controls';
+@import '../style/components/title';
+@import '../style/components/select-block.scss';
