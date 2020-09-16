@@ -19,4 +19,21 @@ export interface IData {
   isComplited: boolean;
 }
 
+export interface RsSchoolEvent {
+  id: string;
+  name: string;
+  description: string;
+  descriptionUrl: string;
+  type: string;
+  timeZone: string;
+  dateTime: string;
+  place: string;
+  comment: string;
+}
+
+export interface Organizer {
+  id: string;
+  name: string;
+}
+
 export type TableDataColumns = ColumnsType<IData>;

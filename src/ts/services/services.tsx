@@ -1,19 +1,5 @@
-interface RsSchoolEvent {
-  id: string;
-  name: string;
-  description: string;
-  descriptionUrl: string;
-  type: string;
-  timeZone: string;
-  dateTime: string;
-  place: string;
-  comment: string;
-}
+import { RsSchoolEvent, Organizer } from '../constants/types-interfaces';
 
-interface organizer {
-  id: string;
-  name: string;
-}
 
 class Services {
   url: string;
@@ -105,7 +91,7 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async addOrganizer(organizer: organizer) {
+  public async addOrganizer(organizer: Organizer) {
     try {
       const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
         method: 'POST',
@@ -134,7 +120,7 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async updateOrganizer(organizer: organizer) {
+  public async updateOrganizer(organizer: Organizer) {
     try {
       const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
         method: 'PUT',
