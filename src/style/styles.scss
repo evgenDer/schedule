@@ -2,8 +2,14 @@
 @import '../../node_modules/antd/dist/antd.css';
 
 @import './abstaract/constants';
-@import './abstaract/mixins';
+@import './abstaract/mixins'; 
 
 @import './base/base';
 
+@import './layout/header';
+@import './layout/controls';
+
 @import './components/shedule-table';
+
+@import '../style/components/title';
+@import '../style/components/select-block.scss';

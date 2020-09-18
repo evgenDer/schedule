@@ -5,6 +5,12 @@ import { IData } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TIMEZONE } from '../../constants/timezones';
 import { getDateString, getTimeString } from '../../helpers/dataHelper';
+import Header from '../header/header';
+import { SheduleType } from '../SelectTypeShedule/SheduleType';
+import SelectTypeShedule from '../SelectTypeShedule/SelectTypeShedule';
+import SaveFile from '../SaveFile/SaveFile';
+import { Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 
 const dataSource: IData[] = [
   {
@@ -131,6 +137,12 @@ const dataSource: IData[] = [
 ];
 
 const App: React.FC = () => {
+  const [typeOfUser, setTypeOfUser] = useState('student');
+  const [typeOfScheduleForm, setTypeOfScheduleForm] = useState(SheduleType.Table);
+  const typesOfUsersHandler: (value: string) => void = function (value) {
+    setTypeOfUser(value);
+  };
+
   const [data, setData] = useState(dataSource);
   const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
 
@@ -149,10 +161,18 @@ const App: React.FC = () => {
 
   return (
     <React.Fragment>
+      <Header selectUserHandler={typesOfUsersHandler} />
+      <div className="controls">
+        <SelectTypeShedule type={typeOfScheduleForm} setType={setTypeOfScheduleForm} />
+        <SaveFile />
+        <Button>
+          <EditOutlined /> Edit types
+        </Button>
+      </div>
       <ScheduleTable
         dataSource={data}
         setData={setData}
-        userType={true}
+        userType={typeOfUser !== 'student'}
         timezone={timezone}
         setTimezone={setTimezone}
       />
