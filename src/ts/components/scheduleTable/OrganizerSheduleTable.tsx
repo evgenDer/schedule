@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
+import EditableTable from './EditableTable';
 
 type OrganizerSheduleTableProps = {
   data: IData[];
@@ -24,31 +25,45 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   timezone,
   setTimezone,
 }) => {
+  const [editableData, setEditableData] = useState(data);
   const [newColumns] = useState(columns);
+  const [isTableEditable, setIsTableEditable] = useState(false);
 
   useEffect(() => {
     setFinalColumns(newColumns);
   }, []);
 
+  const tableHeader = (
+    <SheduleTableHeader
+      userType={true}
+      onEditButtonClick={() => setIsTableEditable(true)}
+      onSaveButtonClick={() => {
+        setData(editableData);
+        setIsTableEditable(false);
+      }}
+      columns={newColumns}
+      finalColumns={finalColumns}
+      setFinalColumns={setFinalColumns}
+      timezone={timezone}
+      setTimezone={setTimezone}
+      isEditing={isTableEditable}
+    />
+  );
+
+  const props = {
+    columns: finalColumns,
+    scroll,
+    sticky: true,
+    title: () => tableHeader,
+  };
+
   return (
     <React.Fragment>
-      <Table<IData>
-        dataSource={data}
-        columns={finalColumns}
-        scroll={scroll}
-        sticky
-        title={() => (
-          <SheduleTableHeader
-            userType={true}
-            onEditButtonClick={() => console.log('tmp')}
-            columns={newColumns}
-            finalColumns={finalColumns}
-            setFinalColumns={setFinalColumns}
-            timezone={timezone}
-            setTimezone={setTimezone}
-          />
-        )}
-      />
+      {isTableEditable ? (
+        <EditableTable {...props} data={editableData} setData={setEditableData} timezone={timezone} />
+      ) : (
+        <Table<IData> {...props} dataSource={data} />
+      )}
     </React.Fragment>
   );
 };

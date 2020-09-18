@@ -36,3 +36,16 @@
 .shedule-table__time-zone-sector {
   width: 12rem;
 }
+
+.editable-table__footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  
+  & > * {
+    margin: 0.5rem;
+  }
+}

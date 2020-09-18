@@ -24,7 +24,7 @@ const TimeZoneSelector: React.FC<TimeZoneSelectorProps> = ({ timezone, setTimezo
 
   return (
     <React.Fragment>
-      <Tooltip title="Select the timezone" placement="bottomLeft">
+      <Tooltip title="Select the timezone" placement="topLeft">
         <Select className="shedule-table__time-zone-sector" defaultValue={[timezone.name]} onChange={handleSelection}>
           {selectOptions}
         </Select>

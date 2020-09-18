@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tooltip, Tag } from 'antd';
 import { LikeOutlined, DislikeOutlined, GithubOutlined } from '@ant-design/icons';
-import { sortMarks, sortDate, getDateString, getTimeString } from '../../helpers/dataHelper';
+import { sortMarks, sortDate, isUrl } from '../../helpers/dataHelper';
 import { IData, TableDataColumns, ITaskType } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
 
@@ -16,18 +16,18 @@ export const COMMON_COLS: TableDataColumns = [
   },
   {
     title: 'Date',
-    dataIndex: 'datetime',
+    dataIndex: 'date',
     key: 'date',
-    render: (datetime: string) => getDateString(datetime),
-    sorter: (a: IData, b: IData) => sortDate(new Date(a.datetime), new Date(b.datetime)),
-    width: 120,
+    render: (date: string) => date,
+    sorter: (a: IData, b: IData) => sortDate(new Date(a.date), new Date(b.date)),
+    width: 150,
   },
   {
     title: 'Time',
-    dataIndex: 'datetime',
+    dataIndex: 'time',
     key: 'time',
-    render: (datetime: string) => getTimeString(datetime),
-    width: 100,
+    render: (time: string) => time,
+    width: 120,
   },
   {
     title: 'Type',
@@ -37,7 +37,7 @@ export const COMMON_COLS: TableDataColumns = [
     filters: Object.values(TASK_TYPES).map(({ name }) => ({ text: name, value: name })),
     onFilter: (value: any, { type }: IData) => type.name === value,
     align: 'center',
-    width: 150,
+    width: 180,
   },
   {
     title: 'Place',
@@ -58,7 +58,7 @@ export const COMMON_COLS: TableDataColumns = [
     ellipsis: true,
     render: (url: string) => (
       <Tooltip placement="topLeft" title={url}>
-        <a href={url}>{url}</a>
+        {url === '-' || !isUrl(url) ? <span>-</span> : <a href={url}>{url}</a>}
       </Tooltip>
     ),
     width: 150,
@@ -69,16 +69,16 @@ export const COMMON_COLS: TableDataColumns = [
     key: 'organizer',
     ellipsis: true,
     render: (organizer: string) => {
-      if (organizer) {
+      if (organizer !== '-' && isUrl(organizer)) {
         return (
           <Tag icon={<GithubOutlined />} color="default">
             <a href={organizer}>{organizer.split('/').pop()}</a>
           </Tag>
         );
       }
-      return '';
+      return <span>-</span>;
     },
-    width: 150,
+    width: 160,
   },
   {
     title: 'Comment',
@@ -148,4 +148,13 @@ export const STUDENT_COLS: TableDataColumns = [
   },
 ];
 
-export const ORGANIZER_COLS: TableDataColumns = [];
+export const ORGANIZER_COLS: TableDataColumns = [
+  {
+    title: '',
+    dataIndex: 'deleteRow',
+    key: 'deleteRow',
+    fixed: 'right',
+    align: 'center',
+    width: 1,
+  },
+];

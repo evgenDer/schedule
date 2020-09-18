@@ -8,14 +8,16 @@ export interface ITaskType {
 export interface IData {
   readonly key: number;
   datetime: string; // moment().format()
+  date: string; // getDateString(moment().format())
+  time: string; // getTimeString(moment().format())
   name: string;
   type: ITaskType;
-  mark?: number;
-  maxMark?: number;
-  place?: string;
-  broadcastUrl?: string;
+  mark: number;
+  maxMark: number;
+  place: string;
+  broadcastUrl: string;
   organizer: string;
-  comment?: string;
+  comment: string;
   isComplited: boolean;
 }
 

@@ -13,8 +13,10 @@ type TableHeaderProps = {
   finalColumns: TableDataColumns;
   setFinalColumns: (columns: TableDataColumns) => void;
   onEditButtonClick?: () => void;
+  onSaveButtonClick?: () => void;
   timezone: ITimeZone;
   setTimezone: (timezone: ITimeZone) => void;
+  isEditing?: boolean;
 };
 
 const SheduleTableHeader: React.FC<TableHeaderProps> = ({
@@ -25,8 +27,10 @@ const SheduleTableHeader: React.FC<TableHeaderProps> = ({
   finalColumns,
   setFinalColumns,
   onEditButtonClick,
+  onSaveButtonClick,
   timezone,
   setTimezone,
+  isEditing = false,
 }) => {
   const emptyFunction = function () {};
 
@@ -39,7 +43,11 @@ const SheduleTableHeader: React.FC<TableHeaderProps> = ({
         <div className="shedule-table__right">
           <ColumnsSelector columns={columns} finalColumns={finalColumns} setFinalColumns={setFinalColumns} />
           {userType ? (
-            <EditTableButton onEditButtonClick={onEditButtonClick || emptyFunction} />
+            <EditTableButton
+              onEditButtonClick={onEditButtonClick || emptyFunction}
+              onSaveButtonClick={onSaveButtonClick || emptyFunction}
+              isEditing={isEditing}
+            />
           ) : (
             <ShowHiddenButton
               hiddenRowsAmnt={hiddenRowsAmnt || 0}

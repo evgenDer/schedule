@@ -18,3 +18,5 @@ export const getDateString = (datetime: string) => {
 export const getTimeString = (datetime: string) => {
   return datetime.split('T')[1].slice(0, 5);
 };
+
+export const isUrl = (url: string) => url.split('/').includes('https:');

@@ -7,7 +7,7 @@ export const TIMEZONES: ITimeZone[] = [
   { name: 'Europe/London' },
   { name: 'Europe/Warsaw' },
   { name: 'Europe/Volgograd' },
-  { name: 'Europe/Yekaterinburg' },
+  { name: 'Asia/Yekaterinburg' },
   { name: 'Asia/Tashkent' },
   { name: 'Asia/Tbilisi' },
 ];
