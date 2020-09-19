@@ -3,7 +3,7 @@ import Header from '../header/header';
 import { SheduleType } from '../SelectTypeShedule/SheduleType';
 import SelectTypeShedule from '../SelectTypeShedule/SelectTypeShedule';
 import SaveFile from '../SaveFile/SaveFile';
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
 const App: React.FC = () => {
