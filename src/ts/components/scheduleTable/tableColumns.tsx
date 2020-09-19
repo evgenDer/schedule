@@ -134,7 +134,6 @@ export const STUDENT_COLS: TableDataColumns = [
     title: '',
     dataIndex: 'taskDone',
     key: 'taskDone',
-    fixed: 'right',
     align: 'center',
     width: 70,
   },

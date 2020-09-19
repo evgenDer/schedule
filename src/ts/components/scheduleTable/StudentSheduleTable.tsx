@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Input, Table } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
@@ -84,6 +84,38 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
     setHiddenData([]);
   };
 
+  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('radio');
+
+  const shiftDownEvent = ({ key }: KeyboardEvent) => {
+    if (key === 'Shift') {
+      setSelectionType('checkbox');
+    }
+  };
+
+  const shiftUpEvent = ({ key }: KeyboardEvent) => {
+    if (key === 'Shift') {
+      setSelectionType('radio');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', shiftDownEvent);
+    document.addEventListener('keyup', shiftUpEvent);
+    return () => {
+      document.removeEventListener('keydown', shiftDownEvent);
+      document.removeEventListener('keyup', shiftUpEvent);
+    };
+  }, []);
+
+  const selectRow = (rowIndex: number | undefined) => {
+    if (rowIndex !== undefined) {
+      const clickElement = document.querySelector(
+        `tr[data-row-key="${rowIndex}"] input.ant-${selectionType}-input`
+      ) as HTMLElement;
+      clickElement.click();
+    }
+  };
+
   return (
     <React.Fragment>
       {/* <VirtualTable dataSource={dataSource} columns={columns} scroll={{ x: 1600, y: 300 }} /> */}
@@ -92,6 +124,15 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
         columns={finalColumns}
         scroll={scroll}
         sticky
+        onRow={(_, rowIndex) => ({
+          onClick: selectRow.bind(null, rowIndex),
+        })}
+        rowSelection={{
+          type: selectionType,
+          preserveSelectedRowKeys: true,
+          hideSelectAll: true,
+          columnWidth: 0,
+        }}
         title={() => (
           <SheduleTableHeader
             hiddenRowsAmnt={hiddenData.length}
