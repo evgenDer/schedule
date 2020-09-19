@@ -1,15 +1,21 @@
 @import './base/normalizer';
 @import '../../node_modules/antd/dist/antd.css';
+@import 'video-react/styles/scss/video-react';
 
 @import './abstaract/constants';
 @import './abstaract/mixins';
 
 @import './base/base';
+// @import './base/buttons';
+// @import './base/checkbox';
 
 @import './layout/header';
 @import './layout/controls';
 
-@import './components/shedule-table';
-@import './components/time-zone-selector';
-@import './components/title';
 @import './components/select-block.scss';
+@import './components/time-zone-selector';
+@import './components/shedule-table';
+// @import './components/title';
+// @import './components/modal';
+// @import './components/uploaders';
+// @import './components/notification';
