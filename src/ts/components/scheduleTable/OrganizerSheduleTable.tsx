@@ -12,7 +12,6 @@ type OrganizerSheduleTableProps = {
   setFinalColumns: (finalColumns: TableDataColumns) => void;
   scroll: { x: number };
   timezone: ITimeZone;
-  setTimezone: (timezone: ITimeZone) => void;
 };
 
 const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
@@ -23,7 +22,6 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   setFinalColumns,
   scroll,
   timezone,
-  setTimezone,
 }) => {
   const [editableData, setEditableData] = useState(data);
   const [newColumns] = useState(columns);
@@ -44,8 +42,6 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       columns={newColumns}
       finalColumns={finalColumns}
       setFinalColumns={setFinalColumns}
-      timezone={timezone}
-      setTimezone={setTimezone}
       isEditing={isTableEditable}
     />
   );

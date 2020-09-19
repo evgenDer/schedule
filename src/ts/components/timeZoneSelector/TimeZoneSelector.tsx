@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select, Tooltip } from 'antd';
-import { TIMEZONES } from '../../../constants/timezones';
-import { ITimeZone } from '../../../constants/types-interfaces';
+import { TIMEZONES } from '../../constants/timezones';
+import { ITimeZone } from '../../constants/types-interfaces';
 
 type TimeZoneSelectorProps = {
   timezone: ITimeZone;
@@ -25,7 +25,7 @@ const TimeZoneSelector: React.FC<TimeZoneSelectorProps> = ({ timezone, setTimezo
   return (
     <React.Fragment>
       <Tooltip title="Select the timezone" placement="topLeft">
-        <Select className="shedule-table__time-zone-sector" defaultValue={[timezone.name]} onChange={handleSelection}>
+        <Select className="time-zone-selector" defaultValue={[timezone.name]} onChange={handleSelection}>
           {selectOptions}
         </Select>
       </Tooltip>

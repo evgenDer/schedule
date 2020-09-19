@@ -8,15 +8,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.shedule-table__right, .shedule-table__left  {
-  // width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap-reverse;
 
@@ -25,16 +16,8 @@
   }
 }
 
-.shedule-table__left {
-  justify-content: flex-start;
-}
-
 .shedule-table__columns-selector {
   width: 55rem;
-}
-
-.shedule-table__time-zone-sector {
-  width: 12rem;
 }
 
 .editable-table__footer {
@@ -44,7 +27,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  
+
   & > * {
     margin: 0.5rem;
   }

@@ -9,8 +9,9 @@ import Header from '../header/header';
 import { SheduleType } from '../SelectTypeShedule/SheduleType';
 import SelectTypeShedule from '../SelectTypeShedule/SelectTypeShedule';
 import SaveFile from '../SaveFile/SaveFile';
-import { Button } from 'antd';
+import { Button, Layout } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import TimeZoneSelector from '../timeZoneSelector/TimeZoneSelector';
 
 const dataSource: IData[] = [
   {
@@ -162,20 +163,23 @@ const App: React.FC = () => {
   return (
     <React.Fragment>
       <Header selectUserHandler={typesOfUsersHandler} />
-      <div className="controls">
-        <SelectTypeShedule type={typeOfScheduleForm} setType={setTypeOfScheduleForm} />
-        <SaveFile />
-        <Button>
-          <EditOutlined /> Edit types
-        </Button>
-      </div>
-      <ScheduleTable
-        dataSource={data}
-        setData={setData}
-        userType={typeOfUser !== 'student'}
-        timezone={timezone}
-        setTimezone={setTimezone}
-      />
+      <Layout.Content>
+        <div className="controls">
+          <TimeZoneSelector timezone={timezone} setTimezone={setTimezone} />
+          <SelectTypeShedule type={typeOfScheduleForm} setType={setTypeOfScheduleForm} />
+          <SaveFile />
+          <Button>
+            <EditOutlined /> Edit types
+          </Button>
+        </div>
+        <ScheduleTable
+          dataSource={data}
+          setData={setData}
+          userType={typeOfUser !== 'student'}
+          timezone={timezone}
+          setTimezone={setTimezone}
+        />
+      </Layout.Content>
     </React.Fragment>
   );
 };

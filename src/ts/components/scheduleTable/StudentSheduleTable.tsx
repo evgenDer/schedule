@@ -13,8 +13,6 @@ type StudentSheduleTableProps = {
   finalColumns: TableDataColumns;
   setFinalColumns: (finalColumns: TableDataColumns) => void;
   scroll: { x: number };
-  timezone: ITimeZone;
-  setTimezone: (timezone: ITimeZone) => void;
 };
 
 const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
@@ -24,8 +22,6 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   finalColumns,
   setFinalColumns,
   scroll,
-  timezone,
-  setTimezone,
 }) => {
   const [hiddenData, setHiddenData] = useState<IData[]>([]);
   const [newColumns] = useState(
@@ -103,8 +99,6 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
             columns={newColumns}
             finalColumns={finalColumns}
             setFinalColumns={setFinalColumns}
-            timezone={timezone}
-            setTimezone={setTimezone}
           />
         )}
       />

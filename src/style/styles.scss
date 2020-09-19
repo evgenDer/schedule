@@ -2,7 +2,7 @@
 @import '../../node_modules/antd/dist/antd.css';
 
 @import './abstaract/constants';
-@import './abstaract/mixins'; 
+@import './abstaract/mixins';
 
 @import './base/base';
 
@@ -10,6 +10,6 @@
 @import './layout/controls';
 
 @import './components/shedule-table';
-
-@import '../style/components/title';
-@import '../style/components/select-block.scss';
+@import './components/time-zone-selector';
+@import './components/title';
+@import './components/select-block.scss';
