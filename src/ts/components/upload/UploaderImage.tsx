@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { UploadOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { Button, notification, Input } from 'antd';
+import { notification } from 'antd';
 
 const UploaderImage: React.FC = () => {
-  const [urlImg, setUrlImage] = useState<any>('');
+  const [urlImg, setUrlImage] = useState<string>('');
   const isMentor = true;
   function handleImageChange(event) {
-    console.log(event);
-
     event.preventDefault();
 
     let reader = new FileReader();
@@ -17,7 +15,7 @@ const UploaderImage: React.FC = () => {
     reader.onloadend = () => {
       const TYPE_FILE: string = file.type;
       if (TYPE_FILE.indexOf('image') !== -1) {
-        setUrlImage(reader.result);
+        setUrlImage(result as string);
       } else {
         notification.open({
           placement: 'topLeft',

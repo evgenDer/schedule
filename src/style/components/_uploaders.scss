@@ -110,6 +110,7 @@ input[type='file']:hover {
   height: 70vh;
   min-height: 550px;
   border-radius: 4px;
+  object-fit: cover;
   @include media-tablet {
     height: 50vh;
   }

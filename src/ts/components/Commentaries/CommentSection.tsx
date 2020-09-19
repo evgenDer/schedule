@@ -34,7 +34,6 @@ const CommentsSection: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = () => {
-    console.log(value);
     if (!value) {
       return;
     }

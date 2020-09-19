@@ -12,7 +12,6 @@ export async function getAdressFromCoordinates(coords: number[]) {
 
 export async function getCoordinatesFromAdress(address: string) {
   const URL = `https://api.opencagedata.com/geocode/v1/json?q=${address}&key=${API_KEY}`;
-  console.log(URL);
   const RESULT = await fetch(URL);
   const DATA = await RESULT.json();
   const { geometry } = DATA.results[0];

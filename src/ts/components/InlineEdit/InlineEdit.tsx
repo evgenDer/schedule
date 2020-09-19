@@ -62,9 +62,6 @@ const InlineEdit: React.FC<InlineEditProps> = ({
   valueKey = 'value',
   labelKey = 'label',
 }) => {
-  //==========================
-  // XState Machine
-  // =========================
   const [current, send] = useMachine(
     getInlineEditMachine({
       value,
@@ -79,29 +76,19 @@ const InlineEdit: React.FC<InlineEditProps> = ({
     })
   );
 
-  //==========================
-  // Send SAVED event when a
-  // new value is received
-  // =========================
   const isFirstRun = useRef(true);
 
   useEffect(() => {
-    // Prevent triggering SAVED
-    // on first render
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
-    // Trigger it on value changes
     send({ type: 'SAVED', value });
   }, [value]);
 
-  //==========================
-  // Event Handlers
-  // =========================
 
   const handleChange = (value: any) => {
-    send({ type: 'CHANGE', value: value });
+    send({ type: 'CHANGE', value: value })
     if (type === InputType.Select) {
       send('ENTER');
     }
@@ -118,12 +105,9 @@ const InlineEdit: React.FC<InlineEditProps> = ({
       send('ESC');
     }
   };
-  //==========================
-  // Format View Value
-  // =========================
+
   let viewValue: any = current.context.value;
 
-  // If Select => get label
   if (type === InputType.Select) {
     const valueOption = options.find((option: any) => option[valueKey] + '' === current.context.value);
 
@@ -132,21 +116,16 @@ const InlineEdit: React.FC<InlineEditProps> = ({
     }
   }
 
-  // If format function, apply
   if (format) {
     viewValue = format(viewValue);
   }
 
-  // If TextArea and showNewLine, do it
   if (type === InputType.TextArea && showNewLines) {
     viewValue = viewValue.split('\n').map((item: string, key: number) => {
       return <ReactMarkdown source={item} key={key.toString()} />;
     });
   }
 
-  //==========================
-  // Render
-  // =========================
   return (
     <>
       {(current.value === 'view' ||

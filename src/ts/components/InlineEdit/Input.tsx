@@ -29,9 +29,7 @@ const Input: React.FC<InputProps> = ({
   handleKeyDown,
   handleBlur,
 }) => {
-  //==========================
-  // Focus input as it mounts
-  // =========================
+
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
@@ -52,10 +50,8 @@ const Input: React.FC<InputProps> = ({
     if (controlRef.current) {
       setTimeout(function () {
         if (controlRef.current) {
-          // Focus input
           controlRef.current.focus();
           if (controlRef === inputRef || controlRef === textareaRef) {
-            // If it is not a Select => select input content
             controlRef.current.select();
           }
         }
@@ -63,9 +59,6 @@ const Input: React.FC<InputProps> = ({
     }
   }, [getRef]);
 
-  //==========================
-  // Select
-  // =========================
   if (type === InputType.Select) {
     return (
       <select
@@ -86,9 +79,6 @@ const Input: React.FC<InputProps> = ({
     );
   }
 
-  //==========================
-  // TextArea
-  // =========================
   if (type === InputType.TextArea) {
     return (
       <textarea
@@ -103,9 +93,6 @@ const Input: React.FC<InputProps> = ({
     );
   }
 
-  //==========================
-  // All Others
-  // =========================
   return (
     <input
       {...editProps}

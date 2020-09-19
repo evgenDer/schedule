@@ -26,15 +26,12 @@ const Task: React.FC = () => {
   const deadline = '25 - 05 - 2018';
 
   const showModal = async () => {
-    console.log(!!address);
     if (address) {
       const geometry = await getCoordinatesFromAdress(address);
-      console.log(geometry);
       const ARRAY_COORDS: number[] = [];
       ARRAY_COORDS[0] = geometry.lat;
       ARRAY_COORDS[1] = geometry.lng;
       setCoords(ARRAY_COORDS);
-      console.log(coords);
       setVisible(true);
     }
   };
@@ -61,7 +58,6 @@ const Task: React.FC = () => {
   async function clickOnMap(event) {
     setCoords(event.get('coords'));
     const ADRESS = await getAdressFromCoordinates(coords);
-    console.log(ADRESS);
     setAdress(ADRESS);
   }
   const createLectureTask = () => {
