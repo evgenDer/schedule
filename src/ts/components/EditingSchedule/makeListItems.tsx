@@ -15,7 +15,7 @@ export const makingListColors = (listColors: any) => {
   const answer: object[] = [];
   listColors.forEach((el: any) => {
     answer.push(<Menu.Item key={el}>
-                  <Tag color={el}>{el}</Tag>
+                  <Tag className={el.split('')[0] === '#' ? 'editing_schedule__tag' : ''} color={el}>{el}</Tag>
                 </Menu.Item>);
   });
   return answer;
