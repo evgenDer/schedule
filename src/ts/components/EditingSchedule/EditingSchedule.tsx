@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Menu, Tag } from 'antd';
 import { EditOutlined, PlusCircleOutlined, RedoOutlined } from '@ant-design/icons';
-import { TASK_TYPES, TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { makingListTags, makingListColors } from './makeListItems';
 import CreateTypeModal from './CreateTypeModal';
 
@@ -11,14 +10,14 @@ const testType: any = {
   }
 }
 
-function EditingSchedule() {
+function EditingSchedule({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) {
   const [visibleModal, setVisibleModal] = useState(false);
   const [taskTypeName, setTaskTypeName] = useState('typeProps');
   const [customizationTypeTask, setCustomizationTypeTask] = useState(testType);
   const [disableItems, setDisableItems] = useState(true);
-  const [fullListTypeTask, setFullListTypeTask] = useState(TASK_TYPES);
+  const [fullListTypeTask, setFullListTypeTask] = useState(taskTypes);
   const { SubMenu } = Menu;
-  let copyTaskType: any = JSON.parse(JSON.stringify(TASK_TYPES));
+  let copyTaskType: any = JSON.parse(JSON.stringify(taskTypes));
 
   const handleOkBtn = (): void => {
     setVisibleModal(false);
@@ -47,7 +46,7 @@ function EditingSchedule() {
     setVisibleModal(false);
     setTaskTypeName('typeProps');
     setCustomizationTypeTask(testType);
-    copyTaskType = JSON.parse(JSON.stringify(TASK_TYPES));
+    copyTaskType = JSON.parse(JSON.stringify(taskTypes));
     setDisableItems(true);
     setTimeout(() => {
       setVisibleModal(resetModal);
@@ -61,7 +60,7 @@ function EditingSchedule() {
 
   const getNewType = (newType: any) => {
     if (Object.keys(newType).length === 1) {
-      const actualListType = JSON.parse(JSON.stringify(TASK_TYPES));
+      const actualListType = JSON.parse(JSON.stringify(taskTypes));
       actualListType[Object.keys(newType)[0]] = newType[Object.keys(newType)[0]];
       setFullListTypeTask(actualListType);
       setTaskTypeName(Object.keys(newType)[0]);
@@ -131,7 +130,7 @@ function EditingSchedule() {
         >
           <SubMenu key="sub1" icon={<PlusCircleOutlined />} title="Select task type">
             <Menu.ItemGroup className="editing_schedule__item_group" title='Select type'>
-              {makingListTags(TASK_TYPES)}
+              {makingListTags(taskTypes)}
             </Menu.ItemGroup>
           </SubMenu>
         </Menu>
@@ -147,7 +146,7 @@ function EditingSchedule() {
             title="Background color for selected type(optional)"
           >
             <Menu.ItemGroup className="editing_schedule__item_group" title='Background color'>
-              {makingListColors(TASK_TYPES_BACKGROUND_COLOR)}
+              {makingListColors(taskTypesBackgroundColor)}
             </Menu.ItemGroup>
           </SubMenu>
         </Menu>
@@ -163,7 +162,7 @@ function EditingSchedule() {
             title="Font color for selected type(optional)"
           >
             <Menu.ItemGroup className="editing_schedule__item_group" title='Font color'>
-              {makingListColors(TASK_TYPES_FONT_COLOR)}
+              {makingListColors(taskTypesFontColor)}
             </Menu.ItemGroup>
           </SubMenu>
         </Menu>
@@ -180,7 +179,7 @@ function EditingSchedule() {
             title="Background color for description(optional)"
           >
             <Menu.ItemGroup className="editing_schedule__item_group" title='Background color'>
-              {makingListColors(TASK_TYPES_FONT_COLOR)}
+              {makingListColors(taskTypesFontColor)}
             </Menu.ItemGroup>
           </SubMenu>
         </Menu>
@@ -196,7 +195,7 @@ function EditingSchedule() {
             title="Font color for description(optional)"
           >
             <Menu.ItemGroup className="editing_schedule__item_group" title='Font color'>
-              {makingListColors(TASK_TYPES_FONT_COLOR)}
+              {makingListColors(taskTypesFontColor)}
             </Menu.ItemGroup>
           </SubMenu>
         </Menu>

@@ -35,7 +35,5 @@ export const TASK_TYPES_BACKGROUND_COLOR = [
 ];
 
 export const TASK_TYPES_FONT_COLOR = [
-  '#000000', '#ffffff', '#f00000', '#fff700', '#d9d9d9', '#1bff00', '#00ffdc', '#0037ff', '#d800ff'
+  '#000000', '#ffffff', '#f00000', '#fff700', '#d9d9d9', '#069718', '#0880a3', '#0037ff', '#d800ff','#760863'
 ]
-
-// export default TASK_TYPES;
