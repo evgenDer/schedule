@@ -1,6 +1,7 @@
 .preset_style_type {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 8px;
   padding: 8px;
 }

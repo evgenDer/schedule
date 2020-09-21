@@ -3,6 +3,7 @@ import { Modal, Button, Menu, Tag } from 'antd';
 import { EditOutlined, PlusCircleOutlined, RedoOutlined } from '@ant-design/icons';
 import { TASK_TYPES, TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { makingListTags, makingListColors } from './makeListItems';
+import CreateTypeModal from './CreateTypeModal';
 
 const testType: any = {
   typeProps: { 
@@ -15,13 +16,16 @@ function EditingSchedule() {
   const [taskTypeName, setTaskTypeName] = useState('typeProps');
   const [customizationTypeTask, setCustomizationTypeTask] = useState(testType);
   const [disableItems, setDisableItems] = useState(true);
+  const [fullListTypeTask, setFullListTypeTask] = useState(TASK_TYPES);
   const { SubMenu } = Menu;
   let copyTaskType: any = JSON.parse(JSON.stringify(TASK_TYPES));
 
   const handleOkBtn = (): void => {
     setVisibleModal(false);
     localStorage.setItem('typeTask', JSON.stringify(customizationTypeTask));
-    console.log(customizationTypeTask);
+    localStorage.setItem('fullListTypeTask', JSON.stringify(fullListTypeTask));
+    reloadModal(false);
+    // console.log(customizationTypeTask);
   }
 
   const handleSelectTaskType = (item: any): void => {
@@ -50,9 +54,28 @@ function EditingSchedule() {
     }, 350)
   }
 
+  const [visibleCreateTypeModal, letVisibleCreateTypeModal] = useState(false);
+  const showCreateTypeModal = () => {
+    letVisibleCreateTypeModal(true);
+  }
+
+  const getNewType = (newType: any) => {
+    if (Object.keys(newType).length === 1) {
+      const actualListType = JSON.parse(JSON.stringify(TASK_TYPES));
+      actualListType[Object.keys(newType)[0]] = newType[Object.keys(newType)[0]];
+      setFullListTypeTask(actualListType);
+      setTaskTypeName(Object.keys(newType)[0]);
+      setCustomizationTypeTask(newType);
+      letVisibleCreateTypeModal(false);
+      setDisableItems(false);
+    } else {
+      letVisibleCreateTypeModal(false);
+      setDisableItems(true);
+    }
+  }
+
   return (
     <>
-      {console.log(TASK_TYPES)}
       <Button 
         onClick={() => setVisibleModal(true)}
         type="primary" 
@@ -73,7 +96,7 @@ function EditingSchedule() {
           }} 
           className="preset_style_type"
         >
-          Some description 
+          <span>Some description</span> 
           <Tag 
             color={customizationTypeTask[taskTypeName].color} 
             style={{color: customizationTypeTask[taskTypeName].fontColor}}
@@ -86,9 +109,21 @@ function EditingSchedule() {
             size="small" 
             type="primary"
           >
-            Reset custom
+            Reset
+          </Button>
+          <Button 
+            onClick={() => showCreateTypeModal()}
+            icon={<PlusCircleOutlined />} 
+            size="small" 
+            type="primary"
+          >
+            Add type
           </Button>
         </div>
+        <CreateTypeModal 
+          showInput={visibleCreateTypeModal}
+          createNewType={(newType: any) => getNewType(newType)}
+        />
         <Menu
           mode={'vertical'}
           theme={'light'}
