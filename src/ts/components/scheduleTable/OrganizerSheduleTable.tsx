@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { notification, Table } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import EditableTable from './EditableTable';
@@ -38,6 +38,10 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       onSaveButtonClick={() => {
         setData(editableData);
         setIsTableEditable(false);
+        notification.open({
+          message: 'Saving failed!',
+          description: 'isdfosihfoiejfoiehf oweifh9owehfei',
+        });
       }}
       columns={newColumns}
       finalColumns={finalColumns}

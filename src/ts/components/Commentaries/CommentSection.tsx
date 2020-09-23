@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
 import { CommentProps } from 'antd/lib/comment';
+import { IComment } from '../../constants/types-interfaces';
 
 const { TextArea } = Input;
 
@@ -38,9 +39,9 @@ const CommentsSection: React.FC = () => {
       return;
     }
 
-    const newComment = {
+    const newComment: IComment = {
       author: 'Github Id',
-      content: <p>{value}</p>,
+      content: value,
       datetime: moment().fromNow(),
       avatar: 'https://avatars1.githubusercontent.com/u/9919?s=200&v=4',
     };
@@ -60,7 +61,9 @@ const CommentsSection: React.FC = () => {
       {comments.length > 0 && <CommentList comments={comments} />}
       <Comment
         avatar={<Avatar src="https://avatars1.githubusercontent.com/u/9919?s=200&v=4" alt="Han Solo" />}
-        content={<Editor onChange={handleChange} onSubmit={handleSubmit} submitting={submitting} value={value} />}
+        content={
+          <Editor onChange={handleChange} onSubmit={handleSubmit} submitting={submitting} value={<p>{value}</p>} />
+        }
       />
     </div>
   );

@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, message, Checkbox } from 'antd';
+import { Modal, Button, Checkbox } from 'antd';
 import UploaderImage from '../Uploaders/UploaderImage';
 import UploaderVideo from '../Uploaders/UploaderVideo';
-import ReactMarkdown from 'react-markdown';
 import { getAdressFromCoordinates, getCoordinatesFromAdress } from '../../service/coordinatesApi';
 import { YMaps, Map, Placemark, ZoomControl } from 'react-yandex-maps';
 import CommentsSection from '../Commentaries/CommentSection';
 import TaskTable from '../TaskTable/TaskTable';
 import EditBlockType from '../EditBlock/EditBlock';
 import { TASK_TYPES } from '../../constants/taskTypes';
+import Services from '../../services/services';
+import { RsSchoolEvent } from '../../constants/types-interfaces';
 
-const Task: React.FC = () => {
+type TaskProps = {
+  key: string;
+  name: string;
+  isMentor?: boolean;
+};
+
+const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [isMentor, setIsMentor] = useState(true);
   const [haveFeedback, setHaveFeedback] = useState(true);
   const [address, setAdress] = useState('Минск');
   const [coords, setCoords] = useState<number[]>([]);
@@ -23,7 +29,18 @@ const Task: React.FC = () => {
   const [imgSrc, setImgSrc] = useState('');
 
   const type = TASK_TYPES.jstask.name;
-  const deadline = '25 - 05 - 2018';
+  const deadline = '2020-09-23';
+
+  useEffect(() => {
+    Services.getEvent(key).then((res: RsSchoolEvent) => {
+      const data = res.taskData;
+      // setAdress(data.address);
+      setDescription(data.description);
+      setMaterials(data.materials);
+      setVideoSrc(data.videoSrc);
+      setImgSrc(data.imgSrc);
+    });
+  }, []);
 
   const showModal = async () => {
     if (address) {
@@ -234,10 +251,11 @@ const Task: React.FC = () => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Task
-      </Button>
+      <span className="task-modal-toggler" onClick={showModal}>
+        {name}
+      </span>
       <Modal
+        className="modal"
         visible={visible}
         title="Title"
         onOk={handleOk}

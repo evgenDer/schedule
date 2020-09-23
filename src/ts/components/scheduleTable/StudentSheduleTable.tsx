@@ -4,6 +4,7 @@ import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interf
 import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
+import Task from '../Task/Task';
 // import VirtualTable from './VirtualTable';
 
 type StudentSheduleTableProps = {
@@ -26,6 +27,14 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   const [hiddenData, setHiddenData] = useState<IData[]>([]);
   const [newColumns] = useState(
     columns.map((col) => {
+      if (col.key === 'name') {
+        return {
+          ...col,
+          render: (_: any, { key, name }: IData) => {
+            return <Task key={key} name={name} />;
+          },
+        };
+      }
       if (col.key === 'taskDone') {
         return {
           ...col,
@@ -62,7 +71,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
     setFinalColumns(newColumns);
   }, []);
 
-  const setTaskDone = (idx: number) => {
+  const setTaskDone = (idx: string) => {
     setData((prev: IData[]) => {
       const newData = [...prev];
       const index = newData.findIndex(({ key }) => key === idx);
@@ -71,7 +80,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
     });
   };
 
-  const setRowHidden = (idx: number) => {
+  const setRowHidden = (idx: string) => {
     const newHidden = data.find(({ key }) => key === idx);
     if (newHidden) {
       setHiddenData((prev) => [...prev, newHidden]);
@@ -80,7 +89,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   };
 
   const showHiddenRows = () => {
-    setData((prev: IData[]) => [...prev, ...hiddenData].sort((a: IData, b: IData) => a.key - b.key));
+    setData((prev: IData[]) => [...prev, ...hiddenData]); // .sort((a: IData, b: IData) => a.key - b.key));
     setHiddenData([]);
   };
 
@@ -124,8 +133,11 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
         columns={finalColumns}
         scroll={scroll}
         sticky
-        onRow={(_, rowIndex) => ({
-          onClick: selectRow.bind(null, rowIndex),
+        onRow={(data, rowIndex) => ({
+          // onClick: (event) => {
+          //   selectRow(rowIndex);
+          // },
+          // onClick: selectRow.bind(null, rowIndex),
         })}
         rowSelection={{
           type: selectionType,

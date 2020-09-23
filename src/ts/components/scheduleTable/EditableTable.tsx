@@ -196,7 +196,7 @@ type EditableTableProps = {
 const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, scroll, sticky, title, timezone }) => {
   const [count, setCount] = useState(data.length);
 
-  const handleDelete = (key: number) => {
+  const handleDelete = (key: string) => {
     setData([...data].filter((item) => item.key !== key));
     message.success('Deleted');
   };
@@ -204,7 +204,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
   const handleAdd = () => {
     const datetime = moment().tz(timezone.name).format();
     const newData: IData = {
-      key: count,
+      key: count.toString(),
       datetime: datetime,
       date: getDateString(datetime),
       time: getTimeString(datetime),
