@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, Checkbox } from 'antd';
+import { Modal, Button, Checkbox, Tag } from 'antd';
 import UploaderImage from '../Uploaders/UploaderImage';
 import UploaderVideo from '../Uploaders/UploaderVideo';
 import { getAdressFromCoordinates, getCoordinatesFromAdress } from '../../service/coordinatesApi';
@@ -296,9 +296,7 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
             <Checkbox disabled={false} checked={haveFeedback} onChange={onChange}>
               Add feedback
             </Checkbox>
-            <Checkbox disabled={true} checked={isOnline}>
-              Online
-            </Checkbox>
+            <Tag color={isOnline ? 'green' : 'volcano'}>{isOnline ? 'online' : 'offline'}</Tag>
           </div>
           {createTasks()}
           {isOnline ? (
