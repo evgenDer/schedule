@@ -31,7 +31,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
         return {
           ...col,
           render: (_: any, { key, name }: IData) => {
-            return <Task key={key} name={name} />;
+            return <Task id={key} name={name} />;
           },
         };
       }

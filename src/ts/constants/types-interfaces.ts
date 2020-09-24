@@ -1,4 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
+import { CommentProps } from 'antd/lib/comment';
 
 export interface ITaskType {
   name: string;
@@ -49,6 +50,7 @@ export interface ITaskData {
   isOnline: boolean;
   deadline: string;
   name: string;
+  comments: CommentProps[];
 }
 
 export interface RsSchoolEvent {

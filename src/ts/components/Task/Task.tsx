@@ -10,16 +10,18 @@ import EditBlockType from '../EditBlock/EditBlock';
 import { TASK_TYPES } from '../../constants/taskTypes';
 import Services from '../../services/services';
 import { RsSchoolEvent } from '../../constants/types-interfaces';
+import { CommentProps } from 'antd/lib/comment';
 
 type TaskProps = {
-  key: string;
+  id: string;
   name: string;
   isMentor?: boolean;
 };
 
-const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
+const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
   const [haveFeedback, setHaveFeedback] = useState(true);
   const [address, setAdress] = useState('Минск');
   const [coords, setCoords] = useState<number[]>([]);
@@ -27,30 +29,42 @@ const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
   const [materials, setMaterials] = useState('Materials will be added later...');
   const [videoSrc, setVideoSrc] = useState('');
   const [imgSrc, setImgSrc] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [comments, setComments] = useState<CommentProps[]>([]);
+  const [resEvent, setResEvent] = useState<RsSchoolEvent>();
 
   const type = TASK_TYPES.jstask.name;
-  const deadline = '2020-09-23';
 
   useEffect(() => {
-    Services.getEvent(key).then((res: RsSchoolEvent) => {
+    Services.getEvent(id).then((res: RsSchoolEvent) => {
       const data = res.taskData;
-      // setAdress(data.address);
+      setResEvent(res);
+      setAdress(data.address);
+      getCoordinates();
       setDescription(data.description);
       setMaterials(data.materials);
       setVideoSrc(data.videoSrc);
       setImgSrc(data.imgSrc);
+      setHaveFeedback(data.haveFeedback);
+      setIsOnline(data.isOnline);
+      setDeadline(data.deadline);
+      setComments(data.comments);
     });
   }, []);
 
-  const showModal = async () => {
+  async function getCoordinates() {
     if (address) {
+      console.log(address);
       const geometry = await getCoordinatesFromAdress(address);
       const ARRAY_COORDS: number[] = [];
       ARRAY_COORDS[0] = geometry.lat;
       ARRAY_COORDS[1] = geometry.lng;
       setCoords(ARRAY_COORDS);
-      setVisible(true);
     }
+  }
+
+  const showModal = async () => {
+    setVisible(true);
   };
 
   const onChange = (event) => {
@@ -59,18 +73,26 @@ const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
 
   const handleOk = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setVisible(false);
-    }, 3000);
+    if (resEvent) {
+      const savedEvent = resEvent;
+      savedEvent.taskData = {
+        ...resEvent.taskData,
+        description,
+        materials,
+        haveFeedback,
+        videoSrc,
+        imgSrc,
+        address,
+        comments,
+      };
+      Services.updateEvent(savedEvent);
+    }
+    setVisible(false);
   };
 
   const handleCancel = () => {
     setVisible(false);
   };
-
-  const title: string = 'schedulue';
-  const isOnline = true;
 
   async function clickOnMap(event) {
     setCoords(event.get('coords'));
@@ -137,7 +159,7 @@ const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
   const createHTMLandJSTask = () => {
     return (
       <>
-        <TaskTable title={title} deadline={deadline} />
+        <TaskTable title={name} deadline={deadline} />
         <UploaderImage imageSrc={imgSrc} setImageSrc={setImgSrc} isMentor={isMentor} />
         <h2 className="task-modal__title">Description</h2>
         <EditBlockType
@@ -257,19 +279,19 @@ const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
       <Modal
         className="modal"
         visible={visible}
-        title="Title"
+        title={name}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Return
           </Button>,
-          <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+          <Button key="submit" type="primary" onClick={handleOk}>
             Save
           </Button>,
         ]}
       >
-        <div className="task-modal">
+        <div className="task-modal modal">
           <div className="task-modal__checkboxes">
             <Checkbox disabled={false} checked={haveFeedback} onChange={onChange}>
               Add feedback
@@ -291,7 +313,7 @@ const Task: React.FC<TaskProps> = ({ key, name, isMentor = false }) => {
               </div>
             </YMaps>
           ) : null}
-          {haveFeedback ? <CommentsSection /> : null}
+          {haveFeedback ? <CommentsSection comments={comments} setComments={setComments} /> : null}
         </div>
       </Modal>
     </>

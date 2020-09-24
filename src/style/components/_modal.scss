@@ -1,10 +1,10 @@
-.modal {
-  .ant-modal-mask {
+
+  .modal .ant-modal-mask {
     border-bottom: none !important;
   }
 
-  .ant-modal-content {
-    padding: 40px;
+  .modal .ant-modal-content {
+    padding: 20px;
     background-color: #fafafa;
     @include media-laptop {
       padding: 10px;
@@ -18,13 +18,15 @@
       margin-bottom: 5px;
     }
   }
-  .ant-modal {
+  .modal.ant-modal {
+    margin-top: -40px;
     @media (min-width: $tablet-width) {
       width: 70vw !important;
     }
   }
 
-  .ant-modal-header {
+ .modal{ 
+   .ant-modal-header {
     padding: 13px 16px;
     border-radius: 4px 4px 0 0;
     background: #fafafa;
@@ -43,7 +45,7 @@
   .task-modal {
     font-size: 1.5rem;
     textarea {
-      height: 300px;
+      height: 200px;
       resize: vertical;
       width: 100%;
       outline: none;
@@ -53,7 +55,7 @@
       white-space: pre-wrap;
       word-wrap: break-word;
       cursor: 'pointer';
-      margin: 20px 0;
+      margin: 20px 0 0;
 
       &::-webkit-scrollbar {
         width: 5px;
@@ -142,18 +144,7 @@
     font-size: 1.8rem;
   }
 
-  textarea.ant-input {
-    font-size: 1.5rem;
-  }
-
-  .ant-comment-inner {
-    p,
-    span {
-      font-size: 1.5rem;
-    }
-  }
-}
-
+ }
 .task-modal-toggler {
   &:hover {
     cursor: pointer;
