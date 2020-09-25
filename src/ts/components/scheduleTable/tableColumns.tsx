@@ -137,14 +137,6 @@ export const STUDENT_COLS: TableDataColumns = [
     align: 'center',
     width: 70,
   },
-  {
-    title: '',
-    dataIndex: 'hideRow',
-    key: 'hideRow',
-    fixed: 'right',
-    align: 'center',
-    width: 70,
-  },
 ];
 
 export const ORGANIZER_COLS: TableDataColumns = [

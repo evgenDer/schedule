@@ -54,7 +54,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
 
   async function getCoordinates() {
     if (address) {
-      console.log(address);
       const geometry = await getCoordinatesFromAdress(address);
       const ARRAY_COORDS: number[] = [];
       ARRAY_COORDS[0] = geometry.lat;

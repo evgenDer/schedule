@@ -4,7 +4,7 @@ import ScheduleTable from '../scheduleTable/ScheduleTable';
 import { IData, ITaskData, RsSchoolEvent } from '../../constants/types-interfaces';
 import { TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TIMEZONE } from '../../constants/timezones';
-import { getDateString, getTimeString } from '../../helpers/dataHelper';
+import { getDateString, getTimeString, sortDataByDate } from '../../helpers/dataHelper';
 import Header from '../header/header';
 import { SheduleType } from '../SelectTypeShedule/SheduleType';
 import SelectTypeShedule from '../SelectTypeShedule/SelectTypeShedule';
@@ -278,7 +278,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     Services.getAllEvents().then((res: RsSchoolEvent[]) => {
-      setData(res.map((event) => ({ ...event.tableData, key: event.id })));
+      setData(res.map((event) => ({ ...event.tableData, key: event.id })).sort(sortDataByDate));
     });
   }, []);
 

@@ -5,7 +5,7 @@ import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import Task from '../Task/Task';
-// import VirtualTable from './VirtualTable';
+import { sortDataByDate } from '../../helpers/dataHelper';
 
 type StudentSheduleTableProps = {
   data: IData[];
@@ -25,6 +25,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   scroll,
 }) => {
   const [hiddenData, setHiddenData] = useState<IData[]>([]);
+  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('radio');
+  const [selectedRowsKeys, setSelectedRowsKeys] = useState<string[]>([]);
   const [newColumns] = useState(
     columns.map((col) => {
       if (col.key === 'name') {
@@ -51,18 +53,6 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
           },
         };
       }
-      if (col.key === 'hideRow') {
-        return {
-          ...col,
-          render: (_: any, { key }: IData) => (
-            <Tooltip placement="topRight" title="Hide this row!">
-              <Button type="ghost" onClick={setRowHidden.bind(null, key)}>
-                <MinusSquareOutlined />
-              </Button>
-            </Tooltip>
-          ),
-        };
-      }
       return col;
     })
   );
@@ -80,20 +70,19 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
     });
   };
 
-  const setRowHidden = (idx: string) => {
-    const newHidden = data.find(({ key }) => key === idx);
-    if (newHidden) {
-      setHiddenData((prev) => [...prev, newHidden]);
+  const setRowsHidden = () => {
+    const newHidden = data.filter(({ key }) => selectedRowsKeys.includes(key));
+    if (newHidden.length) {
+      setHiddenData((prev) => [...prev, ...newHidden]);
     }
-    setData((prev: IData[]) => prev.filter(({ key }) => key !== idx));
+    setData((prev: IData[]) => prev.filter(({ key }) => !selectedRowsKeys.includes(key)));
+    setSelectedRowsKeys([]);
   };
 
   const showHiddenRows = () => {
-    setData((prev: IData[]) => [...prev, ...hiddenData]); // .sort((a: IData, b: IData) => a.key - b.key));
+    setData((prev: IData[]) => [...prev, ...hiddenData].sort(sortDataByDate));
     setHiddenData([]);
   };
-
-  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('radio');
 
   const shiftDownEvent = ({ key }: KeyboardEvent) => {
     if (key === 'Shift') {
@@ -116,28 +105,39 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
     };
   }, []);
 
-  const selectRow = (rowIndex: number | undefined) => {
-    if (rowIndex !== undefined) {
+  const selectRow = (rowData: IData) => {
+    const rowKey = data.find((element) => element.key === rowData.key)?.key;
+    if (rowKey) {
       const clickElement = document.querySelector(
-        `tr[data-row-key="${rowIndex}"] input.ant-${selectionType}-input`
+        `tr[data-row-key="${rowKey}"] input.ant-${selectionType}-input`
       ) as HTMLElement;
       clickElement.click();
+
+      setSelectedRowsKeys((prev) => {
+        const rowKeyIndex = prev.indexOf(rowKey);
+        if (selectionType === 'checkbox') {
+          if (rowKeyIndex === -1) {
+            prev.push(rowKey);
+          } else {
+            prev.splice(rowKeyIndex, 1);
+          }
+        } else {
+          prev = [rowKey];
+        }
+        return prev;
+      });
     }
   };
 
   return (
     <React.Fragment>
-      {/* <VirtualTable dataSource={dataSource} columns={columns} scroll={{ x: 1600, y: 300 }} /> */}
       <Table<IData>
         dataSource={data}
         columns={finalColumns}
         scroll={scroll}
         sticky
-        onRow={(data, rowIndex) => ({
-          // onClick: (event) => {
-          //   selectRow(rowIndex);
-          // },
-          // onClick: selectRow.bind(null, rowIndex),
+        onRow={(data) => ({
+          onClick: selectRow.bind(null, data),
         })}
         rowSelection={{
           type: selectionType,
@@ -148,6 +148,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
         title={() => (
           <SheduleTableHeader
             hiddenRowsAmnt={hiddenData.length}
+            onHideRowsButtonClick={setRowsHidden}
+            selectedRowsAmnt={selectedRowsKeys.length}
             onShowHiddenButtonClick={showHiddenRows}
             columns={newColumns}
             finalColumns={finalColumns}

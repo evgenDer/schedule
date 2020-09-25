@@ -8,6 +8,8 @@ type TableHeaderProps = {
   userType?: boolean;
   hiddenRowsAmnt?: number;
   onShowHiddenButtonClick?: () => void;
+  selectedRowsAmnt?: number;
+  onHideRowsButtonClick?: () => void;
   columns: TableDataColumns;
   finalColumns: TableDataColumns;
   setFinalColumns: (columns: TableDataColumns) => void;
@@ -20,6 +22,8 @@ const SheduleTableHeader: React.FC<TableHeaderProps> = ({
   userType = false,
   hiddenRowsAmnt,
   onShowHiddenButtonClick,
+  selectedRowsAmnt,
+  onHideRowsButtonClick,
   columns,
   finalColumns,
   setFinalColumns,
@@ -27,7 +31,7 @@ const SheduleTableHeader: React.FC<TableHeaderProps> = ({
   onSaveButtonClick,
   isEditing = false,
 }) => {
-  const emptyFunction = function () {};
+  const emptyFunction = () => {};
 
   return (
     <React.Fragment>
@@ -43,6 +47,8 @@ const SheduleTableHeader: React.FC<TableHeaderProps> = ({
           <ShowHiddenButton
             hiddenRowsAmnt={hiddenRowsAmnt || 0}
             onShowHiddenButtonClick={onShowHiddenButtonClick || emptyFunction}
+            selectedRowsAmnt={selectedRowsAmnt || 0}
+            onHideRowsButtonClick={onHideRowsButtonClick || emptyFunction}
           />
         )}
       </div>
