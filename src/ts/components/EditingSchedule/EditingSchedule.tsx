@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
-import { Modal, Button, Menu, Tag } from 'antd';
-import { EditOutlined, PlusCircleOutlined, RedoOutlined } from '@ant-design/icons';
+import { Modal, Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import { makingListTags, makingListColors } from './makeListItems';
 import CreateTypeModal from './CreateTypeModal';
+import VisualDashboard from './VisualDashboard';
+import ListItem from './ListItem';
 
 const testType: any = {
-  typeProps: { 
+  testType: { 
     name: 'test type', color: '', fontColor: '', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000' 
   }
 }
 
-function EditingSchedule({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) {
+interface EditingSchedule {
+  taskTypes: object,
+  taskTypesBackgroundColor: object,
+  taskTypesFontColor: object
+}
+
+const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) => {
   const [visibleModal, setVisibleModal] = useState(false);
-  const [taskTypeName, setTaskTypeName] = useState('typeProps');
+  const [taskTypeName, setTaskTypeName] = useState('testType');
   const [customizationTypeTask, setCustomizationTypeTask] = useState(testType);
   const [disableItems, setDisableItems] = useState(true);
   const [fullListTypeTask, setFullListTypeTask] = useState(taskTypes);
-  const { SubMenu } = Menu;
   let copyTaskType: any = JSON.parse(JSON.stringify(taskTypes));
 
   const handleOkBtn = (): void => {
     setVisibleModal(false);
     localStorage.setItem('typeTask', JSON.stringify(customizationTypeTask));
     localStorage.setItem('fullListTypeTask', JSON.stringify(fullListTypeTask));
-    reloadModal(false);
-    // console.log(customizationTypeTask);
+    handleReloadModal(false);
   }
 
   const handleSelectTaskType = (item: any): void => {
-    const selectTaskTypeName = item.key;
-    setTaskTypeName(selectTaskTypeName);
-    setCustomizationTypeTask({ [selectTaskTypeName]: copyTaskType[selectTaskTypeName] });
+    const selectedTaskTypeName = item.key;
+    setTaskTypeName(selectedTaskTypeName);
+    setCustomizationTypeTask({ [selectedTaskTypeName]: copyTaskType[selectedTaskTypeName] });
     setDisableItems(false);
   }
 
@@ -42,9 +48,9 @@ function EditingSchedule({ taskTypes, taskTypesBackgroundColor, taskTypesFontCol
     });
   }
 
-  const reloadModal = (resetModal: boolean): void => {
+  const handleReloadModal = (resetModal: boolean): void => {
     setVisibleModal(false);
-    setTaskTypeName('typeProps');
+    setTaskTypeName('testType');
     setCustomizationTypeTask(testType);
     copyTaskType = JSON.parse(JSON.stringify(taskTypes));
     setDisableItems(true);
@@ -54,11 +60,11 @@ function EditingSchedule({ taskTypes, taskTypesBackgroundColor, taskTypesFontCol
   }
 
   const [visibleCreateTypeModal, letVisibleCreateTypeModal] = useState(false);
-  const showCreateTypeModal = () => {
+  const handleShowCreateTypeModal = () => {
     letVisibleCreateTypeModal(true);
   }
 
-  const getNewType = (newType: any) => {
+  const getNewType = (newType: object): void => {
     if (Object.keys(newType).length === 1) {
       const actualListType = JSON.parse(JSON.stringify(taskTypes));
       actualListType[Object.keys(newType)[0]] = newType[Object.keys(newType)[0]];
@@ -77,128 +83,64 @@ function EditingSchedule({ taskTypes, taskTypesBackgroundColor, taskTypesFontCol
     <>
       <Button 
         onClick={() => setVisibleModal(true)}
-        type="primary" 
         icon={<EditOutlined />} 
         size='small' 
+        type="primary" 
       />
       <Modal
         title="Editing schedule"
         visible={visibleModal}
         onOk={() => handleOkBtn()}
-        onCancel={() => reloadModal(false)}
-        // afterClose={() => setDisableItems(true)}
+        onCancel={() => handleReloadModal(false)}
         destroyOnClose={true}
       >
-        <div
-          style={{color: customizationTypeTask[taskTypeName].descriptionFontColor, 
-            background: customizationTypeTask[taskTypeName].descriptionBackgroundColor
-          }} 
-          className="preset_style_type"
-        >
-          <span>Some description</span> 
-          <Tag 
-            color={customizationTypeTask[taskTypeName].color} 
-            style={{color: customizationTypeTask[taskTypeName].fontColor}}
-          >
-            {customizationTypeTask[taskTypeName].name}
-          </Tag>
-          <Button 
-            onClick={() => reloadModal(true)}
-            icon={<RedoOutlined />} 
-            size="small" 
-            type="primary"
-          >
-            Reset
-          </Button>
-          <Button 
-            onClick={() => showCreateTypeModal()}
-            icon={<PlusCircleOutlined />} 
-            size="small" 
-            type="primary"
-          >
-            Add type
-          </Button>
-        </div>
         <CreateTypeModal 
           showInput={visibleCreateTypeModal}
-          createNewType={(newType: any) => getNewType(newType)}
+          createNewType={(newType: object) => getNewType(newType)}
         />
-        <Menu
-          mode={'vertical'}
-          theme={'light'}
-          onSelect={(item) => handleSelectTaskType(item)}
-        >
-          <SubMenu key="sub1" icon={<PlusCircleOutlined />} title="Select task type">
-            <Menu.ItemGroup className="editing_schedule__item_group" title='Select type'>
-              {makingListTags(taskTypes)}
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
-        <Menu
-          mode={'vertical'}
-          theme={'light'}
-          onSelect={(item) => handleSelectColors(item, 'color')}
-        >
-          <SubMenu 
-            disabled={disableItems} 
-            key="sub2" 
-            icon={<PlusCircleOutlined />} 
-            title="Background color for selected type(optional)"
-          >
-            <Menu.ItemGroup className="editing_schedule__item_group" title='Background color'>
-              {makingListColors(taskTypesBackgroundColor)}
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
-        <Menu
-          mode={'vertical'}
-          theme={'light'}
-          onSelect={(item) => handleSelectColors(item, 'fontColor')}
-        >
-          <SubMenu
-            disabled={disableItems}
-            key="sub3"
-            icon={<PlusCircleOutlined />} 
-            title="Font color for selected type(optional)"
-          >
-            <Menu.ItemGroup className="editing_schedule__item_group" title='Font color'>
-              {makingListColors(taskTypesFontColor)}
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
+        <VisualDashboard 
+          customizationTypeTask={customizationTypeTask}
+          taskTypeName={taskTypeName}
+          onReloadModal={() => handleReloadModal(true)}
+          onShowCreateTypeModal={() => handleShowCreateTypeModal()}
+          disableItems={!disableItems}
+        />
+        <ListItem 
+          onSelectItem={(item: object) => handleSelectTaskType(item)}
+          disableItems={!disableItems}
+          titleSubMenu={'Select task type'}
+          titleItem={'Select type'}
+          listItems={makingListTags(taskTypes)}
+        />
+        <ListItem 
+          onSelectItem={(item: object) => handleSelectColors(item, 'color')}
+          disableItems={disableItems}
+          titleSubMenu={'Background color for selected type(optional)'}
+          titleItem={'Background color'}
+          listItems={makingListColors(taskTypesBackgroundColor)}
+        />
+        <ListItem 
+          onSelectItem={(item: object) => handleSelectColors(item, 'fontColor')}
+          disableItems={disableItems}
+          titleSubMenu={'Font color for selected type(optional)'}
+          titleItem={'Font color'}
+          listItems={makingListColors(taskTypesFontColor)}
+        />
         <hr />
-        <Menu
-          mode={'vertical'}
-          theme={'light'}
-          onSelect={(item) => handleSelectColors(item, 'descriptionBackgroundColor')}
-        >
-          <SubMenu
-            disabled={disableItems} 
-            key="sub4" 
-            icon={<PlusCircleOutlined />} 
-            title="Background color for description(optional)"
-          >
-            <Menu.ItemGroup className="editing_schedule__item_group" title='Background color'>
-              {makingListColors(taskTypesFontColor)}
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
-        <Menu
-          mode={'vertical'}
-          theme={'light'}
-          onSelect={(item) => handleSelectColors(item, 'descriptionFontColor')}
-        >
-          <SubMenu
-            disabled={disableItems}
-            key="sub5"
-            icon={<PlusCircleOutlined />}
-            title="Font color for description(optional)"
-          >
-            <Menu.ItemGroup className="editing_schedule__item_group" title='Font color'>
-              {makingListColors(taskTypesFontColor)}
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
+        <ListItem 
+          onSelectItem={(item: object) => handleSelectColors(item, 'descriptionBackgroundColor')}
+          disableItems={disableItems}
+          titleSubMenu={'Background color for description(optional)'}
+          titleItem={'Background color'}
+          listItems={makingListColors(taskTypesFontColor)}
+        />
+        <ListItem 
+          onSelectItem={(item: object) => handleSelectColors(item, 'descriptionFontColor')}
+          disableItems={disableItems}
+          titleSubMenu={'Font color for description(optional)'}
+          titleItem={'Font color'}
+          listItems={makingListColors(taskTypesFontColor)}
+        />
       </Modal>
     </>
   );

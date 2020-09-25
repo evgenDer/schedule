@@ -1,12 +1,12 @@
 import React from 'react';
 import { Modal, Input } from 'antd';
 
-interface IInnerParams {
+interface ICreateTypeModal {
   showInput: boolean,
   createNewType: Function
 }
 
-function CreateTypeModal( {showInput, createNewType}: IInnerParams ) {
+const CreateTypeModal: React.FC<ICreateTypeModal> = ( {showInput, createNewType} ) => {
   let nameType = '';
   let newType = {};
 
