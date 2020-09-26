@@ -19,7 +19,7 @@ type TaskProps = {
   type?: string;
 };
 
-const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = 'jstask' }) => {
+const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYPES.jstask.name }) => {
   const [visible, setVisible] = useState(false);
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [haveFeedback, setHaveFeedback] = useState(true);
@@ -32,8 +32,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = 'jstask'
   const [deadline, setDeadline] = useState('');
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [resEvent, setResEvent] = useState<RsSchoolEvent>();
-
-  //const type = TASK_TYPES.jstask.name;
 
   useEffect(() => {
     Services.getEvent(id).then((res: RsSchoolEvent) => {
@@ -57,10 +55,10 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = 'jstask'
   async function getCoordinates() {
     if (address) {
       const geometry = await getCoordinatesFromAdress(address);
-      const ARRAY_COORDS: number[] = [];
-      ARRAY_COORDS[0] = geometry.lat;
-      ARRAY_COORDS[1] = geometry.lng;
-      setCoords(ARRAY_COORDS);
+      const arrayCoords: number[] = [];
+      arrayCoords[0] = geometry.lat;
+      arrayCoords[1] = geometry.lng;
+      setCoords(arrayCoords);
     }
   }
 
@@ -313,4 +311,5 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = 'jstask'
     </>
   );
 };
+
 export default Task;
