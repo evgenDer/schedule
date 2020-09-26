@@ -7,7 +7,13 @@ const App: React.FC<any> = () => {
   const [data, updateData] = useState();
   useEffect(() => {
     const getData = async () => {
-      const events = await services.getAllEvents();
+      let events = await services.getAllEvents();
+      events.sort((a: any, b: any) => {
+        if (a.tableData.date - b.tableData.date) {
+          return a.tableData.time - b.tableData.time;
+        }
+        return a.tableData.date - b.tableData.date;
+      })
       updateData(events);
     }
     getData();
