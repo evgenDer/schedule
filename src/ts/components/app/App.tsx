@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment-timezone';
 import ScheduleTable from '../scheduleTable/ScheduleTable';
 import { IData, ITaskData, RsSchoolEvent } from '../../constants/types-interfaces';
-import { TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TIMEZONE } from '../../constants/timezones';
 import { getDateString, getTimeString, sortDataByDate } from '../../helpers/dataHelper';
 import Header from '../header/header';
@@ -13,6 +12,13 @@ import { Button, Layout } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import TimeZoneSelector from '../timeZoneSelector/TimeZoneSelector';
 import Services from '../../services/services';
+import EditingSchedule from '../EditingSchedule/EditingSchedule'; // Компонент редактирования типов задания.
+import {
+  //
+  TASK_TYPES, // Типы заданий
+  TASK_TYPES_BACKGROUND_COLOR, // Красивые бэкграунды для тэгов из antd
+  TASK_TYPES_FONT_COLOR, // Набор цветов всяких
+} from '../../constants/taskTypes'; //
 
 /* const dataSource: RsSchoolEvent[] = [
   {
@@ -256,7 +262,13 @@ const defaultTableData: IData = {
   date: getDateString(moment().format()),
   time: getTimeString(moment().format()),
   name: 'Task',
-  type: { name: 'task', color: 'gold' },
+  type: {
+    name: 'task',
+    color: 'gold',
+    fontColor: 'black',
+    descriptionBackgroundColor: 'white',
+    descriptionFontColor: 'black',
+  },
   organizer: 'https://github.com/rolling-scopes-school',
   isComplited: false,
   mark: 0,
@@ -305,6 +317,11 @@ const App: React.FC = () => {
           <Button>
             <EditOutlined /> Edit types
           </Button>
+          <EditingSchedule // Передать из бэкенда описанные выше проперти
+            taskTypes={TASK_TYPES} // и ловить в локалсторедж ответ.
+            taskTypesBackgroundColor={TASK_TYPES_BACKGROUND_COLOR} // Надеюсь не сильно зашкварно описал компонент)
+            taskTypesFontColor={TASK_TYPES_FONT_COLOR} // Пользуйтесь кто хочет!))
+          />
         </div>
         <ScheduleTable
           dataSource={data}

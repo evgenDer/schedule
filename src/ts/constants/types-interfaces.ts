@@ -4,6 +4,9 @@ import { CommentProps } from 'antd/lib/comment';
 export interface ITaskType {
   name: string;
   color: string;
+  fontColor: string;
+  descriptionBackgroundColor: string;
+  descriptionFontColor: string;
 }
 
 export interface IData {
