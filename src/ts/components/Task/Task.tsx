@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Checkbox, Tag } from 'antd';
 import UploaderImage from '../Uploaders/UploaderImage';
 import UploaderVideo from '../Uploaders/UploaderVideo';
-import { getAdressFromCoordinates, getCoordinatesFromAdress } from '../../service/coordinatesApi';
+import { getAdressFromCoordinates, getCoordinatesFromAdress } from '../../services/coordinatesApi';
 import { YMaps, Map, Placemark, ZoomControl } from 'react-yandex-maps';
 import CommentsSection from '../Commentaries/CommentSection';
 import TaskTable from '../TaskTable/TaskTable';
@@ -16,41 +16,43 @@ type TaskProps = {
   id: string;
   name: string;
   isMentor?: boolean;
+  type?: string;
 };
 
-const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
-  const [loading, setLoading] = useState(false);
+const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = 'jstask' }) => {
   const [visible, setVisible] = useState(false);
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [haveFeedback, setHaveFeedback] = useState(true);
   const [address, setAdress] = useState('Минск');
   const [coords, setCoords] = useState<number[]>([]);
-  const [description, setDescription] = useState('Description will be added later...');
-  const [materials, setMaterials] = useState('Materials will be added later...');
+  const [description, setDescription] = useState('Will be added later...');
+  const [materials, setMaterials] = useState('Will be added later...');
   const [videoSrc, setVideoSrc] = useState('');
   const [imgSrc, setImgSrc] = useState('');
   const [deadline, setDeadline] = useState('');
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [resEvent, setResEvent] = useState<RsSchoolEvent>();
 
-  const type = TASK_TYPES.jstask.name;
+  //const type = TASK_TYPES.jstask.name;
 
   useEffect(() => {
     Services.getEvent(id).then((res: RsSchoolEvent) => {
-      const data = res.taskData;
-      setResEvent(res);
-      setAdress(data.address);
-      getCoordinates();
-      setDescription(data.description);
-      setMaterials(data.materials);
-      setVideoSrc(data.videoSrc);
-      setImgSrc(data.imgSrc);
-      setHaveFeedback(data.haveFeedback);
-      setIsOnline(data.isOnline);
-      setDeadline(data.deadline);
-      setComments(data.comments);
+      if (res) {
+        const data = res.taskData;
+        setResEvent(res);
+        setAdress(data.address);
+        getCoordinates();
+        setDescription(data.description);
+        setMaterials(data.materials);
+        setVideoSrc(data.videoSrc);
+        setImgSrc(data.imgSrc);
+        setHaveFeedback(data.haveFeedback);
+        setIsOnline(data.isOnline);
+        setDeadline(data.deadline);
+        setComments(data.comments);
+      }
     });
-  }, []);
+  }, [visible === true]);
 
   async function getCoordinates() {
     if (address) {
@@ -62,7 +64,7 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
     }
   }
 
-  const showModal = async () => {
+  const showModal = () => {
     setVisible(true);
   };
 
@@ -71,7 +73,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
   };
 
   const handleOk = () => {
-    setLoading(true);
     if (resEvent) {
       const savedEvent = resEvent;
       savedEvent.taskData = {
@@ -131,7 +132,7 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
     return (
       <>
         <h3>Deadline: {deadline}</h3>
-        {isMentor ? <h2 className="task-modal__title">Description interview</h2> : null}
+        <h2 className="task-modal__title">Questions</h2>
         <EditBlockType
           value={description}
           onChange={(value) => {
@@ -202,9 +203,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
   };
 
   const createTestTask = () => {
-    useEffect(() => {
-      setDescription('Link will be added later...');
-    }, []);
     return (
       <div className="test-task">
         <p>The link will be in Discord.</p>
@@ -256,9 +254,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
       case 'test':
         return createTestTask();
       case 'interview':
-        useEffect(() => {
-          setDescription('### Questions \n');
-        });
         return createInterviewTask();
       case 'codewars':
         return createCodewarsTask();
@@ -275,44 +270,46 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false }) => {
       <span className="task-modal-toggler" onClick={showModal}>
         {name}
       </span>
-      <Modal
-        className="modal"
-        visible={visible}
-        title={name}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
-          </Button>,
-          <Button key="submit" type="primary" onClick={handleOk}>
-            Save
-          </Button>,
-        ]}
-      >
-        <div className="task-modal modal">
-          <div className="task-modal__checkboxes">
-            <Checkbox disabled={false} checked={haveFeedback} onChange={onChange}>
-              Add feedback
-            </Checkbox>
-            <Tag color={isOnline ? 'green' : 'volcano'}>{isOnline ? 'online' : 'offline'}</Tag>
+      {visible ? (
+        <Modal
+          className="modal"
+          visible={visible}
+          title={name}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Return
+            </Button>,
+            <Button key="submit" type="primary" onClick={handleOk}>
+              Save
+            </Button>,
+          ]}
+        >
+          <div className="task-modal modal">
+            <div className="task-modal__checkboxes">
+              <Checkbox disabled={false} checked={haveFeedback} onChange={onChange}>
+                Add feedback
+              </Checkbox>
+              <Tag color={isOnline ? 'green' : 'volcano'}>{isOnline ? 'online' : 'offline'}</Tag>
+            </div>
+            {createTasks()}
+            {isOnline ? (
+              <YMaps>
+                <div className="map">
+                  <h2>Location</h2>
+                  <p>{address}</p>
+                  <Map width="100%" height="70vh" onClick={clickOnMap} defaultState={{ center: coords, zoom: 16 }}>
+                    <Placemark geometry={coords} />
+                    <ZoomControl />
+                  </Map>
+                </div>
+              </YMaps>
+            ) : null}
+            {haveFeedback ? <CommentsSection comments={comments} setComments={setComments} /> : null}
           </div>
-          {createTasks()}
-          {isOnline ? (
-            <YMaps>
-              <div className="map">
-                <h2>Location</h2>
-                <p>{address}</p>
-                <Map width="100%" height="70vh" onClick={clickOnMap} defaultState={{ center: coords, zoom: 16 }}>
-                  <Placemark geometry={coords} />
-                  <ZoomControl />
-                </Map>
-              </div>
-            </YMaps>
-          ) : null}
-          {haveFeedback ? <CommentsSection comments={comments} setComments={setComments} /> : null}
-        </div>
-      </Modal>
+        </Modal>
+      ) : null}
     </>
   );
 };
