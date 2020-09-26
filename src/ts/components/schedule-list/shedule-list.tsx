@@ -10,7 +10,8 @@ const ScheduleList: React.FC<any> = (events) => {
             size="large"
             renderItem={(item: RsSchoolEvent) => {
                 return(
-                <List.Item key={item.id}>
+                <List.Item key={item.id}
+                style={{backgroundColor: item.tableData.type.fontColor}}>
                     {item.tableData.name}
                     <ListItemTable event={item} />
                 </List.Item>

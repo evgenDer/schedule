@@ -6,7 +6,7 @@ const ListItemTable: React.FC<PropsOfListItem> = (props) => {
     console.log(props.event.tableData.type.fontColor);
     return (
         <Descriptions bordered>
-            <Descriptions.Item label="Type:" style={{color: props.event.tableData.type.fontColor}}>{ props.event.tableData.type.name }</Descriptions.Item>
+            <Descriptions.Item label="Type:">{ props.event.tableData.type.name }</Descriptions.Item>
             <Descriptions.Item label="Description:">{props.event.taskData.description}</Descriptions.Item>
             <Descriptions.Item label="Place:">{props.event.tableData.place}</Descriptions.Item>
             <Descriptions.Item label="Date and time:">{props.event.tableData.date} {props.event.tableData.time}</Descriptions.Item>
