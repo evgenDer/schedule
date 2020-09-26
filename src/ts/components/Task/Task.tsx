@@ -229,7 +229,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYP
   };
 
   const createCodewarsTask = () => {
-    setDescription('Task \n Scoring criteria');
     return (
       <>
         <EditBlockType
