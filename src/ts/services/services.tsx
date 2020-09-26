@@ -25,17 +25,19 @@ class Services {
   }
 
   public async getEvent(id: string) {
-    const rawResponse = await fetch(`${this.url}/${this.team}/event/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-    });
-    if (rawResponse.ok) {
-      const content = await rawResponse.json();
-      return content;
+    if (id) {
+      const rawResponse = await fetch(`${this.url}/${this.team}/event/${id}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+      if (rawResponse.ok) {
+        const content = await rawResponse.json();
+        return content;
+      }
+      throw new Error(`${rawResponse.status}`);
     }
-    throw new Error(`${rawResponse.status}`);
   }
 
   public async addEvent(event: RsSchoolEvent) {
