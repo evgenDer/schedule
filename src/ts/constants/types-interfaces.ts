@@ -3,6 +3,9 @@ import { ColumnsType } from 'antd/es/table';
 export interface ITaskType {
   name: string;
   color: string;
+  fontColor: string;
+  descriptionBackgroundColor: string;
+  descriptionFontColor: string;
 }
 
 export interface IData {

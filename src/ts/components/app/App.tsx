@@ -5,6 +5,12 @@ import SelectTypeShedule from '../SelectTypeShedule/SelectTypeShedule';
 import SaveFile from '../SaveFile/SaveFile';
 import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import EditingSchedule from '../EditingSchedule/EditingSchedule'; // Компонент редактирования типов задания.
+import {                                                          //
+  TASK_TYPES,                                                     // Типы заданий
+  TASK_TYPES_BACKGROUND_COLOR,                                    // Красивые бэкграунды для тэгов из antd
+  TASK_TYPES_FONT_COLOR                                           // Набор цветов всяких
+} from '../../constants/taskTypes';                               //
 
 const App: React.FC = () => {
   const [typeOfUser, setTypeOfUser] = useState('student');
@@ -22,6 +28,11 @@ const App: React.FC = () => {
           <EditOutlined /> Edit types
         </Button>
       </div>
+      <EditingSchedule                                          // Передать из бэкенда описанные выше проперти
+        taskTypes={TASK_TYPES}                                  // и ловить в локалсторедж ответ.
+        taskTypesBackgroundColor={TASK_TYPES_BACKGROUND_COLOR}  // Надеюсь не сильно зашкварно описал компонент)
+        taskTypesFontColor={TASK_TYPES_FONT_COLOR}              // Пользуйтесь кто хочет!))
+      />
     </React.Fragment>
   );
 };
