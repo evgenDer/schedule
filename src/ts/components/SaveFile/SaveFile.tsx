@@ -3,12 +3,13 @@ import { Menu, Dropdown, Button, message } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 import jsPDF from 'jspdf';
 import { FormatFiles } from './FormatFiles';
 
 const SaveFile: React.FC = () => {
   function handleMenuClick(event) {
-    const downloadElement = document.querySelector('.header') as HTMLElement;
+    const downloadElement = document.querySelector('.saving-content') as HTMLElement;
     let canvasPage;
     html2canvas(downloadElement).then(function (canvas) {
       canvasPage = canvas;
@@ -24,7 +25,7 @@ const SaveFile: React.FC = () => {
         const docPdf = new jsPDF();
         docPdf.addImage(canvas.toDataURL(), 'JPEG', 15, 40, 180, 180);
         docPdf.save();
-        // html2pdf(downloadElement);
+        html2pdf(downloadElement);
       }
     });
   }

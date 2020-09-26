@@ -320,13 +320,15 @@ const App: React.FC = () => {
             taskTypesFontColor={TASK_TYPES_FONT_COLOR} // Пользуйтесь кто хочет!))
           />
         </div>
-        <ScheduleTable
-          dataSource={data}
-          setData={setData}
-          userType={typeOfUser !== 'student'}
-          timezone={timezone}
-          setTimezone={setTimezone}
-        />
+        <div className="saving-content">
+          <ScheduleTable
+            dataSource={data}
+            setData={setData}
+            userType={typeOfUser !== 'student'}
+            timezone={timezone}
+            setTimezone={setTimezone}
+          />
+        </div>
       </Layout.Content>
     </React.Fragment>
   );
