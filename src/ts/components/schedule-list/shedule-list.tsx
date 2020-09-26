@@ -7,6 +7,7 @@ const ScheduleList: React.FC<any> = (events) => {
     return (
         <List
             dataSource={events.events}
+            size="large"
             renderItem={(item: RsSchoolEvent) => {
                 return(
                 <List.Item key={item.id}>
