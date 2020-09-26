@@ -26,9 +26,7 @@ const ShowHiddenButton: React.FC<TableHeaderProps> = ({
     button = hiddenRowsAmnt ? (
       <Button onClick={onShowHiddenButtonClick}>Show hidden rows ({hiddenRowsAmnt})</Button>
     ) : (
-      <Button onClick={onHideRowsButtonClick} type="primary">
-        Hide selected rows
-      </Button>
+      <Button onClick={onHideRowsButtonClick}>There are neither selected nor hidden rows</Button>
     );
   }
 
