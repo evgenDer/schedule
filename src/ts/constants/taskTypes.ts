@@ -1,13 +1,30 @@
-import { ITaskType } from './types-interfaces';
+import { ITaskTypes } from './types-interfaces';
 
-export const TASK_TYPES = {
-  jstask: { name: 'js task', color: 'green' } as ITaskType,
-  deadline: { name: 'deadline', color: 'red' } as ITaskType,
-  test: { name: 'test', color: 'volcano' } as ITaskType,
-  interview: { name: 'interview', color: 'purple' } as ITaskType,
-  codewars: { name: 'codewars', color: 'lime' } as ITaskType,
-  cvmarkdown: { name: 'cv:markdown', color: 'geekblue' } as ITaskType,
-  cvhtml: { name: 'cv:html', color: 'geekblue' } as ITaskType,
-  htmlcssacademy: { name: 'htmlcssacademy', color: 'blue' } as ITaskType,
-  lecture: { name: 'lecture', color: 'magenta' } as ITaskType,
+const TASK_TYPES: ITaskTypes = {
+  jstask: { 
+    name: 'js task', color: 'green', fontColor: 'green', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000' 
+  },
+  deadline: { 
+    name: 'deadline', color: 'red', fontColor: 'red', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000' 
+  },
+  test: { 
+    name: 'test', color: 'volcano', fontColor: 'volcano', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+  },
+  interview: { 
+    name: 'interview', color: 'purple', fontColor: 'purple', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+  },
+  codewars: { 
+    name: 'codewars', color: 'lime', fontColor: 'lime', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+  },
+  default: { 
+    name: 'cv:markdown', color: 'geekblue', fontColor: 'geekblue', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+  },
+  htmlcssacademy: { 
+    name: 'htmlcssacademy', color: 'blue', fontColor: 'blue', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+ },
+  lecture: { 
+    name: 'lecture', color: 'magenta', fontColor: 'magenta', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000'
+  },
 };
+
+export default TASK_TYPES;

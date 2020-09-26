@@ -1,21 +1,22 @@
 import { List, Space} from 'antd';
 import React from 'react';
-import services from '../../services/services';
 import { RsSchoolEvent } from '../../constants/types-interfaces';
+import ListItemTable from '../listItemTable/listItemTable';
 
-const scheduleList: React.FC = (events: RsSchoolEvent[]) => {
+const ScheduleList: React.FC<any> = (events) => {
     return (
         <List
-            dataSource={events}
-            renderItem={item => (
+            dataSource={events.events}
+            renderItem={(item: RsSchoolEvent) => {
+                return(
                 <List.Item key={item.id}>
-                    title={<a href={item.descriptionUrl}>{item.name}</a>}
-                    
+                    title={item.tableData.name}
+                    <ListItemTable event={item} />
                 </List.Item>
-            )}
+            )}}
         >
         </List>
     )
 }
 
-export default scheduleList;
+export default ScheduleList;

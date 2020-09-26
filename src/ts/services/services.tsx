@@ -1,6 +1,5 @@
 import { RsSchoolEvent, Organizer } from '../constants/types-interfaces';
 
-
 class Services {
   url: string;
   constructor() {
@@ -15,7 +14,7 @@ class Services {
     });
     if (rawResponse.ok) {
       const content = await rawResponse.json();
-      return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
+      return content.data.filter((el: RsSchoolEvent) => el.tableData.name && el.tableData.type);
     }
     throw new Error(`${rawResponse.status}`);
   }
