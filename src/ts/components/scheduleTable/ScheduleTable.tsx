@@ -10,9 +10,16 @@ type SheduleTableProps = {
   userType?: boolean;
   timezone: ITimeZone;
   setTimezone: (timezone: ITimeZone) => void;
+  updateTableData: (newTableDta: IData[]) => void;
 };
 
-const SheduleTable: React.FC<SheduleTableProps> = ({ dataSource, setData, userType = false, timezone }) => {
+const SheduleTable: React.FC<SheduleTableProps> = ({
+  dataSource,
+  setData,
+  userType = false,
+  timezone,
+  updateTableData,
+}) => {
   const additionalColumns = userType ? ORGANIZER_COLS : STUDENT_COLS;
   const columns = [...COMMON_COLS, ...additionalColumns];
 
@@ -32,7 +39,11 @@ const SheduleTable: React.FC<SheduleTableProps> = ({ dataSource, setData, userTy
 
   return (
     <div className="shedule-table-container">
-      {userType ? <OrganizerSheduleTable {...props} timezone={timezone} /> : <StudentSheduleTable {...props} />}
+      {userType ? (
+        <OrganizerSheduleTable {...props} timezone={timezone} updateTableData={updateTableData} />
+      ) : (
+        <StudentSheduleTable {...props} />
+      )}
     </div>
   );
 };

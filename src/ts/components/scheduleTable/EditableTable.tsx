@@ -21,6 +21,8 @@ import { getDateString, getTimeString } from '../../helpers/dataHelper';
 import { DeleteOutlined } from '@ant-design/icons';
 import { SelectValue } from 'antd/lib/select';
 import { TASK_TYPES } from '../../constants/taskTypes';
+import { DEFAULT_TABLE_DATA } from '../../constants/defaultValues';
+import Services from '../../services/services';
 
 const { Option } = Select;
 
@@ -100,14 +102,14 @@ const EditableCell: React.FC<EditableCellProps> = ({
       savingData.time = typeof time === 'string' ? time : getTimeString(time.format());
       savingData.datetime = moment(`${savingData.date}T${savingData.time}:00`).format();
       if (!taskTypesValues.includes(type)) {
-        savingData.type = taskTypesValues.find(({ name }) => name === type);
+        const cmp = typeof type === 'string' ? type : type.name;
+        savingData.type = taskTypesValues.find(({ name }) => name === cmp);
       }
 
       handleSave(savingData);
     } catch (errInfo) {
       notification.open({
         message: 'Saving failed!',
-        description: errInfo,
       });
     }
   };
@@ -147,9 +149,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
             ref={(inputRef as unknown) as React.RefObject<Select<SelectValue>>}
             onChange={save}
           >
-            {taskTypesValues.map(({ name, color }) => (
+            {taskTypesValues.map(({ name, color, fontColor }) => (
               <Option key={name} value={name}>
-                <Tag color={color}>{name}</Tag>
+                <Tag color={color} style={{ color: fontColor }}>
+                  {name}
+                </Tag>
               </Option>
             ))}
           </Select>
@@ -198,28 +202,18 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
 
   const handleDelete = (key: string) => {
     setData([...data].filter((item) => item.key !== key));
+    Services.deleteEvent(key);
     message.success('Deleted');
   };
 
   const handleAdd = () => {
     const datetime = moment().tz(timezone.name).format();
     const newData: IData = {
+      ...DEFAULT_TABLE_DATA,
       key: count.toString(),
       datetime: datetime,
       date: getDateString(datetime),
       time: getTimeString(datetime),
-      name: 'Task',
-      type: {
-        name: 'task',
-        color: 'gold',
-        fontColor: 'black',
-        descriptionBackgroundColor: 'white',
-        descriptionFontColor: 'black',
-      },
-      organizer: 'https://github.com/rolling-scopes-school',
-      isComplited: false,
-      mark: 0,
-      maxMark: 0,
       place: 'Place',
       broadcastUrl: 'URL',
       comment: 'Your comment',

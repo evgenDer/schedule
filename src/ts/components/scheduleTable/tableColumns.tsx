@@ -33,7 +33,11 @@ export const COMMON_COLS: TableDataColumns = [
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
-    render: ({ name, color }: ITaskType) => <Tag color={color}>{name}</Tag>,
+    render: ({ name, color, fontColor }: ITaskType) => (
+      <Tag color={color} style={{ color: fontColor }}>
+        {name}
+      </Tag>
+    ),
     filters: Object.values(TASK_TYPES).map(({ name }) => ({ text: name, value: name })),
     onFilter: (value: any, { type }: IData) => type.name === value,
     align: 'center',
@@ -78,7 +82,7 @@ export const COMMON_COLS: TableDataColumns = [
       }
       return <span>-</span>;
     },
-    width: 160,
+    width: 165,
   },
   {
     title: 'Comment',

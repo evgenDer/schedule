@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { notification, Table } from 'antd';
+import { Table } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import EditableTable from './EditableTable';
@@ -13,6 +13,7 @@ type OrganizerSheduleTableProps = {
   setFinalColumns: (finalColumns: TableDataColumns) => void;
   scroll: { x: number };
   timezone: ITimeZone;
+  updateTableData: (newTableDta: IData[]) => void;
 };
 
 const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
@@ -23,6 +24,7 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   setFinalColumns,
   scroll,
   timezone,
+  updateTableData,
 }) => {
   const [editableData, setEditableData] = useState(data);
   const [newColumns] = useState(
@@ -51,6 +53,7 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       onSaveButtonClick={() => {
         setData(editableData);
         setIsTableEditable(false);
+        updateTableData(editableData);
       }}
       columns={newColumns}
       finalColumns={finalColumns}
