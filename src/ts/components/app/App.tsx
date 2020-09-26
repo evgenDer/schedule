@@ -14,11 +14,12 @@ import Services from '../../services/services';
 import EditingSchedule from '../EditingSchedule/EditingSchedule';
 import { TASK_TYPES, TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { DEFAULT_TASK_DATA } from '../../constants/defaultValues';
+import * as Storage from '../../helpers/storage';
 
 const App: React.FC = () => {
   const [data, setData] = useState<RsSchoolEvent[]>([]);
   const [tableData, setTableData] = useState<IData[]>([]);
-  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
+  const [timezone, setTimezone] = useState(Storage.getTimezone());
   const [typeOfUser, setTypeOfUser] = useState('student');
   const [typeOfScheduleForm, setTypeOfScheduleForm] = useState(SheduleType.Table);
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         return element;
       })
     );
+    Storage.setTimezone(timezone);
   }, [timezone]);
 
   const updateTableData = (newTableData: IData[]) => {

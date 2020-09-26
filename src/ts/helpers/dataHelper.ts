@@ -1,3 +1,4 @@
+import { ColumnsType } from 'antd/lib/table';
 import { IData } from '../constants/types-interfaces';
 
 export const sortMarks = (a: number | undefined, b: number | undefined) => {
@@ -27,4 +28,8 @@ export const sortDataByDate = (a: IData, b: IData) => {
   const aDate = new Date(a.date);
   const bDate = new Date(b.date);
   return sortDate(aDate, bDate);
+};
+
+export const calculateColumnsWidthSum = (columns: ColumnsType<IData>): number => {
+  return columns.map((col) => col.width as number).reduce((accum, current) => accum + current);
 };

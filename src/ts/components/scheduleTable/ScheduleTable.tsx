@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StudentSheduleTable from './StudentSheduleTable';
 import OrganizerSheduleTable from './OrganizerSheduleTable';
 import { COMMON_COLS, STUDENT_COLS, ORGANIZER_COLS } from './tableColumns';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
+import { calculateColumnsWidthSum } from '../../helpers/dataHelper';
 
 type SheduleTableProps = {
   dataSource: IData[];
@@ -24,9 +25,11 @@ const SheduleTable: React.FC<SheduleTableProps> = ({
   const columns = [...COMMON_COLS, ...additionalColumns];
 
   const [finalColumns, setFinalColumns] = useState<TableDataColumns>(columns);
-  const [tableWidth] = useState(
-    finalColumns.map((col) => col.width as number).reduce((accum, current) => accum + current)
-  );
+  const [tableWidth, setTableWidth] = useState(calculateColumnsWidthSum(finalColumns));
+
+  useEffect(() => {
+    setTableWidth(calculateColumnsWidthSum(finalColumns));
+  }, [finalColumns]);
 
   const props = {
     data: dataSource,

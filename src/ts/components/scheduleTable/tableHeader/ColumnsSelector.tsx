@@ -2,6 +2,7 @@ import React from 'react';
 import { IData, TableDataColumns } from '../../../constants/types-interfaces';
 import { Select } from 'antd';
 import { ColumnType } from 'antd/es/table';
+import * as Storage from '../../../helpers/storage';
 
 type ColumnsSelectorProps = {
   columns: TableDataColumns;
@@ -23,7 +24,11 @@ const ColumnsSelector: React.FC<ColumnsSelectorProps> = ({ columns, finalColumns
   );
 
   const handleSelection = (value: string[]) => {
-    setFinalColumns(columns.filter(({ title }) => value.includes(title as string) || title === 'Name' || title === ''));
+    const newFinalColumns = columns.filter(
+      ({ title }) => value.includes(title as string) || title === 'Name' || title === ''
+    );
+    setFinalColumns(newFinalColumns);
+    Storage.setSelectedColumns(newFinalColumns.map((col) => col.key?.toString() || ''));
   };
 
   return (

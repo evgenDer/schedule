@@ -6,6 +6,7 @@ import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/i
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import Task from '../Task/Task';
 import { sortDataByDate } from '../../helpers/dataHelper';
+import * as Storage from '../../helpers/storage';
 
 type StudentSheduleTableProps = {
   data: IData[];
@@ -32,9 +33,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
       if (col.key === 'name') {
         return {
           ...col,
-          render: (_: any, { key, name, type }: IData) => {
-            return <Task id={key} name={name} type={type.name}/>;
-          },
+          render: (_: any, { key, name, type }: IData) => <Task id={key} name={name} type={type.name} />,
         };
       }
       if (col.key === 'taskDone') {
@@ -58,7 +57,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   );
 
   useEffect(() => {
-    setFinalColumns(newColumns);
+    const filteredColumns = Storage.getSelectedColumns();
+    setFinalColumns(newColumns.filter((col) => filteredColumns.includes(col.key?.toString() || '')));
   }, []);
 
   const setTaskDone = (idx: string) => {
@@ -73,7 +73,11 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   const setRowsHidden = () => {
     const newHidden = data.filter(({ key }) => selectedRowsKeys.includes(key));
     if (newHidden.length) {
-      setHiddenData((prev) => [...prev, ...newHidden]);
+      setHiddenData((prev) => {
+        const newHiddenData = [...prev, ...newHidden];
+        Storage.setHiddenRows(newHiddenData.map((element) => element.key));
+        return newHiddenData;
+      });
     }
     setData((prev: IData[]) => prev.filter(({ key }) => !selectedRowsKeys.includes(key)));
     setSelectedRowsKeys([]);
@@ -82,6 +86,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
   const showHiddenRows = () => {
     setData((prev: IData[]) => [...prev, ...hiddenData].sort(sortDataByDate));
     setHiddenData([]);
+    Storage.setHiddenRows([]);
   };
 
   const shiftDownEvent = ({ key }: KeyboardEvent) => {
@@ -128,6 +133,18 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
       });
     }
   };
+
+  useEffect(() => {
+    setHiddenData((prev) => {
+      if (data.length) {
+        const hiddenDataKeys = Storage.getHiddenRows();
+        const dataToHide = data.filter((element) => hiddenDataKeys.includes(element.key));
+        setData((prev: IData[]) => prev.filter(({ key }) => !hiddenDataKeys.includes(key)));
+        return dataToHide;
+      }
+      return prev;
+    });
+  }, [data.length !== 0]);
 
   return (
     <React.Fragment>

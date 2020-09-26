@@ -4,6 +4,7 @@ import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interf
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import EditableTable from './EditableTable';
 import Task from '../Task/Task';
+import * as Storage from '../../helpers/storage';
 
 type OrganizerSheduleTableProps = {
   data: IData[];
@@ -43,7 +44,8 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   const [isTableEditable, setIsTableEditable] = useState(false);
 
   useEffect(() => {
-    setFinalColumns(newColumns);
+    const filteredColumns = Storage.getSelectedColumns();
+    setFinalColumns(newColumns.filter((col) => filteredColumns.includes(col.key?.toString() || '')));
   }, []);
 
   const tableHeader = (
