@@ -2,22 +2,26 @@ import React from 'react';
 import { Modal, Input } from 'antd';
 
 interface ICreateTypeModal {
-  showInput: boolean,
-  createNewType: Function
+  showInput: boolean;
+  createNewType: Function;
 }
 
-const CreateTypeModal: React.FC<ICreateTypeModal> = ( {showInput, createNewType} ) => {
+const CreateTypeModal: React.FC<ICreateTypeModal> = ({ showInput, createNewType }) => {
   let nameType = '';
   let newType = {};
 
   const handleInnerNameNewType = (e: any): void => {
     nameType = e.value;
     newType = {
-      [nameType]: { 
-        name: nameType, color: '', fontColor: '', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000' 
-      }
-    }
-  }
+      [nameType]: {
+        name: nameType,
+        color: '',
+        fontColor: '',
+        descriptionBackgroundColor: '#fff',
+        descriptionFontColor: '#000',
+      },
+    };
+  };
 
   return (
     <>
@@ -28,14 +32,14 @@ const CreateTypeModal: React.FC<ICreateTypeModal> = ( {showInput, createNewType}
         onCancel={() => createNewType({})}
         destroyOnClose={true}
       >
-        <Input 
+        <Input
           placeholder="Enter a new type name"
-          maxLength={25} 
-          onChange={() => handleInnerNameNewType(event?.target)}
+          maxLength={25}
+          onChange={(event) => handleInnerNameNewType(event?.target)}
         />
       </Modal>
     </>
   );
-}
+};
 
 export default CreateTypeModal;

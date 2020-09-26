@@ -314,9 +314,6 @@ const App: React.FC = () => {
           <TimeZoneSelector timezone={timezone} setTimezone={setTimezone} />
           <SelectTypeShedule type={typeOfScheduleForm} setType={setTypeOfScheduleForm} />
           <SaveFile />
-          <Button>
-            <EditOutlined /> Edit types
-          </Button>
           <EditingSchedule // Передать из бэкенда описанные выше проперти
             taskTypes={TASK_TYPES} // и ловить в локалсторедж ответ.
             taskTypesBackgroundColor={TASK_TYPES_BACKGROUND_COLOR} // Надеюсь не сильно зашкварно описал компонент)

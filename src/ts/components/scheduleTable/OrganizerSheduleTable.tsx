@@ -38,10 +38,6 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       onSaveButtonClick={() => {
         setData(editableData);
         setIsTableEditable(false);
-        notification.open({
-          message: 'Saving failed!',
-          description: 'isdfosihfoiejfoiehf oweifh9owehfei',
-        });
       }}
       columns={newColumns}
       finalColumns={finalColumns}

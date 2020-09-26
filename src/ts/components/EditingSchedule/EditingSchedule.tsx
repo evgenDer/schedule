@@ -7,15 +7,19 @@ import VisualDashboard from './VisualDashboard';
 import ListItem from './ListItem';
 
 const testType: any = {
-  testType: { 
-    name: 'test type', color: '', fontColor: '', descriptionBackgroundColor: '#fff', descriptionFontColor: '#000' 
-  }
-}
+  testType: {
+    name: 'test type',
+    color: '',
+    fontColor: '',
+    descriptionBackgroundColor: '#fff',
+    descriptionFontColor: '#000',
+  },
+};
 
 interface EditingSchedule {
-  taskTypes: object,
-  taskTypesBackgroundColor: object,
-  taskTypesFontColor: object
+  taskTypes: object;
+  taskTypesBackgroundColor: object;
+  taskTypesFontColor: object;
 }
 
 const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) => {
@@ -31,22 +35,22 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
     localStorage.setItem('typeTask', JSON.stringify(customizationTypeTask));
     localStorage.setItem('fullListTypeTask', JSON.stringify(fullListTypeTask));
     handleReloadModal(false);
-  }
+  };
 
   const handleSelectTaskType = (item: any): void => {
     const selectedTaskTypeName = item.key;
     setTaskTypeName(selectedTaskTypeName);
     setCustomizationTypeTask({ [selectedTaskTypeName]: copyTaskType[selectedTaskTypeName] });
     setDisableItems(false);
-  }
+  };
 
   const handleSelectColors = (item: any, propertyColor: string): void => {
     const selectColor = item.item.node.innerText;
     setCustomizationTypeTask(() => {
       customizationTypeTask[taskTypeName][propertyColor] = selectColor;
-      return {...customizationTypeTask};
+      return { ...customizationTypeTask };
     });
-  }
+  };
 
   const handleReloadModal = (resetModal: boolean): void => {
     setVisibleModal(false);
@@ -56,13 +60,13 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
     setDisableItems(true);
     setTimeout(() => {
       setVisibleModal(resetModal);
-    }, 350)
-  }
+    }, 350);
+  };
 
-  const [visibleCreateTypeModal, letVisibleCreateTypeModal] = useState(false);
+  const [visibleCreateTypeModal, setVisibleCreateTypeModal] = useState(false);
   const handleShowCreateTypeModal = () => {
-    letVisibleCreateTypeModal(true);
-  }
+    setVisibleCreateTypeModal(true);
+  };
 
   const getNewType = (newType: object): void => {
     if (Object.keys(newType).length === 1) {
@@ -71,22 +75,19 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
       setFullListTypeTask(actualListType);
       setTaskTypeName(Object.keys(newType)[0]);
       setCustomizationTypeTask(newType);
-      letVisibleCreateTypeModal(false);
+      setVisibleCreateTypeModal(false);
       setDisableItems(false);
     } else {
-      letVisibleCreateTypeModal(false);
+      setVisibleCreateTypeModal(false);
       setDisableItems(true);
     }
-  }
+  };
 
   return (
     <>
-      <Button 
-        onClick={() => setVisibleModal(true)}
-        icon={<EditOutlined />} 
-        size='small' 
-        type="primary" 
-      />
+      <Button onClick={() => setVisibleModal(true)}>
+        <EditOutlined /> Customize table
+      </Button>
       <Modal
         title="Editing schedule"
         visible={visibleModal}
@@ -94,32 +95,29 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
         onCancel={() => handleReloadModal(false)}
         destroyOnClose={true}
       >
-        <CreateTypeModal 
-          showInput={visibleCreateTypeModal}
-          createNewType={(newType: object) => getNewType(newType)}
-        />
-        <VisualDashboard 
+        <CreateTypeModal showInput={visibleCreateTypeModal} createNewType={(newType: object) => getNewType(newType)} />
+        <VisualDashboard
           customizationTypeTask={customizationTypeTask}
           taskTypeName={taskTypeName}
           onReloadModal={() => handleReloadModal(true)}
           onShowCreateTypeModal={() => handleShowCreateTypeModal()}
           disableItems={!disableItems}
         />
-        <ListItem 
+        <ListItem
           onSelectItem={(item: object) => handleSelectTaskType(item)}
           disableItems={!disableItems}
           titleSubMenu={'Select task type'}
           titleItem={'Select type'}
           listItems={makingListTags(taskTypes)}
         />
-        <ListItem 
+        <ListItem
           onSelectItem={(item: object) => handleSelectColors(item, 'color')}
           disableItems={disableItems}
           titleSubMenu={'Background color for selected type(optional)'}
           titleItem={'Background color'}
           listItems={makingListColors(taskTypesBackgroundColor)}
         />
-        <ListItem 
+        <ListItem
           onSelectItem={(item: object) => handleSelectColors(item, 'fontColor')}
           disableItems={disableItems}
           titleSubMenu={'Font color for selected type(optional)'}
@@ -127,14 +125,14 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
           listItems={makingListColors(taskTypesFontColor)}
         />
         <hr />
-        <ListItem 
+        <ListItem
           onSelectItem={(item: object) => handleSelectColors(item, 'descriptionBackgroundColor')}
           disableItems={disableItems}
           titleSubMenu={'Background color for description(optional)'}
           titleItem={'Background color'}
           listItems={makingListColors(taskTypesFontColor)}
         />
-        <ListItem 
+        <ListItem
           onSelectItem={(item: object) => handleSelectColors(item, 'descriptionFontColor')}
           disableItems={disableItems}
           titleSubMenu={'Font color for description(optional)'}
@@ -144,6 +142,6 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
       </Modal>
     </>
   );
-}
+};
 
 export default EditingSchedule;
