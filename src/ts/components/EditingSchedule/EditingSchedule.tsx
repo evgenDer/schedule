@@ -5,6 +5,8 @@ import { makingListTags, makingListColors } from './makeListItems';
 import CreateTypeModal from './CreateTypeModal';
 import VisualDashboard from './VisualDashboard';
 import ListItem from './ListItem';
+import { setTaskType, setFullListTaskTypes } from '../../helpers/storage';
+import { ITaskType, ITaskTypes } from '../../constants/types-interfaces';
 
 const testType: any = {
   testType: {
@@ -17,9 +19,9 @@ const testType: any = {
 };
 
 interface EditingSchedule {
-  taskTypes: object;
-  taskTypesBackgroundColor: object;
-  taskTypesFontColor: object;
+  taskTypes: ITaskTypes;
+  taskTypesBackgroundColor: string[];
+  taskTypesFontColor: string[];
 }
 
 const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) => {
@@ -32,8 +34,8 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
 
   const handleOkBtn = (): void => {
     setVisibleModal(false);
-    localStorage.setItem('typeTask', JSON.stringify(customizationTypeTask));
-    localStorage.setItem('fullListTypeTask', JSON.stringify(fullListTypeTask));
+    setTaskType(customizationTypeTask);
+    setFullListTaskTypes(fullListTypeTask);
     handleReloadModal(false);
   };
 

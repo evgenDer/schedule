@@ -26,6 +26,5 @@ export const isUrl = (url: string) => url.split('/').includes('https:');
 export const sortDataByDate = (a: IData, b: IData) => {
   const aDate = new Date(a.date);
   const bDate = new Date(b.date);
-  console.log(aDate, bDate);
   return sortDate(aDate, bDate);
 };

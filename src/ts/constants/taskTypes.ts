@@ -1,69 +1,69 @@
-import { ITaskType } from './types-interfaces';
+import { ITaskType, ITaskTypes } from './types-interfaces';
 
-export const TASK_TYPES = {
+export const TASK_TYPES: ITaskTypes = {
   jstask: {
     name: 'js task',
     color: 'green',
     fontColor: 'green',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   deadline: {
     name: 'deadline',
     color: 'red',
     fontColor: 'red',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   test: {
     name: 'test',
     color: 'volcano',
     fontColor: 'volcano',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   interview: {
     name: 'interview',
     color: 'purple',
     fontColor: 'purple',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   codewars: {
     name: 'codewars',
     color: 'lime',
     fontColor: 'lime',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   cvmarkdown: {
     name: 'cv:markdown',
     color: 'geekblue',
     fontColor: 'geekblue',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   cvhtml: {
     name: 'cv:html',
     color: 'geekblue',
     fontColor: 'geekblue',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   htmlcssacademy: {
     name: 'htmlcssacademy',
     color: 'blue',
     fontColor: 'blue',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
   lecture: {
     name: 'lecture',
     color: 'magenta',
     fontColor: 'magenta',
     descriptionBackgroundColor: '#fff',
     descriptionFontColor: '#000',
-  } as ITaskType,
+  },
 };
 
 export const TASK_TYPES_BACKGROUND_COLOR = [
@@ -92,3 +92,11 @@ export const TASK_TYPES_FONT_COLOR = [
   '#d800ff',
   '#760863',
 ];
+
+export const DEFAULT_TASK_TYPE: ITaskType = {
+  name: 'task',
+  color: 'green',
+  fontColor: 'green',
+  descriptionBackgroundColor: '#fff',
+  descriptionFontColor: '#000',
+};

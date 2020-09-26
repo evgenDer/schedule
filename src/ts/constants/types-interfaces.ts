@@ -9,6 +9,10 @@ export interface ITaskType {
   descriptionFontColor: string;
 }
 
+export interface ITaskTypes {
+  [propName: string]: ITaskType;
+}
+
 export interface IData {
   key: string;
   datetime: string; // moment().format()
