@@ -247,6 +247,12 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
   };
 
   const newColumns = columns.map((col) => {
+    if (col.key === 'name') {
+      col = {
+        ...col,
+        render: (name) => name,
+      };
+    }
     if (col.key === 'deleteRow') {
       col = {
         ...col,

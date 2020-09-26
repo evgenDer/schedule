@@ -3,6 +3,7 @@ import { notification, Table } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import EditableTable from './EditableTable';
+import Task from '../Task/Task';
 
 type OrganizerSheduleTableProps = {
   data: IData[];
@@ -24,7 +25,19 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
   timezone,
 }) => {
   const [editableData, setEditableData] = useState(data);
-  const [newColumns] = useState(columns);
+  const [newColumns] = useState(
+    columns.map((col) => {
+      if (col.key === 'name') {
+        return {
+          ...col,
+          render: (_: any, { key, name }: IData) => {
+            return <Task id={key} name={name} isMentor={true} />;
+          },
+        };
+      }
+      return col;
+    })
+  );
   const [isTableEditable, setIsTableEditable] = useState(false);
 
   useEffect(() => {
