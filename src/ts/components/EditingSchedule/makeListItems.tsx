@@ -6,7 +6,9 @@ export const makingListTags = (listTags: any) => {
   for (let key in listTags) {
     answer.push(
       <Menu.Item key={key}>
-        <Tag color={listTags[key]['color']}>{listTags[key]['name']}</Tag>
+        <Tag color={listTags[key]['color']} style={{ color: listTags[key]['fontColor'] }}>
+          {listTags[key]['name']}
+        </Tag>
       </Menu.Item>
     );
   }

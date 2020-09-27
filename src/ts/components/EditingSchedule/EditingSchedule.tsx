@@ -132,7 +132,7 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
           disableItems={disableItems}
           titleSubMenu={'Background color for description(optional)'}
           titleItem={'Background color'}
-          listItems={makingListColors(taskTypesFontColor)}
+          listItems={makingListColors(taskTypesBackgroundColor)}
         />
         <ListItem
           onSelectItem={(item: object) => handleSelectColors(item, 'descriptionFontColor')}
