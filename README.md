@@ -34,7 +34,11 @@
    ```react
    <StudentSheduleTable  />
    ```
+<<<<<<< HEAD
    Компонент для создания таблицы студента
+=======
+   Компонент для создания таблицы студнта
+>>>>>>> 3c3725529ea8d6ff0b54fb597dcebb78ad150704
 4. OrganizerSheduleTable
    ```react
     <OrganizerSheduleTable />
