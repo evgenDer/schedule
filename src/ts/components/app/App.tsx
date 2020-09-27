@@ -11,6 +11,7 @@ import {                                                          //
   TASK_TYPES_BACKGROUND_COLOR,                                    // Красивые бэкграунды для тэгов из antd
   TASK_TYPES_FONT_COLOR                                           // Набор цветов всяких
 } from '../../constants/taskTypes';                               //
+import CalendarSchedule from '../CalendarSchedule/CalendarSchedule';
 
 const App: React.FC = () => {
   const [typeOfUser, setTypeOfUser] = useState('student');
@@ -33,6 +34,7 @@ const App: React.FC = () => {
         taskTypesBackgroundColor={TASK_TYPES_BACKGROUND_COLOR}  // Надеюсь не сильно зашкварно описал компонент)
         taskTypesFontColor={TASK_TYPES_FONT_COLOR}              // Пользуйтесь кто хочет!))
       />
+      <CalendarSchedule />
     </React.Fragment>
   );
 };
