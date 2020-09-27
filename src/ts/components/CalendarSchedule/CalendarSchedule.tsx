@@ -1,7 +1,6 @@
 import React from 'react';
 import { Calendar, Badge } from 'antd';
 import { IData } from '../../constants/types-interfaces';
-// import ModalEvent from './ModalEvent';
 import Task from '../Task/Task';
 import { findTask } from '../../helpers/dataHelper';
 
@@ -10,12 +9,10 @@ type CalendarSchedule = {
 };
 
 const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
-  console.log(dataSource);
   const getListData = (value) => {
     let listData;
     let actualObject;
     const compareDates = (day) => {
-      // console.log(day.date, value.format().slice(0, 10));
       if (day.date === value.format().slice(0, 10)) {
         actualObject = day;
       }
@@ -24,8 +21,6 @@ const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
     switch (true) {
       case dataSource.some(compareDates):
         listData = [
-          // { type: 'warning', content: 'This is warning event.' },
-          // { type: 'success', content: 'This is usual event.' },
           {
             broadcastUrl: actualObject.broadcastUrl,
             coef: actualObject.coef,
@@ -54,8 +49,6 @@ const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
       <ul className="events">
         {listData.map(item => (
           <li key={item.key}>
-            <h4>{item.name}</h4>
-            {/* <ModalEvent dayData={item} /> */}
             <Task id={item.key} name={item.name} type={findTask(item.typeId).name} deadline={item.date} />
           </li>
         ))}
@@ -64,9 +57,10 @@ const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
   }
   
   const getMonthData = (value) => {
-    if (value.month() === 8) {
-      return 1394;
-    }
+    // if (value.month() === 8) {
+    //   return 1394;
+    // }
+    return null;
   }
   
   const monthCellRender = (value) => {
