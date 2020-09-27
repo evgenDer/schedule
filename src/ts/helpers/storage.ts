@@ -23,7 +23,7 @@ export const setSelectedColumns = (selectedColumns: string[]) => {
 };
 
 export const getSelectedColumns = (): string[] => {
-  return JSON.parse(localStorage.getItem('RSSSelectedColumns') || '[]');
+  return JSON.parse(localStorage.getItem('RSSSelectedColumns') || '["name", "taskDone"]');
 };
 
 export const setHiddenRows = (hiddenRows: string[]) => {
