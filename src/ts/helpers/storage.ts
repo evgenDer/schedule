@@ -6,7 +6,7 @@ export const setTaskType = (customizationTaskType: ITaskType) => {
   localStorage.setItem('RSSTypeTask', JSON.stringify(customizationTaskType));
 };
 
-export const setFullListTaskTypes = (FullListTaskTypes: ITaskTypes) => {
+export const setFullListTaskTypes = (FullListTaskTypes: ITaskType[]) => {
   localStorage.setItem('RSSFullListTypeTask', JSON.stringify(FullListTaskTypes));
 };
 
@@ -14,7 +14,7 @@ export const getTaskType = (): ITaskType => {
   return JSON.parse(localStorage.getItem('RSSTypeTask') || JSON.stringify(DEFAULT_TASK_TYPE));
 };
 
-export const getFullListTaskTypes = (): ITaskTypes => {
+export const getFullListTaskTypes = (): ITaskType[] => {
   return JSON.parse(localStorage.getItem('RSSFullListTypeTask') || JSON.stringify([DEFAULT_TASK_TYPE]));
 };
 
@@ -40,4 +40,12 @@ export const setTimezone = (timezone: ITimeZone) => {
 
 export const getTimezone = (): ITimeZone => {
   return JSON.parse(localStorage.getItem('RSSTimezone') || JSON.stringify(DEFAULT_TIMEZONE));
+};
+
+export const setServerTaskTypes = (taskTypes: ITaskType[]) => {
+  localStorage.setItem('RSSCurrentTaskTypes', JSON.stringify(taskTypes));
+};
+
+export const getServerTaskTypes = (): ITaskType[] => {
+  return JSON.parse(localStorage.getItem('RSSCurrentTaskTypes') || JSON.stringify([DEFAULT_TASK_TYPE]));
 };

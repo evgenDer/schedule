@@ -21,10 +21,11 @@ import { PickerProps } from 'antd/lib/date-picker/generatePicker';
 import { getDateString, getTimeString } from '../../helpers/dataHelper';
 import { CalendarOutlined, DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { SelectValue } from 'antd/lib/select';
-import { DEFAULT_TASK_TYPE, TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TABLE_DATA } from '../../constants/defaultValues';
 import Services from '../../services/services';
 import ScheduleList from '../schedule-list/shedule-list';
+import * as Storage from '../../helpers/storage';
+import { findTask } from '../../helpers/dataHelper';
 
 const { Option } = Select;
 
@@ -74,7 +75,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const form = useContext(EditableContext);
   const currentKey = Object.keys(record).find((key) => key === dataIndex) || '';
 
-  const taskTypesValues = Object.values(TASK_TYPES);
+  const taskTypesValues = Storage.getServerTaskTypes();
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -85,7 +86,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const toggleEdit = () => {
     setEditing((prev) => !prev);
     Object.entries(record).forEach(([key, value]) => {
-      if (!['time', 'date', 'type'].includes(key)) {
+      if (!['time', 'date', 'typeId'].includes(key)) {
         if (key === currentKey) {
           form.setFieldsValue({ [dataIndex]: value });
         }
@@ -98,14 +99,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
       const values = await form.validateFields();
       toggleEdit();
       const savingData = { ...record, ...values };
-      const { time, date, type } = savingData;
+      const { time, date, typeId: type } = savingData;
 
       savingData.date = typeof date === 'string' ? date : getDateString(date.format());
       savingData.time = typeof time === 'string' ? time : getTimeString(time.format());
       savingData.datetime = moment(`${savingData.date}T${savingData.time}:00`).format();
+
       if (!taskTypesValues.includes(type)) {
-        const cmp = typeof type === 'string' ? type : type.name;
-        savingData.type = taskTypesValues.find(({ name }) => name === cmp);
+        const res = taskTypesValues.find(({ name }) => name === type);
+        savingData.typeId = res !== undefined ? res.id : findTask(type).id;
       }
 
       handleSave(savingData);
@@ -144,16 +146,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
           />
         );
         break;
-      case 'type':
+      case 'typeId':
         input = (
           <Select
             placeholder="Select task type"
             ref={(inputRef as unknown) as React.RefObject<Select<SelectValue>>}
             onChange={save}
-            // defaultValue={DEFAULT_TASK_TYPE.name}
           >
-            {taskTypesValues.map(({ name, color, fontColor }) => (
-              <Option key={name} value={name}>
+            {taskTypesValues.map(({ id, name, color, fontColor }) => (
+              <Option key={id} value={name}>
                 <Tag color={color} style={{ color: fontColor }}>
                   {name}
                 </Tag>

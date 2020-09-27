@@ -1,4 +1,4 @@
-import { RsSchoolEvent, Organizer } from '../constants/types-interfaces';
+import { RsSchoolEvent, ITaskType } from '../constants/types-interfaces';
 
 class Services {
   url: string;
@@ -19,7 +19,6 @@ class Services {
     if (rawResponse.ok) {
       const content = await rawResponse.json();
       return content.data;
-      // return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
     }
     throw new Error(`${rawResponse.status}`);
   }
@@ -83,7 +82,7 @@ class Services {
     }
   }
 
-  public async getAllOrganizers() {
+  public async getAllTaskTypes() {
     const rawResponse = await fetch(`${this.url}/${this.team}/organizers`, {
       method: 'GET',
       headers: {
@@ -97,7 +96,7 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async addOrganizer(organizer: Organizer) {
+  public async addTaskType(taskType: ITaskType) {
     try {
       const rawResponse = await fetch(`${this.url}/${this.team}/organizer`, {
         method: 'POST',
@@ -105,14 +104,14 @@ class Services {
           Accept: 'application/json',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(organizer),
+        body: JSON.stringify(taskType),
       });
     } catch (e) {
       throw new Error(`${e.message}`);
     }
   }
 
-  public async getOrganizer(id: string) {
+  public async getTaskType(id: string) {
     const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${id}`, {
       method: 'GET',
       headers: {
@@ -126,22 +125,22 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async updateOrganizer(organizer: Organizer) {
+  public async updateTaskType(taskType: ITaskType) {
     try {
-      const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${organizer.id}`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${taskType.id}`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-type': 'application/json',
         },
-        body: JSON.stringify(organizer),
+        body: JSON.stringify(taskType),
       });
     } catch (e) {
       throw new Error(`${e.message}`);
     }
   }
 
-  public async deleteOrganizer(id: string) {
+  public async deleteTaskType(id: string) {
     try {
       const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${id}`, {
         method: 'DELETE',

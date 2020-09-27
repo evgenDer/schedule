@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import StudentSheduleTable from './StudentSheduleTable';
 import OrganizerSheduleTable from './OrganizerSheduleTable';
 import { COMMON_COLS, STUDENT_COLS, ORGANIZER_COLS } from './tableColumns';
-import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
+import { IData, TableDataColumns, ITimeZone, ITaskType } from '../../constants/types-interfaces';
 import { calculateColumnsWidthSum } from '../../helpers/dataHelper';
 
 type SheduleTableProps = {

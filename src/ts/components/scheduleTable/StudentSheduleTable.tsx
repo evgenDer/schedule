@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Table } from 'antd';
-import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
+import { Table } from 'antd';
+import { IData, TableDataColumns, ITimeZone, ITaskType } from '../../constants/types-interfaces';
 import { Button, Tooltip } from 'antd';
 import { CheckOutlined, CloseOutlined, MinusSquareOutlined } from '@ant-design/icons';
 import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import Task from '../Task/Task';
-import { sortDataByDate } from '../../helpers/dataHelper';
+import { findTask, sortDataByDate } from '../../helpers/dataHelper';
 import * as Storage from '../../helpers/storage';
 
 type StudentSheduleTableProps = {
@@ -33,8 +33,8 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
       if (col.key === 'name') {
         return {
           ...col,
-          render: (_: any, { key, name, type, date }: IData) => (
-            <Task id={key} name={name} type={type.name} deadline={date} />
+          render: (_: any, { key, name, typeId, date }: IData) => (
+            <Task id={key} name={name} type={findTask(typeId).name} deadline={date} />
           ),
         };
       }
