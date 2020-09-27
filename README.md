@@ -20,26 +20,58 @@
 
 ### В каждом файле компонента видны используемые внутри него свойства
 
-1. Task <Task />
+1. Task
+   ```react
+   <Task />
+   ```
    Для создания модального окна с подробной информации о задании
-2. SheduleTable <SheduleTable />
+2. SheduleTable
+   ```react
+   <SheduleTable />
+   ```
    Общий компонент для создания таблицы с заданием
-3. StudentSheduleTable <StudentSheduleTable  />
+3. StudentSheduleTable
+   ```react
+   <StudentSheduleTable  />
+   ```
    Компонент для создания таблицы студнта
-4. OrganizerSheduleTable <OrganizerSheduleTable />
+4. OrganizerSheduleTable
+   ```react
+    <OrganizerSheduleTable />
+   ```
    Компонент для создания таблицы организатора
-5. EditableTable <EditableTable />
+5. EditableTable
+   ```react
+     <EditableTable />
+   ```
    Для редактирования таблицы
 6. Calendar <Calendar />
+   ```react
+     <EditableTable />
+   ```
    Компонент для отображения расписания в виде календаря
 7. ScheduleList <ScheduleList />
+   ```react
+     <ScheduleList />
+   ```
    Расписание в виде списка
-8. UploaderImage <UploaderImage />
+8. UploaderImage
+   ```react
+    <UploaderImage  />
+   ```
    Для загрузки картинки на страницу
-9. UploaderVideo <UploaderVideo />
+9. UploaderVideo
+   ```react
+   <UploaderVideo  />
+   ```
    Для загрузки видео на сраницу
-10. InlineEdit <InlineEdit />
-    Для редактирования строк в задании
+10. InlineEdit
+
+```react
+<InlineEdit />
+```
+
+Для редактирования строк в задании
 
 ## Интеграция
 
