@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import { DEFAULT_TASK_TYPE } from '../constants/taskTypes';
 import { DEFAULT_TIMEZONE } from '../constants/timezones';
 import { ITaskType, ITaskTypes, ITimeZone } from '../constants/types-interfaces';
@@ -48,4 +49,18 @@ export const setServerTaskTypes = (taskTypes: ITaskType[]) => {
 
 export const getServerTaskTypes = (): ITaskType[] => {
   return JSON.parse(localStorage.getItem('RSSCurrentTaskTypes') || JSON.stringify([DEFAULT_TASK_TYPE]));
+};
+
+export const setTaskDone = (id: string) => {
+  const tasksDone = getTasksDone();
+  if (tasksDone.includes(id)) {
+    tasksDone.splice(tasksDone.indexOf(id), 1);
+  } else {
+    tasksDone.push(id);
+  }
+  localStorage.setItem('RSSTasksDone', JSON.stringify(tasksDone));
+};
+
+export const getTasksDone = (): string[] => {
+  return JSON.parse(localStorage.getItem('RSSTasksDone') || '[]');
 };

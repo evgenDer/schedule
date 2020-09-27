@@ -68,6 +68,7 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
       const newData = [...prev];
       const index = newData.findIndex(({ key }) => key === idx);
       newData[index].isComplited = !newData[index].isComplited;
+      Storage.setTaskDone(newData[index].key);
       return newData;
     });
   };
@@ -143,6 +144,18 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
         const dataToHide = data.filter((element) => hiddenDataKeys.includes(element.key));
         setData((prev: IData[]) => prev.filter(({ key }) => !hiddenDataKeys.includes(key)));
         return dataToHide;
+      }
+      return prev;
+    });
+
+    setData((prev) => {
+      if (data.length) {
+        const tasksDone = Storage.getTasksDone();
+        prev.forEach((element) => {
+          if (tasksDone.includes(element.key)) {
+            element.isComplited = true;
+          }
+        });
       }
       return prev;
     });
