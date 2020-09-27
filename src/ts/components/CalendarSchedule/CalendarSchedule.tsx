@@ -1,31 +1,43 @@
 import React from 'react';
 import { Calendar, Badge } from 'antd';
+import { IData } from '../../constants/types-interfaces';
+import ModalEvent from './ModalEvent';
 
-const CalendarSchedule = () => {
-  function getListData(value) {
+type CalendarSchedule = {
+  dataSource: IData[];
+};
+
+const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
+  const getListData = (value) => {
     let listData;
-    switch (value.date()) {
-      case 8:
+    let actualObject;
+    const compareDates = (day) => {
+      // console.log(day.date, value.format().slice(0, 10));
+      if (day.date === value.format().slice(0, 10)) {
+        actualObject = day;
+      }
+      return day.date === value.format().slice(0, 10);
+    }
+    switch (true) {
+      case dataSource.some(compareDates):
         listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' },
-        ];
-        break;
-      case 10:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' },
-          { type: 'error', content: 'This is error event.' },
-        ];
-        break;
-      case 15:
-        listData = [
-          { type: 'warning', content: 'This is warning event' },
-          { type: 'success', content: 'This is very long usual event。。....' },
-          { type: 'error', content: 'This is error event 1.' },
-          { type: 'error', content: 'This is error event 2.' },
-          { type: 'error', content: 'This is error event 3.' },
-          { type: 'error', content: 'This is error event 4.' },
+          // { type: 'warning', content: 'This is warning event.' },
+          // { type: 'success', content: 'This is usual event.' },
+          {
+            broadcastUrl: actualObject.broadcastUrl,
+            coef: actualObject.coef,
+            comment: actualObject.comment,
+            date: actualObject.date,
+            datetime: actualObject.datetime,
+            isComplited: actualObject.isComplited,
+            key: actualObject.key,
+            maxMark: actualObject.maxMark,
+            name: actualObject.name,
+            organizer: actualObject.organizer,
+            place: actualObject.place,
+            time: actualObject.time,
+            typeId: actualObject.typeId
+          },
         ];
         break;
       default:
@@ -33,26 +45,27 @@ const CalendarSchedule = () => {
     return listData || [];
   }
   
-  function dateCellRender(value) {
+  const dateCellRender = (value) => {
     const listData = getListData(value);
     return (
       <ul className="events">
         {listData.map(item => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
+          <li key={item.key}>
+            <h4>{item.name}</h4>
+            <ModalEvent dayData={item} />
           </li>
         ))}
       </ul>
     );
   }
   
-  function getMonthData(value) {
+  const getMonthData = (value) => {
     if (value.month() === 8) {
       return 1394;
     }
   }
   
-  function monthCellRender(value) {
+  const monthCellRender = (value) => {
     const num = getMonthData(value);
     return num ? (
       <div className="notes-month">

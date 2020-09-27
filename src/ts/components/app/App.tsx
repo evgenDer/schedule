@@ -15,6 +15,7 @@ import EditingSchedule from '../EditingSchedule/EditingSchedule';
 import { TASK_TYPES, TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { DEFAULT_TASK_DATA } from '../../constants/defaultValues';
 import * as Storage from '../../helpers/storage';
+import CalendarSchedule from '../CalendarSchedule/CalendarSchedule'
 
 const App: React.FC = () => {
   const [data, setData] = useState<RsSchoolEvent[]>([]);
@@ -80,16 +81,17 @@ const App: React.FC = () => {
           />
         </div>
         <div className="saving-content">
-          <ScheduleTable
+          {/* <ScheduleTable
             dataSource={tableData}
             setData={setTableData}
             userType={typeOfUser !== 'student'}
             timezone={timezone}
             setTimezone={setTimezone}
             updateTableData={updateTableData}
-          />
+          /> */}
         </div>
       </Layout.Content>
+      <CalendarSchedule dataSource={tableData} />
     </React.Fragment>
   );
 };
