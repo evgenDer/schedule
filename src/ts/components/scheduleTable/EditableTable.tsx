@@ -26,6 +26,7 @@ import Services from '../../services/services';
 import ScheduleList from '../schedule-list/shedule-list';
 import * as Storage from '../../helpers/storage';
 import { findTask } from '../../helpers/dataHelper';
+import CalendarSchedule from '../CalendarSchedule/CalendarSchedule';
 
 const { Option } = Select;
 
@@ -204,6 +205,7 @@ type EditableTableProps = {
 const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, scroll, sticky, title, timezone }) => {
   const [count, setCount] = useState(data.length);
   const [isListPreviewVisible, setIsListPreviewVisible] = useState(false);
+  const [isCalendarPreviewVisible, setIsCalendarPreviewVisible] = useState(false);
 
   const handleDelete = (key: string) => {
     setData([...data].filter((item) => item.key !== key));
@@ -295,7 +297,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
             <Button type="default" onClick={setIsListPreviewVisible.bind(null, true)}>
               <UnorderedListOutlined /> List preview
             </Button>
-            <Button type="default">
+            <Button type="default" onClick={setIsCalendarPreviewVisible.bind(null, true)}>
               <CalendarOutlined />
               Calendar preview
             </Button>
@@ -306,6 +308,11 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
         {isListPreviewVisible ? (
           <Modal className="modal" visible={true} onCancel={setIsListPreviewVisible.bind(null, false)} footer={[]}>
             <ScheduleList events={data} />
+          </Modal>
+        ) : null}
+        {isCalendarPreviewVisible ? (
+          <Modal className="modal" visible={true} onCancel={setIsCalendarPreviewVisible.bind(null, false)} footer={[]}>
+            <CalendarSchedule dataSource={data} />
           </Modal>
         ) : null}
       </div>

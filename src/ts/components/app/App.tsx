@@ -14,7 +14,7 @@ import EditingSchedule from '../EditingSchedule/EditingSchedule';
 import { TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { DEFAULT_TASK_DATA } from '../../constants/defaultValues';
 import * as Storage from '../../helpers/storage';
-import CalendarSchedule from '../CalendarSchedule/CalendarSchedule'
+import CalendarSchedule from '../CalendarSchedule/CalendarSchedule';
 import ScheduleList from '../schedule-list/shedule-list';
 
 const App: React.FC = () => {
@@ -90,7 +90,7 @@ const App: React.FC = () => {
       content = <ScheduleList events={tableData} />;
       break;
     case SheduleType.Calendar:
-      content = <CalendarSchedule dataSource={tableData} />
+      content = <CalendarSchedule dataSource={tableData} />;
       break;
     default:
       content = <></>;
@@ -109,8 +109,6 @@ const App: React.FC = () => {
             taskTypesBackgroundColor={TASK_TYPES_BACKGROUND_COLOR}
             taskTypesFontColor={TASK_TYPES_FONT_COLOR}
           />
-        </div>
-        <div className="saving-content">
         </div>
         <div className="saving-content">{content}</div>
       </Layout.Content>
