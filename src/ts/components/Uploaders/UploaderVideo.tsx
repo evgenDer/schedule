@@ -32,7 +32,11 @@ const UploaderVideo: React.FC<UploaderVideoType> = ({ videoSrc, setVideoSrc, isM
     <React.Fragment>
       {videoSrc ? (
         <iframe
-          src={videoSrc.replace('watch?v=', 'embed/')}
+          src={
+            videoSrc.includes('&feature=youtu.be')
+              ? videoSrc.replace('watch?v=', 'embed/').replace('&feature=youtu.be', '')
+              : videoSrc.replace('watch?v=', 'embed/')
+          }
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
