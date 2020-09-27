@@ -1,27 +1,16 @@
-interface RsSchoolEvent {
-  id: string;
-  name: string;
-  description: string;
-  descriptionUrl: string;
-  type: string;
-  timeZone: string;
-  dateTime: string;
-  place: string;
-  comment: string;
-}
-
-interface organizer {
-  id: string;
-  name: string;
-}
+import { RsSchoolEvent, Organizer } from '../constants/types-interfaces';
 
 class Services {
   url: string;
+  team: string;
+
   constructor() {
     this.url = 'https://rs-react-schedule.firebaseapp.com/api';
+    this.team = 'team/39';
   }
+
   public async getAllEvents() {
-    const rawResponse = await fetch(`${this.url}/team/39/events`, {
+    const rawResponse = await fetch(`${this.url}/${this.team}/events`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -29,28 +18,31 @@ class Services {
     });
     if (rawResponse.ok) {
       const content = await rawResponse.json();
-      return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
+      return content.data;
+      // return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
     }
     throw new Error(`${rawResponse.status}`);
   }
 
   public async getEvent(id: string) {
-    const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-    });
-    if (rawResponse.ok) {
-      const content = await rawResponse.json();
-      return content;
+    if (id) {
+      const rawResponse = await fetch(`${this.url}/${this.team}/event/${id}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+      if (rawResponse.ok) {
+        const content = await rawResponse.json();
+        return content;
+      }
+      throw new Error(`${rawResponse.status}`);
     }
-    throw new Error(`${rawResponse.status}`);
   }
 
   public async addEvent(event: RsSchoolEvent) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/event`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/event`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -65,7 +57,7 @@ class Services {
 
   public async updateEvent(event: RsSchoolEvent) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/event/${event.id}`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/event/${event.id}`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -80,7 +72,7 @@ class Services {
 
   public async deleteEvent(id: string) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/event/${id}`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/event/${id}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -92,7 +84,7 @@ class Services {
   }
 
   public async getAllOrganizers() {
-    const rawResponse = await fetch(`${this.url}/team/39/organizers`, {
+    const rawResponse = await fetch(`${this.url}/${this.team}/organizers`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -105,9 +97,9 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async addOrganizer(organizer: organizer) {
+  public async addOrganizer(organizer: Organizer) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/organizer`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -121,7 +113,7 @@ class Services {
   }
 
   public async getOrganizer(id: string) {
-    const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
+    const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${id}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -134,9 +126,9 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async updateOrganizer(organizer: organizer) {
+  public async updateOrganizer(organizer: Organizer) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${organizer.id}`, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -151,7 +143,7 @@ class Services {
 
   public async deleteOrganizer(id: string) {
     try {
-      const rawResponse = await fetch(`${this.url}/team/39/organizer/${id}`, {
+      const rawResponse = await fetch(`${this.url}/${this.team}/organizer/${id}`, {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
@@ -162,5 +154,6 @@ class Services {
     }
   }
 }
+
 const services = new Services();
 export default services;

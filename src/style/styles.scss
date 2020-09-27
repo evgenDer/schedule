@@ -1,10 +1,21 @@
+@import './base/normalizer';
+@import '../../node_modules/antd/dist/antd.css';
+@import 'video-react/styles/scss/video-react';
+
 @import './abstaract/constants';
 @import './abstaract/mixins';
 
-@import './base/normalizer';
 @import './base/base';
-@import '../../node_modules/antd/dist/antd.css';
+@import './base/checkbox';
+
 @import './layout/header';
 @import './layout/controls';
-@import '../style/components/title';
-@import '../style/components/select-block.scss';
+
+@import './components/select-block';
+@import './components/time-zone-selector';
+@import './components/shedule-table';
+@import './components/title';
+@import './components/modal';
+@import './components/uploaders';
+@import './components/editingSchedule';
+@import './components/shedule-list';
