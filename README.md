@@ -4,7 +4,7 @@
 
 ## Описание
 
-Приложение для создания и отображения расписания rs-school. Выполнены различные проверки для вводимых данных<, что делает приложение удобным для пользования. Для удобства пользователя создан различные виды сортировок и фильтрации. Есть возможность редактирования задания в виде markdown файла.
+Приложение для создания и отображения расписания rs-school. Выполнены различные проверки для вводимых данных, что делает приложение удобным для пользования. Для удобства пользователя создан различные виды сортировок и фильтрации. Есть возможность редактирования задания в виде markdown файла.
 
 ## Используемые технологии при создании приложения
 
@@ -20,30 +20,62 @@
 
 ### В каждом файле компонента видны используемые внутри него свойства
 
-1. Task <Task />
+1. Task
+   ```react
+   <Task />
+   ```
    Для создания модального окна с подробной информации о задании
-2. SheduleTable <SheduleTable />
+2. SheduleTable
+   ```react
+   <SheduleTable />
+   ```
    Общий компонент для создания таблицы с заданием
-3. StudentSheduleTable <StudentSheduleTable  />
-   Компонент для создания таблицы студнта
-4. OrganizerSheduleTable <OrganizerSheduleTable />
+3. StudentSheduleTable
+   ```react
+   <StudentSheduleTable  />
+   ```
+   Компонент для создания таблицы студента
+4. OrganizerSheduleTable
+   ```react
+    <OrganizerSheduleTable />
+   ```
    Компонент для создания таблицы организатора
-5. EditableTable <EditableTable />
+5. EditableTable
+   ```react
+     <EditableTable />
+   ```
    Для редактирования таблицы
 6. Calendar <Calendar />
+   ```react
+     <EditableTable />
+   ```
    Компонент для отображения расписания в виде календаря
 7. ScheduleList <ScheduleList />
+   ```react
+     <ScheduleList />
+   ```
    Расписание в виде списка
-8. UploaderImage <UploaderImage />
+8. UploaderImage
+   ```react
+    <UploaderImage  />
+   ```
    Для загрузки картинки на страницу
-9. UploaderVideo <UploaderVideo />
+9. UploaderVideo
+   ```react
+   <UploaderVideo  />
+   ```
    Для загрузки видео на сраницу
-10. InlineEdit <InlineEdit />
-    Для редактирования строк в задании
+10. InlineEdit
+
+```react
+<InlineEdit />
+```
+
+Для редактирования строк в задании
 
 ## Интеграция
 
-Для интеграции нужно добавить ссылку в приложение
+Встроить наш компонент App
 
 ## Хранение данных
 
@@ -88,7 +120,7 @@ interface IData {
 
 ```js
 interface ITaskType {
-  id: string; // строка с айди типа задания
+  id: string; // строка с id типа задания
   name: string; // тип задания
   color: string; // цвет заднего фона
   fontColor: string; // цвет шрифта
