@@ -1,5 +1,9 @@
 html {
   user-select: none;
+  font-size: 14px;
+  // @include media-tablet {
+  //   font-size: 18px;
+  // }
 }
 
 h1 {
@@ -13,11 +17,10 @@ h1 {
 }
 
 h2 {
-  @include font(2.8rem, 2.8rem, bold);
+  @include font(2.4rem, 2.4rem, bold);
   @include media-tablet {
     @include font(2.2rem, 2.2rem, bold);
   }
-  text-align: center;
 }
 
 .hidden {
@@ -26,4 +29,8 @@ h2 {
 
 body {
   overflow-x: hidden;
+}
+
+ul {
+  list-style: none;
 }

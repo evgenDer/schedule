@@ -51,44 +51,48 @@
 
 ### Данные хранятся в слeдующем формате:
 
+```js
 interface RsSchoolEvent {
-id: string;
-tableData: IData; // для данных таблицы, списка, календаря
-taskData: ITaskData; // для подробной информации о задании
+  id: string;
+  tableData: IData; // для данных таблицы, списка, календаря
+  taskData: ITaskData; // для подробной информации о задании
 }
 
 interface ITaskData {
-haveFeedback: boolean; // возможность оставить фидбек
-description: string; // описание
-materials: string; // материалы
-videoSrc: string; // ссылка на видео в ютубе
-imgSrc: string; // ссылка на картинку
-comments: CommentProps[]; // массив фидбеков
+  haveFeedback: boolean; // возможность оставить фидбек
+  description: string; // описание
+  materials: string; // материалы
+  videoSrc: string; // ссылка на видео в ютубе
+  imgSrc: string; // ссылка на картинку
+  comments: CommentProps[]; // массив фидбеков
 }
 
 interface IData {
-key: string; // id для данных
-datetime: string; // для конвертации даты
-date: string; // для отображения даты
-time: string; // для отображения времени
-name: string; // название задания
-type: string; // id для типа задания
-mark: number; // оценка за задание
-coef: number; // коэффициент задания
-place: string; // место проведения
-broadcastUrl: string; // ссылка на трансляцию
-organizer: string; // гитхаб организатора мероприятия
-comment: string; // оставить комментарии по заданию
-isComplited: boolean; // показывает завершение задания
+  key: string; // id для данных
+  datetime: string; // для конвертации даты
+  date: string; // для отображения даты
+  time: string; // для отображения времени
+  name: string; // название задания
+  type: string; // id для типа задания
+  mark: number; // оценка за задание
+  coef: number; // коэффициент задания
+  place: string; // место проведения
+  broadcastUrl: string; // ссылка на трансляцию
+  organizer: string; // гитхаб организатора мероприятия
+  comment: string; // оставить комментарии по заданию
+  isComplited: boolean; // показывает завершение задания
 }
+```
 
 ### Для типов задания предусмотрены свойства:
 
+```js
 interface ITaskType {
-id: string; // строка с айди типа задания
-name: string; // тип задания
-color: string; // цвет заднего фона
-fontColor: string; // цвет шрифта
-descriptionBackgroundColor: string; // цвет заднего фона описания
-descriptionFontColor: string; // цвет для шрифта описания
+  id: string; // строка с айди типа задания
+  name: string; // тип задания
+  color: string; // цвет заднего фона
+  fontColor: string; // цвет шрифта
+  descriptionBackgroundColor: string; // цвет заднего фона описания
+  descriptionFontColor: string; // цвет для шрифта описания
 }
+```
