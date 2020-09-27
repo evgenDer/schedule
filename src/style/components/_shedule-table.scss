@@ -1,0 +1,34 @@
+.shedule-table-container {
+  width: 100%;
+  padding: 10px;
+}
+
+.shedule-table__header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap-reverse;
+
+  & > * {
+    margin: 0.5rem;
+  }
+}
+
+.shedule-table__columns-selector {
+  width: 63rem;
+}
+
+.editable-table__footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: 0.5rem;
+  }
+}

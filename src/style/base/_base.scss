@@ -1,9 +1,9 @@
 html {
   user-select: none;
-  font-size: 15px;
-  @include media-tablet {
-    font-size: 18px;
-  }
+  font-size: 14px;
+  // @include media-tablet {
+  //   font-size: 18px;
+  // }
 }
 
 h1 {

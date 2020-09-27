@@ -1,62 +1,60 @@
 import { ColumnsType } from 'antd/es/table';
+import { CommentProps } from 'antd/lib/comment';
 
 export interface ITaskType {
-  [name: string]: string;
+  name: string;
   color: string;
   fontColor: string;
   descriptionBackgroundColor: string;
   descriptionFontColor: string;
 }
 
-export interface PropsOfListItem {
-  event: RsSchoolEvent;
-}
-
 export interface ITaskTypes {
-  [jstask: string]: ITaskType;
-  deadline: ITaskType;
-  test: ITaskType;
-  codewars: ITaskType;
-  interview: ITaskType;
-  default: ITaskType;
-  htmlcssacademy: ITaskType;
-  lecture: ITaskType;
+  [propName: string]: ITaskType;
 }
 
 export interface IData {
-  readonly key: number;
-  datetime: string;
+  key: string;
+  datetime: string; // moment().format()
+  date: string; // getDateString(moment().format())
+  time: string; // getTimeString(moment().format())
   name: string;
   type: ITaskType;
-  mark?: number;
-  maxMark?: number;
-  place?: string;
-  broadcastUrl?: string;
+  coef: number;
+  maxMark: number;
+  place: string;
+  broadcastUrl: string;
   organizer: string;
-  comment?: string;
+  comment: string;
   isComplited: boolean;
-  date: string;
-  time: string;
+}
+
+export type TableDataColumns = ColumnsType<IData>;
+
+export interface Organizer {
+  id: string;
+  name: string;
+}
+
+export interface ITimeZone {
+  name: string;
 }
 
 export interface IComment {
-  datetime: string;
-  author: string;
-  content: string;
   avatar: string;
+  datetime: string;
+  content: string;
+  author: string;
 }
 
 export interface ITaskData {
-  videoSrc: string;
-  name: string;
   haveFeedback: boolean;
-  deadline: string;
-  materials: string;
-  comment: IComment;
-  description: string;
-  imgSrc: string;
-  isOnline: boolean;
   address: string;
+  description: string;
+  materials: string;
+  videoSrc: string;
+  imgSrc: string;
+  comments: CommentProps[];
 }
 
 export interface RsSchoolEvent {
@@ -64,10 +62,3 @@ export interface RsSchoolEvent {
   tableData: IData;
   taskData: ITaskData;
 }
-
-export interface Organizer {
-  id: string;
-  name: string;
-}
-
-export type TableDataColumns = ColumnsType<IData>;

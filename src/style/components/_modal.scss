@@ -1,9 +1,9 @@
-.ant-modal-mask {
+.modal .ant-modal-mask {
   border-bottom: none !important;
 }
 
-.ant-modal-content {
-  padding: 40px;
+.modal .ant-modal-content {
+  padding: 20px;
   background-color: #fafafa;
   @include media-laptop {
     padding: 10px;
@@ -17,137 +17,138 @@
     margin-bottom: 5px;
   }
 }
-.ant-modal {
+
+.modal.ant-modal {
+  margin-top: -40px;
   @media (min-width: $tablet-width) {
     width: 70vw !important;
   }
 }
 
-.ant-modal-header {
-  padding: 13px 16px;
-  border-radius: 4px 4px 0 0;
-  background: #fafafa;
-}
-
-.ant-modal-title {
-  font-size: 4rem;
-  padding-bottom: 20px;
-  margin-top: 10px;
-}
-
-.ant-modal-footer {
-  border: none;
-}
-
-.task-modal {
-  font-size: 1.5rem;
-  textarea {
-    height: 300px;
-    resize: vertical;
-    width: 100%;
-    outline: none;
-    border-radius: 4px;
-    border-color: $color-primary;
-    padding: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    cursor: 'pointer';
-    margin: 20px 0;
-
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-track {
-      background: rgb(225, 217, 217);
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: $color-primary;
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background: $color-primary;
-      cursor: pointer;
-    }
-  }
-  span {
-    cursor: pointer;
-  }
-}
-
-.anticon-upload::before {
-  display: none;
-}
-
-.task-modal__title {
-  margin-bottom: 5px;
-}
-
-.table-task {
-  border: 1px solid #d4d3d3;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  th,
-  tr,
-  td {
-    padding: 5px;
-    border: 1px solid #cccbcb;
-  }
-}
-
-.ant-comment {
-  margin-top: 20px;
-}
-
-.map p {
-  font-size: 1.4rem;
-}
-
-.inline-edit {
-  * {
-    margin: 0px;
-  }
-  p {
-    margin: 0px;
-  }
-  ul {
-    margin: 0px;
-    padding: 0 20px;
+.modal {
+  .ant-modal-header {
+    padding: 13px 16px;
+    border-radius: 4px 4px 0 0;
+    background: #fafafa;
   }
 
-  span {
-    h1 {
-      font-size: 2rem;
-    }
-    h2 {
-      font-size: 1.8rem;
-    }
-    h3 {
-      font-size: 1.6rem;
-    }
+  .ant-modal-title {
+    font-size: 3.5rem;
+    line-height: 3rem;
+    padding-bottom: 20px;
+    margin-top: 10px;
   }
-}
 
-.test-task textarea {
-  height: 7rem;
-}
+  .ant-modal-footer {
+    border: none;
+  }
 
-.comment-section {
-  margin-top: 20px;
-}
-
-.ant-list-header {
-  font-size: 1.8rem;
-}
-
-textarea.ant-input {
-  font-size: 1.5rem;
-}
-
-.ant-comment-inner {
-  p,
-  span {
+  .task-modal {
     font-size: 1.5rem;
+    textarea {
+      height: 200px;
+      resize: vertical;
+      width: 100%;
+      outline: none;
+      border-radius: 4px;
+      border-color: $color-primary;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      cursor: 'pointer';
+      margin: 20px 0 0;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgb(225, 217, 217);
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: $color-primary;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: $color-primary;
+        cursor: pointer;
+      }
+    }
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .anticon-upload::before {
+    display: none;
+  }
+
+  .task-modal__title {
+    margin-bottom: 5px;
+  }
+
+  .table-task {
+    border: 1px solid #d4d3d3;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    th,
+    tr,
+    td {
+      padding: 5px;
+      border: 1px solid #cccbcb;
+    }
+  }
+
+  .ant-comment {
+    margin-top: 20px;
+  }
+
+  .map p {
+    font-size: 1.4rem;
+  }
+
+  .inline-edit {
+    * {
+      margin: 0px;
+    }
+    p {
+      margin: 0px;
+    }
+    ul {
+      margin: 0px;
+      padding: 0 20px;
+    }
+
+    span {
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      h3 {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  .test-task textarea {
+    height: 7rem;
+  }
+
+  .comment-section {
+    margin-top: 20px;
+  }
+
+  .ant-list-header {
+    font-size: 1.8rem;
+  }
+}
+
+.task-modal-toggler {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
   }
 }

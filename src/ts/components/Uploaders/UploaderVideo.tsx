@@ -42,7 +42,12 @@ const UploaderVideo: React.FC<UploaderVideoType> = ({ videoSrc, setVideoSrc, isM
       ) : null}
       {isMentor ? (
         <form className="uploader-video" onSubmit={handleSubmit}>
-          <Input className="uload-video__input" placeholder={'Input video link'} value={value} onChange={onChange} />
+          <Input
+            className="uload-video__input"
+            placeholder={'Insert a link to YouTube'}
+            value={value}
+            onChange={onChange}
+          />
           <div className="uload-video__btn" onClick={() => uploadVideo()}>
             <input type="submit" className="input input__video" multiple />
             <label htmlFor="input__file" className="input__button">

@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
+import { IComment } from '../../constants/types-interfaces';
 import { CommentProps } from 'antd/lib/comment';
 
 const { TextArea } = Input;
 
+type TypeComments = {
+  comments: CommentProps[];
+  setComments: (value: CommentProps[]) => void;
+};
+
 const CommentList = ({ comments }) => (
   <List
     dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+    header={`${comments.length} ${comments.length > 1 ? 'reviews' : 'review'}`}
     itemLayout="horizontal"
     renderItem={(props: CommentProps) => <Comment {...props} />}
   />
@@ -28,9 +34,8 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-const CommentsSection: React.FC = () => {
+const CommentsSection: React.FC<TypeComments> = ({ comments, setComments }) => {
   const [value, setValue] = useState('');
-  const [comments, setComments] = useState<CommentProps[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = () => {
@@ -38,9 +43,9 @@ const CommentsSection: React.FC = () => {
       return;
     }
 
-    const newComment = {
+    const newComment: IComment = {
       author: 'Github Id',
-      content: <p>{value}</p>,
+      content: value,
       datetime: moment().fromNow(),
       avatar: 'https://avatars1.githubusercontent.com/u/9919?s=200&v=4',
     };
@@ -49,12 +54,14 @@ const CommentsSection: React.FC = () => {
       setSubmitting(false);
       setValue(value);
       setComments([...comments, newComment]);
+      setValue('');
     }, 1000);
   };
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
   return (
     <div className="comment-section">
       {comments.length > 0 && <CommentList comments={comments} />}
