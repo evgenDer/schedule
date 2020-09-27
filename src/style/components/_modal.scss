@@ -116,6 +116,7 @@
       margin: 0px;
     }
     ul {
+      list-style: circle;
       margin: 0px;
       padding: 0 20px;
     }
@@ -151,4 +152,8 @@
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.modal ul {
+  list-style: circle;
 }

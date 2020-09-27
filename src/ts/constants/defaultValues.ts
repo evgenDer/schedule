@@ -5,7 +5,7 @@ import { IData, ITaskData } from './types-interfaces';
 
 export const DEFAULT_TASK_DATA: ITaskData = {
   haveFeedback: false,
-  address: '',
+  address: '-',
   description: 'Will be added later...',
   materials: 'Will be added later...',
   videoSrc: '',

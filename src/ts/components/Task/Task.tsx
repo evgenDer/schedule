@@ -39,14 +39,16 @@ const Task: React.FC<TaskProps> = ({ id, name, deadline, isMentor = false, type 
         const data = res.taskData;
         setResEvent(res);
         setAdress(data.address);
-        getCoordinates();
+        setIsOnline(!['-', '', 'Place'].includes(data.address));
+        if (!isOnline) {
+          getCoordinates();
+        }
         setDescription(data.description);
         setMaterials(data.materials);
         setVideoSrc(data.videoSrc);
         setImgSrc(data.imgSrc);
         setHaveFeedback(data.haveFeedback);
         setComments(data.comments);
-        setIsOnline(!['-', '', 'Place'].includes(data.address));
       }
     });
   }, [visible === true]);
@@ -100,7 +102,7 @@ const Task: React.FC<TaskProps> = ({ id, name, deadline, isMentor = false, type 
   const createLectureTask = () => {
     return (
       <>
-        {isMentor ? <UploaderVideo videoSrc={videoSrc} setVideoSrc={setVideoSrc} isMentor={isMentor} /> : null}
+        <UploaderVideo videoSrc={videoSrc} setVideoSrc={setVideoSrc} isMentor={isMentor} />
         <h2 className="task-modal__title">Description</h2>
         <EditBlockType
           value={description}
