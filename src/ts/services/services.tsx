@@ -1,19 +1,4 @@
-interface RsSchoolEvent {
-  id: string;
-  name: string;
-  description: string;
-  descriptionUrl: string;
-  type: string;
-  timeZone: string;
-  dateTime: string;
-  place: string;
-  comment: string;
-}
-
-interface organizer {
-  id: string;
-  name: string;
-}
+import { RsSchoolEvent, Organizer } from '../constants/types-interfaces';
 
 class Services {
   url: string;
@@ -29,7 +14,7 @@ class Services {
     });
     if (rawResponse.ok) {
       const content = await rawResponse.json();
-      return content.data.filter((el: RsSchoolEvent) => el.name && el.type);
+      return content.data.filter((el: RsSchoolEvent) => el.tableData.name && el.tableData.type);
     }
     throw new Error(`${rawResponse.status}`);
   }
@@ -105,7 +90,7 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async addOrganizer(organizer: organizer) {
+  public async addOrganizer(organizer: Organizer) {
     try {
       const rawResponse = await fetch(`${this.url}/team/39/organizer`, {
         method: 'POST',
@@ -134,7 +119,7 @@ class Services {
     throw new Error(`${rawResponse.status}`);
   }
 
-  public async updateOrganizer(organizer: organizer) {
+  public async updateOrganizer(organizer: Organizer) {
     try {
       const rawResponse = await fetch(`${this.url}/team/39/organizer/${organizer.id}`, {
         method: 'PUT',
