@@ -81,7 +81,7 @@ const App: React.FC = () => {
       );
       break;
     case SheduleType.List:
-      content = <ScheduleList events={data} />;
+      content = <ScheduleList events={tableData} />;
       break;
     case SheduleType.Calendar:
     default:
