@@ -8,11 +8,18 @@ import { FormatFiles } from './FormatFiles';
 
 const SaveFile: React.FC = () => {
   function handleMenuClick(event) {
-    const downloadElement = document.querySelector('.header') as HTMLElement;
+    let downloadElement = document.querySelector('.ant-table-container') as HTMLElement;
+    if (!downloadElement) {
+      downloadElement = document.querySelector('.saving-content') as HTMLElement;
+    }
     let canvasPage;
+    const scroll = document.querySelector('.ant-table-sticky-scroll');
+    scroll?.classList.add('hidden');
     html2canvas(downloadElement).then(function (canvas) {
       canvasPage = canvas;
-      const FILE: Blob = new Blob([canvasPage]);
+      const FILE: Blob = new Blob([downloadElement.innerHTML], {
+        type: 'image/svg+xml;charset=utf-8',
+      });
       if (event.key === FormatFiles.png) {
         canvas.toBlob((blob) => {
           if (blob) {
@@ -22,10 +29,10 @@ const SaveFile: React.FC = () => {
       }
       if (event.key === FormatFiles.pdf) {
         const docPdf = new jsPDF();
-        docPdf.addImage(canvas.toDataURL(), 'JPEG', 15, 40, 180, 180);
+        docPdf.addImage(canvas.toDataURL(), 'JPEG', 5, 5, 200, 100);
         docPdf.save();
-        // html2pdf(downloadElement);
       }
+      scroll?.classList.remove('hidden');
     });
   }
 

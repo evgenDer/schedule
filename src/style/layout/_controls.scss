@@ -1,14 +1,19 @@
 .controls {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+
   padding: 0 40px;
+  margin-top: 20px;
   @include media-tablet {
     padding: 0 20px;
+    margin-top: 0;
   }
-  margin-top: 20px;
   .ant-btn,
-  .ant-radio-group {
-    margin-right: 20px;
-    margin-bottom: 20px;
+  .ant-radio-group,
+  .time-zone-selector {
+    margin: 10px 20px 10px 0;
   }
 }
