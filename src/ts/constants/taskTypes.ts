@@ -95,8 +95,8 @@ export const TASK_TYPES_FONT_COLOR = [
 
 export const DEFAULT_TASK_TYPE: ITaskType = {
   name: 'task',
-  color: '#00000',
-  fontColor: '#fffbe6',
+  color: '#fffbe6',
+  fontColor: '#faad14',
   descriptionBackgroundColor: '#fff',
   descriptionFontColor: '#000',
 };

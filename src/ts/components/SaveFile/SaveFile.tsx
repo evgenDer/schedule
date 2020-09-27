@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Menu, Dropdown, Button, message } from 'antd';
+import React from 'react';
+import { Menu, Dropdown, Button } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
@@ -11,14 +11,16 @@ import * as Storage from '../../helpers/storage';
 import * as Download from '../../helpers/downaload';
 
 const SaveFile: React.FC = () => {
-  const downloader = useRef<HTMLElement>();
   function saveFile() {
     let txtData: string = '';
     Services.getAllEvents().then((res: RsSchoolEvent[]) => {
       const visibleFields = Storage.getSelectedColumns();
-      console.log(visibleFields);
+
       const doneElement = visibleFields.indexOf('taskDone');
       visibleFields.splice(doneElement, 1);
+      const deleteElement = visibleFields.indexOf('deleteRow');
+      visibleFields.splice(deleteElement, 1);
+
       txtData += `${visibleFields.join(' ')}\n`;
       const dataKeys = Object.keys(res[0].tableData);
       const data = res
@@ -32,6 +34,7 @@ const SaveFile: React.FC = () => {
           });
           return obj;
         });
+
       data.forEach((item: object) => {
         const tempArray: string[] = [];
         visibleFields.forEach((field: string) => {
@@ -42,7 +45,7 @@ const SaveFile: React.FC = () => {
         });
         txtData += `${tempArray.join(' ')}\n`;
       });
-      console.log(txtData);
+
       Download.download('table', txtData);
     });
   }
@@ -51,6 +54,7 @@ const SaveFile: React.FC = () => {
     if (!downloadElement) {
       downloadElement = document.querySelector('.saving-content') as HTMLElement;
     }
+
     let canvasPage;
     const scroll = document.querySelector('.ant-table-sticky-scroll');
     scroll?.classList.add('hidden');

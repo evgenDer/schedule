@@ -15,21 +15,21 @@ import { CommentProps } from 'antd/lib/comment';
 type TaskProps = {
   id: string;
   name: string;
+  deadline: string;
   isMentor?: boolean;
   type?: string;
 };
 
-const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYPES.jstask.name }) => {
+const Task: React.FC<TaskProps> = ({ id, name, deadline, isMentor = false, type = TASK_TYPES.jstask.name }) => {
   const [visible, setVisible] = useState(false);
-  const [isOnline, setIsOnline] = useState<boolean>(true);
   const [haveFeedback, setHaveFeedback] = useState(true);
   const [address, setAdress] = useState('Минск');
+  const [isOnline, setIsOnline] = useState(false);
   const [coords, setCoords] = useState<number[]>([]);
   const [description, setDescription] = useState('Will be added later...');
   const [materials, setMaterials] = useState('Will be added later...');
   const [videoSrc, setVideoSrc] = useState('');
   const [imgSrc, setImgSrc] = useState('');
-  const [deadline, setDeadline] = useState('');
   const [comments, setComments] = useState<CommentProps[]>([]);
   const [resEvent, setResEvent] = useState<RsSchoolEvent>();
 
@@ -45,9 +45,8 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYP
         setVideoSrc(data.videoSrc);
         setImgSrc(data.imgSrc);
         setHaveFeedback(data.haveFeedback);
-        setIsOnline(data.isOnline);
-        setDeadline(data.deadline);
         setComments(data.comments);
+        setIsOnline(!['-', '', 'Place'].includes(data.address));
       }
     });
   }, [visible === true]);
@@ -83,6 +82,7 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYP
         address,
         comments,
       };
+      savedEvent.tableData.place = address;
       Services.updateEvent(savedEvent);
     }
     setVisible(false);
@@ -100,7 +100,6 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYP
   const createLectureTask = () => {
     return (
       <>
-        <h3>Lector: Pavel</h3>
         {isMentor ? <UploaderVideo videoSrc={videoSrc} setVideoSrc={setVideoSrc} isMentor={isMentor} /> : null}
         <h2 className="task-modal__title">Description</h2>
         <EditBlockType
@@ -274,14 +273,18 @@ const Task: React.FC<TaskProps> = ({ id, name, isMentor = false, type = TASK_TYP
           title={name}
           onOk={handleOk}
           onCancel={handleCancel}
-          footer={[
-            <Button key="back" onClick={handleCancel}>
-              Return
-            </Button>,
-            <Button key="submit" type="primary" onClick={handleOk}>
-              Save
-            </Button>,
-          ]}
+          footer={
+            isMentor
+              ? [
+                  <Button key="back" onClick={handleCancel}>
+                    Return
+                  </Button>,
+                  <Button key="submit" type="primary" onClick={handleOk}>
+                    Save
+                  </Button>,
+                ]
+              : []
+          }
         >
           <div className="task-modal modal">
             <div className="task-modal__checkboxes">

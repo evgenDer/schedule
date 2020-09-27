@@ -1,4 +1,5 @@
-const API_KEY = '098f353529db498ba64327d93d1b0111';
+// const API_KEY = '098f353529db498ba64327d93d1b0111';
+const API_KEY = 'f935efe0d47c4666abd2283ac830e5a3';
 
 export async function getAdressFromCoordinates(coords: number[]) {
   try {

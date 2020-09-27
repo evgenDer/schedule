@@ -54,6 +54,7 @@ const App: React.FC = () => {
       if (correspondingData) {
         const newData = { ...correspondingData };
         newData.tableData = element;
+        newData.taskData.address = element.place;
         Services.updateEvent(newData);
       } else {
         const newEvent: RsSchoolEvent = {

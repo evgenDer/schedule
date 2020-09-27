@@ -15,12 +15,9 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ events }) => {
       size="large"
       renderItem={(item: IData) => {
         return (
-          <List.Item
-            key={item.key}
-            style={{ backgroundImage: `linear-gradient(15deg, ${item.type.color}, transparent)` }}
-          >
+          <List.Item key={item.key} style={{ backgroundColor: item.type.color }}>
             <div className="schedule-list-item">
-              <Task id={item.key} name={item.name} type={item.type.name} />
+              <Task id={item.key} name={item.name} type={item.type.name} deadline={item.date} />
               <ListItemTable event={item} />
             </div>
           </List.Item>

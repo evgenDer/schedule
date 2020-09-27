@@ -21,7 +21,7 @@ import { PickerProps } from 'antd/lib/date-picker/generatePicker';
 import { getDateString, getTimeString } from '../../helpers/dataHelper';
 import { CalendarOutlined, DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { SelectValue } from 'antd/lib/select';
-import { TASK_TYPES } from '../../constants/taskTypes';
+import { DEFAULT_TASK_TYPE, TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TABLE_DATA } from '../../constants/defaultValues';
 import Services from '../../services/services';
 import ScheduleList from '../schedule-list/shedule-list';
@@ -150,6 +150,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
             placeholder="Select task type"
             ref={(inputRef as unknown) as React.RefObject<Select<SelectValue>>}
             onChange={save}
+            // defaultValue={DEFAULT_TASK_TYPE.name}
           >
             {taskTypesValues.map(({ name, color, fontColor }) => (
               <Option key={name} value={name}>
@@ -278,7 +279,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
   return (
     <React.Fragment>
       <Table<IData>
-        components={components}
+        components={data.length ? components : {}}
         rowClassName={() => 'editable-row'}
         dataSource={data}
         columns={newColumns}

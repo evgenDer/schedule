@@ -33,7 +33,9 @@ const StudentSheduleTable: React.FC<StudentSheduleTableProps> = ({
       if (col.key === 'name') {
         return {
           ...col,
-          render: (_: any, { key, name, type }: IData) => <Task id={key} name={name} type={type.name} />,
+          render: (_: any, { key, name, type, date }: IData) => (
+            <Task id={key} name={name} type={type.name} deadline={date} />
+          ),
         };
       }
       if (col.key === 'taskDone') {

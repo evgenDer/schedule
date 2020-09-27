@@ -33,8 +33,8 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       if (col.key === 'name') {
         return {
           ...col,
-          render: (_: any, { key, name }: IData) => {
-            return <Task id={key} name={name} isMentor={true} />;
+          render: (_: any, { key, name, type, date }: IData) => {
+            return <Task id={key} name={name} isMentor={true} deadline={date} type={type.name} />;
           },
         };
       }

@@ -20,7 +20,7 @@ export interface IData {
   time: string; // getTimeString(moment().format())
   name: string;
   type: ITaskType;
-  mark: number;
+  coef: number;
   maxMark: number;
   place: string;
   broadcastUrl: string;
@@ -54,9 +54,6 @@ export interface ITaskData {
   materials: string;
   videoSrc: string;
   imgSrc: string;
-  isOnline: boolean;
-  deadline: string;
-  name: string;
   comments: CommentProps[];
 }
 

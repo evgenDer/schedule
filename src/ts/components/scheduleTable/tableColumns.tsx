@@ -97,6 +97,14 @@ export const COMMON_COLS: TableDataColumns = [
     width: 200,
   },
   {
+    title: 'Coefficient',
+    dataIndex: 'coef',
+    key: 'coef',
+    sorter: (a: IData, b: IData) => sortMarks(a.coef, b.coef),
+    width: 120,
+    align: 'right',
+  },
+  {
     title: 'Max Mark',
     dataIndex: 'maxMark',
     key: 'maxMark',
@@ -107,14 +115,6 @@ export const COMMON_COLS: TableDataColumns = [
 ];
 
 export const STUDENT_COLS: TableDataColumns = [
-  {
-    title: 'Mark',
-    dataIndex: 'mark',
-    key: 'mark',
-    sorter: (a: IData, b: IData) => sortMarks(a.mark, b.mark),
-    width: 120,
-    align: 'right',
-  },
   {
     title: 'Complited',
     dataIndex: 'isComplited',
