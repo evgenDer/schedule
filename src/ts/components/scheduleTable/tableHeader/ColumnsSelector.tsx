@@ -12,6 +12,7 @@ type ColumnsSelectorProps = {
 
 const ColumnsSelector: React.FC<ColumnsSelectorProps> = ({ columns, finalColumns, setFinalColumns }) => {
   const columnsFiltrator = (col: ColumnType<IData>) => col.title !== '' && col.title !== 'Name';
+  const filteredColumns = Storage.getSelectedColumns();
 
   const selectChildren = columns.filter(columnsFiltrator).map((col) =>
     col.title ? (
@@ -38,7 +39,10 @@ const ColumnsSelector: React.FC<ColumnsSelectorProps> = ({ columns, finalColumns
         mode="multiple"
         allowClear
         placeholder="Select table columns"
-        defaultValue={finalColumns.filter(columnsFiltrator).map((col) => (col.title ? col.title.toString() : ''))}
+        defaultValue={finalColumns
+          .filter(columnsFiltrator)
+          .filter((col) => filteredColumns.includes(col.key?.toString() || ''))
+          .map((col) => (col.title ? col.title.toString() : ''))}
         onChange={handleSelection}
       >
         {selectChildren}
