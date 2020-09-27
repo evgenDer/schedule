@@ -12,17 +12,20 @@ import {
   message,
   Select,
   Tag,
+  Modal,
 } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import { ColumnType } from 'antd/es/table';
 import moment, { Moment } from 'moment-timezone';
 import { PickerProps } from 'antd/lib/date-picker/generatePicker';
 import { getDateString, getTimeString } from '../../helpers/dataHelper';
-import { DeleteOutlined } from '@ant-design/icons';
+import { CalendarOutlined, DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { SelectValue } from 'antd/lib/select';
-import { TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TABLE_DATA } from '../../constants/defaultValues';
 import Services from '../../services/services';
+import ScheduleList from '../schedule-list/shedule-list';
+import * as Storage from '../../helpers/storage';
+import { findTask } from '../../helpers/dataHelper';
 
 const { Option } = Select;
 
@@ -72,7 +75,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const form = useContext(EditableContext);
   const currentKey = Object.keys(record).find((key) => key === dataIndex) || '';
 
-  const taskTypesValues = Object.values(TASK_TYPES);
+  const taskTypesValues = Storage.getServerTaskTypes();
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -83,7 +86,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const toggleEdit = () => {
     setEditing((prev) => !prev);
     Object.entries(record).forEach(([key, value]) => {
-      if (!['time', 'date', 'type'].includes(key)) {
+      if (!['time', 'date', 'typeId'].includes(key)) {
         if (key === currentKey) {
           form.setFieldsValue({ [dataIndex]: value });
         }
@@ -96,14 +99,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
       const values = await form.validateFields();
       toggleEdit();
       const savingData = { ...record, ...values };
-      const { time, date, type } = savingData;
+      const { time, date, typeId: type } = savingData;
 
       savingData.date = typeof date === 'string' ? date : getDateString(date.format());
       savingData.time = typeof time === 'string' ? time : getTimeString(time.format());
       savingData.datetime = moment(`${savingData.date}T${savingData.time}:00`).format();
+
       if (!taskTypesValues.includes(type)) {
-        const cmp = typeof type === 'string' ? type : type.name;
-        savingData.type = taskTypesValues.find(({ name }) => name === cmp);
+        const res = taskTypesValues.find(({ name }) => name === type);
+        savingData.typeId = res !== undefined ? res.id : findTask(type).id;
       }
 
       handleSave(savingData);
@@ -142,15 +146,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
           />
         );
         break;
-      case 'type':
+      case 'typeId':
         input = (
           <Select
             placeholder="Select task type"
             ref={(inputRef as unknown) as React.RefObject<Select<SelectValue>>}
             onChange={save}
           >
-            {taskTypesValues.map(({ name, color, fontColor }) => (
-              <Option key={name} value={name}>
+            {taskTypesValues.map(({ id, name, color, fontColor }) => (
+              <Option key={id} value={name}>
                 <Tag color={color} style={{ color: fontColor }}>
                   {name}
                 </Tag>
@@ -199,6 +203,7 @@ type EditableTableProps = {
 
 const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, scroll, sticky, title, timezone }) => {
   const [count, setCount] = useState(data.length);
+  const [isListPreviewVisible, setIsListPreviewVisible] = useState(false);
 
   const handleDelete = (key: string) => {
     setData([...data].filter((item) => item.key !== key));
@@ -275,7 +280,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
   return (
     <React.Fragment>
       <Table<IData>
-        components={components}
+        components={data.length ? components : {}}
         rowClassName={() => 'editable-row'}
         dataSource={data}
         columns={newColumns}
@@ -287,11 +292,23 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
             <Button onClick={handleAdd} type="primary">
               Add a row
             </Button>
-            <Button type="default">Calendar preview</Button>
-            <Button type="default">List preview</Button>
+            <Button type="default" onClick={setIsListPreviewVisible.bind(null, true)}>
+              <UnorderedListOutlined /> List preview
+            </Button>
+            <Button type="default">
+              <CalendarOutlined />
+              Calendar preview
+            </Button>
           </div>
         )}
       />
+      <div className="edit-preview">
+        {isListPreviewVisible ? (
+          <Modal className="modal" visible={true} onCancel={setIsListPreviewVisible.bind(null, false)} footer={[]}>
+            <ScheduleList events={data} />
+          </Modal>
+        ) : null}
+      </div>
     </React.Fragment>
   );
 };

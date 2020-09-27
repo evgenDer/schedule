@@ -2,6 +2,7 @@ import { ColumnsType } from 'antd/es/table';
 import { CommentProps } from 'antd/lib/comment';
 
 export interface ITaskType {
+  id: string;
   name: string;
   color: string;
   fontColor: string;
@@ -19,8 +20,8 @@ export interface IData {
   date: string; // getDateString(moment().format())
   time: string; // getTimeString(moment().format())
   name: string;
-  type: ITaskType;
-  mark: number;
+  typeId: string;
+  coef: number;
   maxMark: number;
   place: string;
   broadcastUrl: string;
@@ -54,9 +55,6 @@ export interface ITaskData {
   materials: string;
   videoSrc: string;
   imgSrc: string;
-  isOnline: boolean;
-  deadline: string;
-  name: string;
   comments: CommentProps[];
 }
 

@@ -1,5 +1,7 @@
 import { ColumnsType } from 'antd/lib/table';
-import { IData } from '../constants/types-interfaces';
+import { DEFAULT_TASK_TYPE } from '../constants/taskTypes';
+import { IData, ITaskType } from '../constants/types-interfaces';
+import * as Storage from '../helpers/storage';
 
 export const sortMarks = (a: number | undefined, b: number | undefined) => {
   const aVal = a ? a : 0;
@@ -32,4 +34,10 @@ export const sortDataByDate = (a: IData, b: IData) => {
 
 export const calculateColumnsWidthSum = (columns: ColumnsType<IData>): number => {
   return columns.map((col) => col.width as number).reduce((accum, current) => accum + current);
+};
+
+export const findTask = (typeId: string): ITaskType => {
+  const taskTypesData = Storage.getServerTaskTypes();
+  const res = taskTypesData.find(({ id }) => id === typeId);
+  return res || DEFAULT_TASK_TYPE;
 };

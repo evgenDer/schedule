@@ -3,7 +3,8 @@ import { Tooltip, Tag } from 'antd';
 import { LikeOutlined, DislikeOutlined, GithubOutlined } from '@ant-design/icons';
 import { sortMarks, sortDate, isUrl } from '../../helpers/dataHelper';
 import { IData, TableDataColumns, ITaskType } from '../../constants/types-interfaces';
-import { TASK_TYPES } from '../../constants/taskTypes';
+import * as Storage from '../../helpers/storage';
+import { findTask } from '../../helpers/dataHelper';
 
 export const COMMON_COLS: TableDataColumns = [
   {
@@ -31,15 +32,19 @@ export const COMMON_COLS: TableDataColumns = [
   },
   {
     title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
-    render: ({ name, color, fontColor }: ITaskType) => (
-      <Tag color={color} style={{ color: fontColor }}>
-        {name}
-      </Tag>
-    ),
-    filters: Object.values(TASK_TYPES).map(({ name }) => ({ text: name, value: name })),
-    onFilter: (value: any, { type }: IData) => type.name === value,
+    dataIndex: 'typeId',
+    key: 'typeId',
+    render: (typeId: string) => {
+      const type = findTask(typeId);
+      const { name, color, fontColor } = type;
+      return (
+        <Tag color={color} style={{ color: fontColor }}>
+          {name}
+        </Tag>
+      );
+    },
+    filters: Storage.getServerTaskTypes().map(({ name }) => ({ text: name, value: name })),
+    onFilter: (value: any, { typeId }: IData) => findTask(typeId).name === value,
     align: 'center',
     width: 180,
   },
@@ -97,6 +102,14 @@ export const COMMON_COLS: TableDataColumns = [
     width: 200,
   },
   {
+    title: 'Coefficient',
+    dataIndex: 'coef',
+    key: 'coef',
+    sorter: (a: IData, b: IData) => sortMarks(a.coef, b.coef),
+    width: 120,
+    align: 'right',
+  },
+  {
     title: 'Max Mark',
     dataIndex: 'maxMark',
     key: 'maxMark',
@@ -107,14 +120,6 @@ export const COMMON_COLS: TableDataColumns = [
 ];
 
 export const STUDENT_COLS: TableDataColumns = [
-  {
-    title: 'Mark',
-    dataIndex: 'mark',
-    key: 'mark',
-    sorter: (a: IData, b: IData) => sortMarks(a.mark, b.mark),
-    width: 120,
-    align: 'right',
-  },
   {
     title: 'Complited',
     dataIndex: 'isComplited',

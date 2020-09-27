@@ -6,13 +6,10 @@ import { IData, ITaskData } from './types-interfaces';
 export const DEFAULT_TASK_DATA: ITaskData = {
   haveFeedback: false,
   address: '',
-  description: 'Description will be added later...',
-  materials: 'Materials will be added later...',
+  description: 'Will be added later...',
+  materials: 'Will be added later...',
   videoSrc: '',
   imgSrc: '',
-  isOnline: false,
-  deadline: getDateString(moment().format()),
-  name: 'name',
   comments: [],
 };
 
@@ -22,10 +19,10 @@ export const DEFAULT_TABLE_DATA: IData = {
   date: getDateString(moment().format()),
   time: getTimeString(moment().format()),
   name: 'Task',
-  type: DEFAULT_TASK_TYPE,
+  typeId: '0',
   organizer: 'https://github.com/rolling-scopes-school',
   isComplited: false,
-  mark: 0,
+  coef: 0.1,
   maxMark: 0,
   place: '-',
   broadcastUrl: '-',
