@@ -1,13 +1,16 @@
 import React from 'react';
 import { Calendar, Badge } from 'antd';
 import { IData } from '../../constants/types-interfaces';
-import ModalEvent from './ModalEvent';
+// import ModalEvent from './ModalEvent';
+import Task from '../Task/Task';
+import { findTask } from '../../helpers/dataHelper';
 
 type CalendarSchedule = {
   dataSource: IData[];
 };
 
 const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
+  console.log(dataSource);
   const getListData = (value) => {
     let listData;
     let actualObject;
@@ -52,7 +55,8 @@ const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
         {listData.map(item => (
           <li key={item.key}>
             <h4>{item.name}</h4>
-            <ModalEvent dayData={item} />
+            {/* <ModalEvent dayData={item} /> */}
+            <Task id={item.key} name={item.name} type={findTask(item.typeId).name} deadline={item.date} />
           </li>
         ))}
       </ul>
@@ -70,7 +74,7 @@ const CalendarSchedule: React.FC<CalendarSchedule> = ( {dataSource} ) => {
     return num ? (
       <div className="notes-month">
         <section>{num}</section>
-        <span>Backlog number</span>
+        <span>{'Это что еще такое? :('}</span>
       </div>
     ) : null;
   }

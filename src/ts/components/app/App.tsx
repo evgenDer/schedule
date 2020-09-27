@@ -91,6 +91,7 @@ const App: React.FC = () => {
       break;
     case SheduleType.Calendar:
       content = <CalendarSchedule dataSource={tableData} />
+      break;
     default:
       content = <></>;
   }
