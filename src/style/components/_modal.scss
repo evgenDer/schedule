@@ -1,32 +1,32 @@
+.modal .ant-modal-mask {
+  border-bottom: none !important;
+}
 
-  .modal .ant-modal-mask {
-    border-bottom: none !important;
+.modal .ant-modal-content {
+  padding: 20px;
+  background-color: #fafafa;
+  @include media-laptop {
+    padding: 10px;
+  }
+  @include media-tablet {
+    padding: 0px;
   }
 
-  .modal .ant-modal-content {
-    padding: 20px;
-    background-color: #fafafa;
-    @include media-laptop {
-      padding: 10px;
-    }
-    @include media-tablet {
-      padding: 0px;
-    }
-
-    h2 {
-      margin-top: 20px;
-      margin-bottom: 5px;
-    }
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 5px;
   }
-  .modal.ant-modal {
-    margin-top: -40px;
-    @media (min-width: $tablet-width) {
-      width: 70vw !important;
-    }
-  }
+}
 
- .modal{ 
-   .ant-modal-header {
+.modal.ant-modal {
+  margin-top: -40px;
+  @media (min-width: $tablet-width) {
+    width: 70vw !important;
+  }
+}
+
+.modal {
+  .ant-modal-header {
     padding: 13px 16px;
     border-radius: 4px 4px 0 0;
     background: #fafafa;
@@ -143,8 +143,8 @@
   .ant-list-header {
     font-size: 1.8rem;
   }
+}
 
- }
 .task-modal-toggler {
   &:hover {
     cursor: pointer;

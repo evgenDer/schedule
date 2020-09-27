@@ -12,17 +12,19 @@ import {
   message,
   Select,
   Tag,
+  Modal,
 } from 'antd';
 import { IData, TableDataColumns, ITimeZone } from '../../constants/types-interfaces';
 import { ColumnType } from 'antd/es/table';
 import moment, { Moment } from 'moment-timezone';
 import { PickerProps } from 'antd/lib/date-picker/generatePicker';
 import { getDateString, getTimeString } from '../../helpers/dataHelper';
-import { DeleteOutlined } from '@ant-design/icons';
+import { CalendarOutlined, DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { SelectValue } from 'antd/lib/select';
 import { TASK_TYPES } from '../../constants/taskTypes';
 import { DEFAULT_TABLE_DATA } from '../../constants/defaultValues';
 import Services from '../../services/services';
+import ScheduleList from '../schedule-list/shedule-list';
 
 const { Option } = Select;
 
@@ -199,6 +201,7 @@ type EditableTableProps = {
 
 const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, scroll, sticky, title, timezone }) => {
   const [count, setCount] = useState(data.length);
+  const [isListPreviewVisible, setIsListPreviewVisible] = useState(false);
 
   const handleDelete = (key: string) => {
     setData([...data].filter((item) => item.key !== key));
@@ -287,11 +290,23 @@ const EditableTable: React.FC<EditableTableProps> = ({ data, setData, columns, s
             <Button onClick={handleAdd} type="primary">
               Add a row
             </Button>
-            <Button type="default">Calendar preview</Button>
-            <Button type="default">List preview</Button>
+            <Button type="default" onClick={setIsListPreviewVisible.bind(null, true)}>
+              <UnorderedListOutlined /> List preview
+            </Button>
+            <Button type="default">
+              <CalendarOutlined />
+              Calendar preview
+            </Button>
           </div>
         )}
       />
+      <div className="edit-preview">
+        {isListPreviewVisible ? (
+          <Modal className="modal" visible={true} onCancel={setIsListPreviewVisible.bind(null, false)} footer={[]}>
+            <ScheduleList events={data} />
+          </Modal>
+        ) : null}
+      </div>
     </React.Fragment>
   );
 };
