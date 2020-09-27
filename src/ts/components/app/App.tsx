@@ -15,6 +15,7 @@ import EditingSchedule from '../EditingSchedule/EditingSchedule';
 import { TASK_TYPES, TASK_TYPES_BACKGROUND_COLOR, TASK_TYPES_FONT_COLOR } from '../../constants/taskTypes';
 import { DEFAULT_TASK_DATA } from '../../constants/defaultValues';
 import * as Storage from '../../helpers/storage';
+import ScheduleList from '../schedule-list/shedule-list';
 
 const App: React.FC = () => {
   const [data, setData] = useState<RsSchoolEvent[]>([]);
@@ -65,6 +66,28 @@ const App: React.FC = () => {
     });
   };
 
+  let content: JSX.Element;
+  switch (typeOfScheduleForm) {
+    case SheduleType.Table:
+      content = (
+        <ScheduleTable
+          dataSource={tableData}
+          setData={setTableData}
+          userType={typeOfUser !== 'student'}
+          timezone={timezone}
+          setTimezone={setTimezone}
+          updateTableData={updateTableData}
+        />
+      );
+      break;
+    case SheduleType.List:
+      content = <ScheduleList events={data} />;
+      break;
+    case SheduleType.Calendar:
+    default:
+      content = <></>;
+  }
+
   return (
     <React.Fragment>
       <Header selectUserHandler={typesOfUsersHandler} />
@@ -79,16 +102,7 @@ const App: React.FC = () => {
             taskTypesFontColor={TASK_TYPES_FONT_COLOR}
           />
         </div>
-        <div className="saving-content">
-          <ScheduleTable
-            dataSource={tableData}
-            setData={setTableData}
-            userType={typeOfUser !== 'student'}
-            timezone={timezone}
-            setTimezone={setTimezone}
-            updateTableData={updateTableData}
-          />
-        </div>
+        <div className="saving-content">{content}</div>
       </Layout.Content>
     </React.Fragment>
   );
