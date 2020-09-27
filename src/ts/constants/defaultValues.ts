@@ -19,7 +19,7 @@ export const DEFAULT_TABLE_DATA: IData = {
   date: getDateString(moment().format()),
   time: getTimeString(moment().format()),
   name: 'Task',
-  type: DEFAULT_TASK_TYPE,
+  typeId: '0',
   organizer: 'https://github.com/rolling-scopes-school',
   isComplited: false,
   coef: 0.1,

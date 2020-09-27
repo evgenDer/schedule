@@ -5,60 +5,64 @@ import { makingListTags, makingListColors } from './makeListItems';
 import CreateTypeModal from './CreateTypeModal';
 import VisualDashboard from './VisualDashboard';
 import ListItem from './ListItem';
-import { setTaskType, setFullListTaskTypes } from '../../helpers/storage';
-import { ITaskType, ITaskTypes } from '../../constants/types-interfaces';
+import * as Storage from '../../helpers/storage';
+import { ITaskType } from '../../constants/types-interfaces';
+import { DEFAULT_TASK_TYPE } from '../../constants/taskTypes';
+import Services from '../../services/services';
 
-const testType: any = {
-  testType: {
-    name: 'test type',
-    color: '',
-    fontColor: '',
-    descriptionBackgroundColor: '#fff',
-    descriptionFontColor: '#000',
-  },
+const testType: ITaskType = {
+  ...DEFAULT_TASK_TYPE,
+  name: 'test type',
 };
 
 interface EditingSchedule {
-  taskTypes: ITaskTypes;
+  taskTypes: ITaskType[];
   taskTypesBackgroundColor: string[];
   taskTypesFontColor: string[];
 }
 
 const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgroundColor, taskTypesFontColor }) => {
   const [visibleModal, setVisibleModal] = useState(false);
-  const [taskTypeName, setTaskTypeName] = useState('testType');
+
   const [customizationTypeTask, setCustomizationTypeTask] = useState(testType);
   const [disableItems, setDisableItems] = useState(true);
-  const [fullListTypeTask, setFullListTypeTask] = useState(taskTypes);
-  let copyTaskType: any = JSON.parse(JSON.stringify(taskTypes));
+
+  const [isNew, setIsNew] = useState(false);
 
   const handleOkBtn = (): void => {
     setVisibleModal(false);
-    setTaskType(customizationTypeTask);
-    setFullListTaskTypes(fullListTypeTask);
+
+    if (isNew) {
+      Services.addTaskType(customizationTypeTask);
+    } else {
+      Services.updateTaskType(customizationTypeTask);
+    }
+    setIsNew(false);
+
+    Services.getAllTaskTypes().then((res: ITaskType[]) => {
+      Storage.setServerTaskTypes(res);
+    });
+
     handleReloadModal(false);
   };
 
   const handleSelectTaskType = (item: any): void => {
-    const selectedTaskTypeName = item.key;
-    setTaskTypeName(selectedTaskTypeName);
-    setCustomizationTypeTask({ [selectedTaskTypeName]: copyTaskType[selectedTaskTypeName] });
+    const selectedTaskTypeName = Storage.getServerTaskTypes()[item.key];
+    setCustomizationTypeTask(selectedTaskTypeName);
     setDisableItems(false);
   };
 
   const handleSelectColors = (item: any, propertyColor: string): void => {
     const selectColor = item.item.node.innerText;
     setCustomizationTypeTask(() => {
-      customizationTypeTask[taskTypeName][propertyColor] = selectColor;
+      customizationTypeTask[propertyColor] = selectColor;
       return { ...customizationTypeTask };
     });
   };
 
   const handleReloadModal = (resetModal: boolean): void => {
     setVisibleModal(false);
-    setTaskTypeName('testType');
     setCustomizationTypeTask(testType);
-    copyTaskType = JSON.parse(JSON.stringify(taskTypes));
     setDisableItems(true);
     setTimeout(() => {
       setVisibleModal(resetModal);
@@ -70,19 +74,16 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
     setVisibleCreateTypeModal(true);
   };
 
-  const getNewType = (newType: object): void => {
-    if (Object.keys(newType).length === 1) {
-      const actualListType = JSON.parse(JSON.stringify(taskTypes));
-      actualListType[Object.keys(newType)[0]] = newType[Object.keys(newType)[0]];
-      setFullListTypeTask(actualListType);
-      setTaskTypeName(Object.keys(newType)[0]);
-      setCustomizationTypeTask(newType);
-      setVisibleCreateTypeModal(false);
-      setDisableItems(false);
-    } else {
-      setVisibleCreateTypeModal(false);
-      setDisableItems(true);
-    }
+  const getNewType = (newTypeObj: object): void => {
+    const newType: ITaskType = {
+      id: '11',
+      ...Object.values(newTypeObj)[0],
+    };
+    console.log(newType);
+    setCustomizationTypeTask(newType);
+    setVisibleCreateTypeModal(false);
+    setDisableItems(false);
+    setIsNew(true);
   };
 
   return (
@@ -100,7 +101,6 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
         <CreateTypeModal showInput={visibleCreateTypeModal} createNewType={(newType: object) => getNewType(newType)} />
         <VisualDashboard
           customizationTypeTask={customizationTypeTask}
-          taskTypeName={taskTypeName}
           onReloadModal={() => handleReloadModal(true)}
           onShowCreateTypeModal={() => handleShowCreateTypeModal()}
           disableItems={!disableItems}

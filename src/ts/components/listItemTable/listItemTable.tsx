@@ -1,13 +1,16 @@
 import React from 'react';
 import { Descriptions, Tag } from 'antd';
 import { IData } from '../../constants/types-interfaces';
+import { findTask } from '../../helpers/dataHelper';
 
 interface PropsOfListItem {
   event: IData;
 }
 
 const ListItemTable: React.FC<PropsOfListItem> = ({ event }) => {
-  const { type } = event;
+  const { typeId } = event;
+  const type = findTask(typeId);
+
   return (
     <Descriptions bordered style={{ backgroundColor: 'white' }}>
       <Descriptions.Item label="Type:">

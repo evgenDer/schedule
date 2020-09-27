@@ -5,6 +5,7 @@ import SheduleTableHeader from './tableHeader/SheduleTableHeader';
 import EditableTable from './EditableTable';
 import Task from '../Task/Task';
 import * as Storage from '../../helpers/storage';
+import { findTask } from '../../helpers/dataHelper';
 
 type OrganizerSheduleTableProps = {
   data: IData[];
@@ -33,8 +34,8 @@ const OrganizerSheduleTable: React.FC<OrganizerSheduleTableProps> = ({
       if (col.key === 'name') {
         return {
           ...col,
-          render: (_: any, { key, name, type, date }: IData) => {
-            return <Task id={key} name={name} isMentor={true} deadline={date} type={type.name} />;
+          render: (_: any, { key, name, typeId, date }: IData) => {
+            return <Task id={key} name={name} isMentor={true} deadline={date} type={findTask(typeId).name} />;
           },
         };
       }
