@@ -146,4 +146,4 @@ const EditingSchedule: React.FC<EditingSchedule> = ({ taskTypes, taskTypesBackgr
   );
 };
 
-export default EditingSchedule;
+export default React.memo(EditingSchedule);

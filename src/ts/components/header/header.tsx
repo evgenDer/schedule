@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from 'antd';
 import SelectComponent from '../SelectComponent/SelectComponent';
 import typesOfUsers from './typesOfUsers';
-import SaveFile from '../SaveFile/SaveFile';
 
 const Header: React.FunctionComponent<{
   selectUserHandler: (value: string) => void;
@@ -18,4 +17,4 @@ const Header: React.FunctionComponent<{
   );
 };
 
-export default Header;
+export default React.memo(Header);

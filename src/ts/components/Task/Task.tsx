@@ -53,13 +53,14 @@ const Task: React.FC<TaskProps> = ({ id, name, deadline, isMentor = false, type 
     });
   }, [visible === true]);
 
-  async function getCoordinates() {
+  function getCoordinates() {
     if (address) {
-      const geometry = await getCoordinatesFromAdress(address);
-      const arrayCoords: number[] = [];
-      arrayCoords[0] = geometry.lat;
-      arrayCoords[1] = geometry.lng;
-      setCoords(arrayCoords);
+      getCoordinatesFromAdress(address).then((geometry) => {
+        const arrayCoords: number[] = [];
+        arrayCoords[0] = geometry.lat;
+        arrayCoords[1] = geometry.lng;
+        setCoords(arrayCoords);
+      });
     }
   }
 
@@ -316,4 +317,4 @@ const Task: React.FC<TaskProps> = ({ id, name, deadline, isMentor = false, type 
   );
 };
 
-export default Task;
+export default React.memo(Task);
