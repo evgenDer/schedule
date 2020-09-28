@@ -1,0 +1,24 @@
+.modal {
+  .ant-checkbox-wrapper {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+
+  .ant-checkbox-inner:after {
+    width: 0.6rem;
+    height: 0.8rem;
+  }
+
+  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+  }
+
+  .ant-checkbox-inner {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .task-modal__checkboxes {
+    margin-bottom: 20px;
+  }
+}
